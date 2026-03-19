@@ -1,26 +1,54 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* Cores Padrão - Light Base / Fallback */
+  --background: #f8fafc;
+  --foreground: #0a0e17;
+
+  /* Cores: Tech Imersivo */
+  --color-tech-bg: #0a0e17;
+  --color-tech-text: #f8fafc;
+  --color-tech-subtext: #94a3b8;
+  --color-tech-cyan: #06b6d4;
+  --color-tech-violet: #8b5cf6;
+  --color-tech-emerald: #10b981;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
+/* Modo Escuro (Tech Imersivo Principal) */
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --background: var(--color-tech-bg);
+    --foreground: var(--color-tech-text);
   }
 }
 
+@theme {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-muted: var(--color-tech-subtext);
+
+  --color-accent-cyan: var(--color-tech-cyan);
+  --color-accent-violet: var(--color-tech-violet);
+  --color-accent-emerald: var(--color-tech-emerald);
+
+  --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-geist-mono), ui-monospace, SFMono-Regular, Menlo, monospace;
+}
+
 body {
-  background: var(--background);
+  background-color: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: var(--font-sans);
+  color: var(--foreground);
 }

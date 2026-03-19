@@ -71,9 +71,39 @@ Páginas geradas dinamicamente via Markdown (`.mdx`).
 - **Highlights:** Destaques técnicos (features complexas implementadas).
 - **Tech Stack:** Ferramentas usadas naquele projeto específico.
 
+## 4. Design System, Cores e Tipografia (Tech & Imersivo)
+
+O design visual foca em um ambiente "Tech Imersivo", usando contrastes vibrantes, cores que remetem à alta tecnologia (cyber/neon) e extrema legibilidade.
+
+### 4.1. Paleta de Cores (Vibrante & Tech)
+
+O sistema de cores utiliza variáveis CSS modernas para transições vibrantes e vivas.
+
+- **Fundo Principal (Dark Mode):** Um tom profundo de azul/cinza tecnológico (Ex: `#0A0E17` ou `#09090B`). Foge do preto puro para dar mais profundidade e conforto visual.
+- **Texto Principal:** Branco fosco (`#F8FAFC`).
+- **Texto Secundário:** Cinza Azulado (`#94A3B8`) para criar uma hierarquia clara.
+- **Cores de Acento (Vivas e "Tech"):**
+  - **Electric Cyan (`#06B6D4` a `#00FFD1`):** Usada para botões de destaque, links e detalhes técnicos que pulam na tela.
+  - **Neon Violet (`#8B5CF6` a `#A855F7`):** Usada para o brilho da "aurora boreal" de fundo misturada ao Cyan, criando um efeito espacial moderno e pulsante.
+  - **Tech Emerald (`#10B981`):** Usada para status "online", pill de tecnologias, ou badges de sucesso.
+- **Superfícies (Cards e Navbars):** Efeito Glassmorphism (vidro) com `rgba(10, 14, 23, 0.6)` e forte amaciamento (`backdrop-blur-md`), além de bordas ultra finas iluminadas.
+
+### 4.2. Tipografia
+
+A tipografia combina o universo das interfaces de altíssima clareza com fontes "mono" clássicas de editores de código (IDE), unindo legibilidade ao tema "desenvolvedor".
+
+| Elemento                 | Família de Fonte             | Peso (Weight)  | Tamanho (Desktop) |
+| ------------------------ | ---------------------------- | -------------- | ----------------- |
+| **Headings (H1)**        | Inter ou Geist Sans          | Bold (700)     | 4.5rem / 72px     |
+| **Headings (H2)**        | Inter ou Geist Sans          | Bold (700)     | 3rem / 48px       |
+| **Sub-headings (H3)**    | Inter ou Geist Sans          | Semibold (600) | 1.5rem / 24px     |
+| **Body text**            | Inter ou Geist Sans          | Regular (400)  | 1rem / 16px       |
+| **Code / Mono elements** | JetBrains Mono ou Geist Mono | Medium (500)   | 0.75rem / 12px    |
+| **Tech pills**           | JetBrains Mono ou Geist Mono | Medium (500)   | 0.75rem / 12px    |
+
 ---
 
-## 4. A Stack de Tecnologia Definitiva
+## 5. A Stack de Tecnologia Definitiva
 
 | Categoria                    | Tecnologia Principal                          | Justificativa Breve                                                              |
 | ---------------------------- | --------------------------------------------- | -------------------------------------------------------------------------------- |
@@ -88,7 +118,7 @@ Páginas geradas dinamicamente via Markdown (`.mdx`).
 
 ---
 
-### 3.1. Versões da Stack
+### 5.1. Versões da Stack
 
 Para garantir a consistência e reprodutibilidade do projeto, usaremos as versões _latest LTS_:
 
@@ -96,12 +126,70 @@ Para garantir a consistência e reprodutibilidade do projeto, usaremos as versõ
 - **Next.js:** `^15.x`
 - **React:** `^19.x`
 - **TypeScript:** `^5.x`
-- **Prisma:** `^6.x`
 - **Tailwind CSS:** `^4.x`
 
 ---
 
-## 5. Padrões de Código e Boas Práticas
+## 6. Setup e Execução do Projeto (Acesso entre Máquinas)
+
+Sempre que clonar este projeto em uma máquina nova, você precisará apenas do **Node.js** instalado para baixar as dependências e colocar o ambiente em pé. Todo o ambiente de desenvolvimento é isolado via `npm`.
+
+### Como rodar em uma máquina nova:
+
+1. Clone o repositório do github:
+
+   ```bash
+   git clone <sua-url-do-repositorio>
+   cd kleefisch
+   ```
+
+2. Instale todas as dependências do projeto mapeadas:
+
+   ```bash
+   npm install
+   ```
+
+3. Inicie o servidor de desenvolvimento:
+
+   ```bash
+   npm run dev
+   ```
+
+4. Acesse em seu navegador:
+   > http://localhost:3000
+
+### Bibliotecas Essenciais em uso no instante (registradas no package.json):
+
+_Lembrete: O `npm install` cuida de instalar tudo automaticamente._
+
+**Framework / Engine:**
+
+- `next` (v15+)
+- `react`, `react-dom` (v19+)
+
+**Estilização e UI:**
+
+- `tailwindcss` (v4+ e seu postcss plugin)
+- `clsx` e `tailwind-merge` (Utilitários de classes dinâmicas)
+- `next-themes` (Dark/Light mode)
+- `lucide-react` (Ícones SVGs incríveis)
+
+**Efeitos Interativos (Hero Section):**
+
+- `framer-motion` (Animações de entrada e movimento)
+- `@tsparticles/react` e `@tsparticles/slim` (Partículas/Galáxia de fundo)
+- `react-type-animation` (Efeito de desenvolvedor digitando textos)
+
+**Ferramentas dev (Qualidade do Código):**
+
+- `typescript` (Tipagem)
+- `eslint` (Linting rígido integrado)
+- `prettier` (Formatação de código automática)
+- `husky` e `lint-staged` (Garantia de código formatado antes de criar um commit)
+
+---
+
+## 7. Padrões de Código e Boas Práticas
 
 Este guia define nossas convenções de código para garantir um desenvolvimento limpo, consistente e manutenível.
 
@@ -156,7 +244,7 @@ Este guia define nossas convenções de código para garantir um desenvolvimento
 
 ---
 
-## 6. Próximos Passos
+## 7. Próximos Passos
 
 Após a sua validação deste documento, o primeiro passo prático será:
 
