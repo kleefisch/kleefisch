@@ -52,3 +52,49 @@ h6 {
   font-family: var(--font-sans);
   color: var(--foreground);
 }
+
+/* Notion Overrides */
+.notion-app {
+  background: transparent !important;
+  font-family: inherit !important;
+}
+.notion-page {
+  padding: 0 !important;
+  width: 100% !important;
+  max-width: 100% !important;
+}
+.notion-text,
+.notion-list,
+.notion-quote,
+.notion-callout,
+.notion-toggle,
+.notion-toggle-title,
+.notion-bookmark,
+.notion-table,
+.notion-table-row,
+.notion-table-cell,
+.notion-table-header-inner,
+.notion-table-cell-text,
+.notion-simple-table {
+  font-size: 1.125rem !important; /* Corresponde a text-lg do Tailwind */
+  line-height: 1.75rem !important; /* leading-relaxed (1.625) ou parecidos */
+  color: var(--color-muted) !important;
+}
+.notion-h1,
+.notion-h2,
+.notion-h3 {
+  font-family: inherit !important;
+  color: var(--color-foreground) !important;
+}
+.notion-h1 {
+  font-size: 2.25rem !important;
+  font-weight: 700 !important;
+}
+.notion-h2 {
+  font-size: 1.5rem !important;
+  font-weight: 700 !important;
+}
+.notion-h3 {
+  font-size: 1.25rem !important;
+  font-weight: 600 !important;
+}

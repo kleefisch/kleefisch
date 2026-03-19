@@ -2,8 +2,9 @@
 
 import { motion } from "framer-motion";
 import { ArrowRight, ExternalLink, Github, MonitorPlay } from "lucide-react";
-import Link from "next/link";
+import { Link } from "@/i18n/routing";
 import Image from "next/image";
+import { LikeButton } from "@/components/ui/like-button";
 
 type Project = {
   id: string;
@@ -14,6 +15,7 @@ type Project = {
   liveUrl: string | null;
   githubUrl: string | null;
   imageUrl?: string | null;
+  likes: number;
 };
 
 const containerVariants = {
@@ -102,6 +104,9 @@ export function Projects({ featuredProjects }: { featuredProjects: Project[] }) 
                           <Github className="h-4 w-4" /> Source
                         </Link>
                       )}
+                      <div className="ml-auto">
+                        <LikeButton projectId={project.id} initialLikes={project.likes} />
+                      </div>
                     </div>
                   </div>
                   

@@ -2,9 +2,10 @@
 
 import { motion } from "framer-motion";
 import { ExternalLink, Github, MonitorPlay, ArrowRight } from "lucide-react";
-import Link from "next/link";
+import { Link } from "@/i18n/routing";
 import Image from "next/image";
 import { useState } from "react";
+import { LikeButton } from "@/components/ui/like-button";
 
 type Project = {
   id: string;
@@ -16,6 +17,7 @@ type Project = {
   githubUrl: string | null;
   imageUrl: string | null;
   createdAt: Date;
+  likes: number;
 };
 
 export default function ProjectsClient({ projects }: { projects: Project[] }) {
@@ -200,12 +202,13 @@ export default function ProjectsClient({ projects }: { projects: Project[] }) {
                             <ExternalLink className="h-5 w-5" />
                           </a>
                         )}
+                        <LikeButton projectId={project.id} initialLikes={project.likes} />
                       </div>
 
                       {/* Link para página interna */}
                       <Link
                         href={`/projects/${project.id}`}
-                        className="inline-flex items-center gap-2 text-sm font-medium text-foreground hover:text-accent-cyan transition-colors group/link"
+                        className="inline-flex items-center gap-2 text-sm font-medium text-foreground hover:text-accent-cyan transition-colors group/link ml-auto"
                       >
                         Ver Detalhes
                         <ArrowRight className="h-4 w-4 transition-transform group-hover/link:-translate-x-1" />

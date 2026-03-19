@@ -1,20 +1,36 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Send, Mail, MapPin, Loader2 } from "lucide-react";
-import { useState } from "react";
+import { Send, Mail, MapPin, Loader2, CheckCircle, AlertCircle } from "lucide-react";
+import { useState, useTransition } from "react";
+import { submitContactForm } from "@/app/actions/contact";
+import { track } from "@vercel/analytics";
 
 export function Contact() {
-  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isPending, startTransition] = useTransition();
+  const [status, setStatus] = useState<"idle" | "success" | "error">("idle");
+  const [errorMsg, setErrorMsg] = useState("");
 
-  // Exemplo de handler (será trocado futuramente por uma Server Action)
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setIsSubmitting(true);
-    // Simula uma requisição
-    await new Promise((resolve) => setTimeout(resolve, 1500));
-    setIsSubmitting(false);
-    // Futuramento adicione toast notification aqui
+    setStatus("idle");
+    const formData = new FormData(e.currentTarget);
+    
+    startTransition(async () => {
+      try {
+        const result = await submitContactForm(formData);
+        if (result.success) {
+          setStatus("success");
+          track("Contact Form Submitted");
+        } else {
+          setStatus("error");
+          setErrorMsg(result.error || "Ocorreu um erro ao enviar a mensagem.");
+        }
+      } catch (err) {
+        setStatus("error");
+        setErrorMsg("Erro de conexão com o servidor.");
+      }
+    });
   };
 
   const itemVariants = {
@@ -87,73 +103,93 @@ export function Contact() {
 
             {/* Right Column: Form */}
             <motion.div variants={itemVariants} className="lg:col-span-7">
-              <form
-                onSubmit={handleSubmit}
-                className="space-y-6 flex flex-col bg-background/30 p-6 sm:p-8 rounded-2xl border border-white/5 shadow-xl"
-              >
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                  <div className="space-y-2">
-                    <label htmlFor="name" className="text-sm font-medium text-foreground">
-                      Name
-                    </label>
-                    <input
-                      id="name"
-                      name="name"
-                      type="text"
-                      required
-                      placeholder="John Doe"
-                      className="w-full h-12 px-4 rounded-md bg-background border border-white/10 text-foreground placeholder:text-muted-foreground/50 focus:outline-none focus:ring-2 focus:ring-accent-cyan/50 focus:border-transparent transition-all"
-                    />
+              {status === "success" ? (
+                <div className="flex flex-col items-center justify-center h-full text-center p-12 bg-background/30 rounded-2xl border border-white/5 shadow-xl">
+                  <div className="h-16 w-16 rounded-full bg-emerald-500/10 flex items-center justify-center mb-6">
+                    <CheckCircle className="h-8 w-8 text-emerald-500" />
                   </div>
-                  <div className="space-y-2">
-                    <label htmlFor="email" className="text-sm font-medium text-foreground">
-                      Email
-                    </label>
-                    <input
-                      id="email"
-                      name="email"
-                      type="email"
-                      required
-                      placeholder="john@example.com"
-                      className="w-full h-12 px-4 rounded-md bg-background border border-white/10 text-foreground placeholder:text-muted-foreground/50 focus:outline-none focus:ring-2 focus:ring-accent-cyan/50 focus:border-transparent transition-all"
-                    />
-                  </div>
+                  <h3 className="text-2xl font-bold mb-2">Message Sent!</h3>
+                  <p className="text-muted-foreground">Thank you for reaching out. I'll get back to you soon.</p>
                 </div>
-
-                <div className="space-y-2">
-                  <label htmlFor="message" className="text-sm font-medium text-foreground">
-                    Message
-                  </label>
-                  <textarea
-                    id="message"
-                    name="message"
-                    required
-                    rows={5}
-                    placeholder="Tell me about your project..."
-                    className="w-full p-4 rounded-md bg-background border border-white/10 text-foreground placeholder:text-muted-foreground/50 focus:outline-none focus:ring-2 focus:ring-accent-cyan/50 focus:border-transparent transition-all resize-none"
-                  />
-                </div>
-
-                <button
-                  type="submit"
-                  disabled={isSubmitting}
-                  className="group relative h-12 w-full sm:w-auto px-8 overflow-hidden rounded-md bg-foreground text-background font-medium hover:bg-foreground/90 disabled:opacity-70 disabled:cursor-not-allowed transition-all active:scale-95"
+              ) : (
+                <form
+                  onSubmit={handleSubmit}
+                  className="space-y-6 flex flex-col bg-background/30 p-6 sm:p-8 rounded-2xl border border-white/5 shadow-xl"
                 >
-                  <span className="relative z-10 flex items-center justify-center gap-2">
-                    {isSubmitting ? (
-                      <>
-                        <Loader2 className="h-4 w-4 animate-spin" />
-                        Sending...
-                      </>
-                    ) : (
-                      <>
-                        Send Message
-                        <Send className="h-4 w-4 transition-transform group-hover:-translate-y-1 group-hover:translate-x-1" />
-                      </>
-                    )}
-                  </span>
-                </button>
-              </form>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                    <div className="space-y-2">
+                      <label htmlFor="name" className="text-sm font-medium text-foreground">
+                        Name
+                      </label>
+                      <input
+                        id="name"
+                        name="name"
+                        type="text"
+                        required
+                        disabled={isPending}
+                        placeholder="John Doe"
+                        className="w-full h-12 px-4 rounded-md bg-background border border-white/10 text-foreground placeholder:text-muted-foreground/50 focus:outline-none focus:ring-2 focus:ring-accent-cyan/50 focus:border-transparent transition-all disabled:opacity-50"
+                      />
+                    </div>
+                    <div className="space-y-2">
+                      <label htmlFor="email" className="text-sm font-medium text-foreground">
+                        Email
+                      </label>
+                      <input
+                        id="email"
+                        name="email"
+                        type="email"
+                        required
+                        disabled={isPending}
+                        placeholder="john@example.com"
+                        className="w-full h-12 px-4 rounded-md bg-background border border-white/10 text-foreground placeholder:text-muted-foreground/50 focus:outline-none focus:ring-2 focus:ring-accent-cyan/50 focus:border-transparent transition-all disabled:opacity-50"
+                      />
+                    </div>
+                  </div>
+
+                  <div className="space-y-2">
+                    <label htmlFor="message" className="text-sm font-medium text-foreground">
+                      Message
+                    </label>
+                    <textarea
+                      id="message"
+                      name="message"
+                      required
+                      disabled={isPending}
+                      rows={5}
+                      placeholder="Tell me about your project..."
+                      className="w-full p-4 rounded-md bg-background border border-white/10 text-foreground placeholder:text-muted-foreground/50 focus:outline-none focus:ring-2 focus:ring-accent-cyan/50 focus:border-transparent transition-all resize-none disabled:opacity-50"
+                    />
+                  </div>
+
+                  {status === "error" && (
+                    <div className="flex items-center gap-2 p-3 text-sm text-red-500 bg-red-500/10 rounded-md border border-red-500/20">
+                      <AlertCircle className="h-4 w-4 shrink-0" />
+                      {errorMsg}
+                    </div>
+                  )}
+
+                  <button
+                    type="submit"
+                    disabled={isPending}
+                    className="group relative h-12 w-full sm:w-auto px-8 overflow-hidden rounded-md bg-foreground text-background font-medium hover:bg-foreground/90 disabled:opacity-70 disabled:cursor-not-allowed transition-all active:scale-95"
+                  >
+                    <span className="relative z-10 flex items-center justify-center gap-2">
+                      {isPending ? (
+                        <>
+                          <Loader2 className="h-4 w-4 animate-spin" />
+                          Sending...
+                        </>
+                      ) : (
+                        <>
+                          Send Message
+                          <Send className="h-4 w-4 transition-transform group-hover:-translate-y-1 group-hover:translate-x-1" />
+                        </>
+                      )}
+                    </span>
+                  </button>
+                </form>
+              )}
             </motion.div>
           </motion.div>
         </div>

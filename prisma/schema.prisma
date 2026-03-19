@@ -24,6 +24,8 @@ model Project {
   category    String // e.g. "Full Stack", "Frontend", "Backend"
   tags        String[] // PostgreSQL natively supports arrays
   featured    Boolean  @default(false)
+  likes       Int      @default(0)
+
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -35,5 +37,16 @@ model ContactMessage {
   email     String
   message   String
   read      Boolean  @default(false)
+  archived  Boolean  @default(false)
   createdAt DateTime @default(now())
+}
+
+model AdminUser {
+  id                 String   @id @default(cuid())
+  email              String   @unique
+  passwordHash       String
+  twoFactorSecret    String?
+  isTwoFactorEnabled Boolean  @default(false)
+  createdAt          DateTime @default(now())
+  updatedAt          DateTime @updatedAt
 }

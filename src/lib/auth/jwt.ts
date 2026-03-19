@@ -2,7 +2,7 @@ import { SignJWT, jwtVerify } from "jose";
 
 const getJwtSecretKey = () => {
   const secret = process.env.JWT_SECRET;
-  
+
   if (!secret || secret.length === 0) {
     // Apenas num caso extremo do Dev esquecer de setar. Causa um erro fatal pois não é seguro.
     throw new Error("JWT_SECRET environment variable is not set");
@@ -11,7 +11,7 @@ const getJwtSecretKey = () => {
   return secret;
 };
 
-export const signToken = async (payload: { role: string }) => {
+export const signToken = async (payload: { role: string; [key: string]: any }) => {
   try {
     const secret = new TextEncoder().encode(getJwtSecretKey());
     const alg = "HS256";

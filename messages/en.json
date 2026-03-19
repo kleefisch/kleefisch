@@ -1,0 +1,12 @@
+{
+  "Navigation": {
+    "home": "Home",
+    "about": "About",
+    "projects": "Projects",
+    "contact": "Contact"
+  },
+  "Hero": {
+    "title": "Welcome to My Portfolio",
+    "subtitle": "Building Digital Experiences"
+  }
+}

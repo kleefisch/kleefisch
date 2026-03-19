@@ -4,6 +4,7 @@ import * as React from "react";
 import { Moon, Sun } from "lucide-react";
 import { useTheme } from "next-themes";
 import { cn } from "@/lib/utils";
+import { track } from "@vercel/analytics";
 
 export function ThemeToggle({ className }: { className?: string }) {
   const { setTheme, theme } = useTheme();
@@ -19,7 +20,11 @@ export function ThemeToggle({ className }: { className?: string }) {
 
   return (
     <button
-      onClick={() => setTheme(theme === "light" ? "dark" : "light")}
+      onClick={() => {
+        const newTheme = theme === "light" ? "dark" : "light";
+        setTheme(newTheme);
+        track("Theme Toggled", { theme: newTheme });
+      }}
       className={cn(
         "relative flex h-9 w-9 items-center justify-center rounded-md border border-zinc-200 dark:border-zinc-800 bg-transparent text-zinc-900 transition-colors hover:bg-zinc-100 dark:text-zinc-100 dark:hover:bg-zinc-800",
         className,

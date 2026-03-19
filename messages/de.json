@@ -1,0 +1,12 @@
+{
+  "Navigation": {
+    "home": "Startseite",
+    "about": "Über mich",
+    "projects": "Projekte",
+    "contact": "Auswirkung"
+  },
+  "Hero": {
+    "title": "Willkommen in meinem Portfolio",
+    "subtitle": "Digitale Erlebnisse schaffen"
+  }
+}

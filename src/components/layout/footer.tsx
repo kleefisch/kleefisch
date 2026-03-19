@@ -1,5 +1,5 @@
 import * as React from "react";
-import Link from "next/link";
+import { Link } from "@/i18n/routing";
 import { Github, Linkedin, Twitter, Mail } from "lucide-react";
 
 export function Footer() {

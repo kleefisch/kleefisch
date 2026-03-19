@@ -3,7 +3,7 @@
 import { motion } from "framer-motion";
 import { ParticlesBackground } from "@/components/ui/particles-background";
 import { ArrowRight } from "lucide-react";
-import Link from "next/link";
+import { Link } from "@/i18n/routing";
 import Image from "next/image";
 import { TypeAnimation } from "react-type-animation";
 

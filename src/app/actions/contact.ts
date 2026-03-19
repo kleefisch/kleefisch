@@ -10,6 +10,22 @@ export async function markMessageReadAction(id: string) {
   revalidatePath("/admin/dashboard");
 }
 
+export async function toggleMessageReadAction(id: string, read: boolean) {
+  await prisma.contactMessage.update({
+    where: { id },
+    data: { read },
+  });
+  revalidatePath("/admin/dashboard");
+}
+
+export async function archiveMessageAction(id: string, archived: boolean) {
+  await prisma.contactMessage.update({
+    where: { id },
+    data: { archived },
+  });
+  revalidatePath("/admin/dashboard");
+}
+
 export async function deleteMessageAction(id: string) {
   await prisma.contactMessage.delete({ where: { id } });
   revalidatePath("/admin/dashboard");

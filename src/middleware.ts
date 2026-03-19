@@ -1,39 +1,42 @@
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 import { verifyToken } from "./lib/auth/jwt";
+import createMiddleware from "next-intl/middleware";
+import { routing } from "./i18n/routing";
 
-// Quais rotas esse middleware deve inspecionar?
-// Basicamente tudo que começar com /admin (ignorando arquivos estáticos para não perder performance)
+const intlMiddleware = createMiddleware(routing);
+
 export const config = {
-  matcher: ["/admin/:path*"],
+  // Match all pathnames except for
+  // - … if they start with `/api`, `/_next` or `/_vercel`
+  // - … the ones containing a dot (e.g. `favicon.ico`)
+  matcher: ["/((?!api|_next|_vercel|.*\\..*).*)"],
 };
 
 export async function middleware(request: NextRequest) {
   const currentPath = request.nextUrl.pathname;
-  
-  // Se o dev estiver tentando entrar na página de login, continua o fluxo normal e deixa ele ver
-  if (currentPath === "/admin/login") {
+
+  // Guardião do Admin
+  if (currentPath.startsWith("/admin")) {
+    // Permite bypass para login e setup
+    if (currentPath === "/admin/login" || currentPath === "/admin/setup") {
+      return NextResponse.next();
+    }
+
+    const token = request.cookies.get("admin_token")?.value;
+    if (!token) {
+      return NextResponse.redirect(new URL("/admin/login", request.url));
+    }
+
+    const verifiedToken = await verifyToken(token);
+    if (!verifiedToken) {
+      const response = NextResponse.redirect(new URL("/admin/login", request.url));
+      response.cookies.delete("admin_token");
+      return response;
+    }
     return NextResponse.next();
   }
 
-  // Verifica se existe algum cookie de token gravado ali
-  const token = request.cookies.get("admin_token")?.value;
-
-  // Se não tem cookie, bota pra correr devolta para o login!
-  if (!token) {
-    return NextResponse.redirect(new URL("/admin/login", request.url));
-  }
-
-  // Se tem cookie, vamos abrir ele (descriptografar a assinatura) e ver se foi a gente mesmo quem gerou o JWT
-  const verifiedToken = await verifyToken(token);
-
-  if (!verifiedToken) {
-    // Alguém tentou forjar um cookie fingindo ser admin, chuta ele de volta!
-    const response = NextResponse.redirect(new URL("/admin/login", request.url));
-    response.cookies.delete("admin_token"); // ainda limpa a sujeira pra garantir
-    return response;
-  }
-
-  // Se deu tudo certo e chegou até aqui: O Guardião diz "Pode Passar chefia!" ✅
-  return NextResponse.next();
+  // Internacionalização para as outras rotas
+  return intlMiddleware(request);
 }

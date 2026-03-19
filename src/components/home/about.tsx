@@ -2,7 +2,7 @@
 
 import { motion } from "framer-motion";
 import { Code2, Cpu, Globe, ArrowRight } from "lucide-react";
-import Link from "next/link";
+import { Link } from "@/i18n/routing";
 
 const containerVariants = {
   hidden: { opacity: 0 },

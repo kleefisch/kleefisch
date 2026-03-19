@@ -1,0 +1,12 @@
+{
+  "Navigation": {
+    "home": "Início",
+    "about": "Sobre",
+    "projects": "Projetos",
+    "contact": "Contato"
+  },
+  "Hero": {
+    "title": "Bem-vindo ao meu Portfólio",
+    "subtitle": "Construindo Experiências Digitais"
+  }
+}

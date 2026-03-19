@@ -10,15 +10,17 @@ export default function NewProjectPage() {
   const router = useRouter();
   const [isPending, startTransition] = useTransition();
   const [error, setError] = useState<string | null>(null);
+  const [content, setContent] = useState("");
 
   async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
     setError(null);
     const formData = new FormData(event.currentTarget);
+    formData.set("content", content); // Injection do HTML gerado pelo TipTap
 
     startTransition(async () => {
       const result = await createProjectAction(formData);
-      
+
       if (result?.error) {
         setError(result.error);
       } else {
@@ -31,8 +33,8 @@ export default function NewProjectPage() {
   return (
     <div className="container max-w-2xl py-12">
       <div className="mb-8 flex items-center gap-4">
-        <Link 
-          href="/admin/dashboard" 
+        <Link
+          href="/admin/dashboard"
           className="inline-flex h-9 w-9 items-center justify-center rounded-md border border-neutral-800 bg-neutral-900 text-neutral-400 hover:bg-neutral-800 hover:text-white"
         >
           <ArrowLeft className="h-4 w-4" />
@@ -64,7 +66,10 @@ export default function NewProjectPage() {
             </div>
 
             <div>
-              <label htmlFor="description" className="block text-sm font-medium text-neutral-300 mb-1">
+              <label
+                htmlFor="description"
+                className="block text-sm font-medium text-neutral-300 mb-1"
+              >
                 Descrição *
               </label>
               <textarea
@@ -98,7 +103,10 @@ export default function NewProjectPage() {
 
             <div className="grid gap-4 sm:grid-cols-2">
               <div>
-                <label htmlFor="liveUrl" className="block text-sm font-medium text-neutral-300 mb-1">
+                <label
+                  htmlFor="liveUrl"
+                  className="block text-sm font-medium text-neutral-300 mb-1"
+                >
                   URL ao Vivo
                 </label>
                 <input
@@ -110,7 +118,10 @@ export default function NewProjectPage() {
                 />
               </div>
               <div>
-                <label htmlFor="githubUrl" className="block text-sm font-medium text-neutral-300 mb-1">
+                <label
+                  htmlFor="githubUrl"
+                  className="block text-sm font-medium text-neutral-300 mb-1"
+                >
                   URL do GitHub
                 </label>
                 <input
@@ -138,17 +149,20 @@ export default function NewProjectPage() {
 
             <div>
               <label htmlFor="content" className="block text-sm font-medium text-neutral-300 mb-1">
-                Conteúdo do Case Study (Markdown)
+                Notion Page ID
               </label>
-              <textarea
+              <input
                 id="content"
                 name="content"
-                rows={10}
-                className="w-full font-mono rounded-md border border-neutral-800 bg-neutral-950 px-3 py-3 text-sm text-white placeholder-neutral-500 focus:border-white focus:outline-none focus:ring-1 focus:ring-white resize-y"
-                placeholder="## Arquitetura do Projeto&#10;\nEscreva aqui os detalhes do desenvolvimento..."
+                defaultValue={content}
+                onChange={(e) => setContent(e.target.value)}
+                placeholder="ID ou URL da página do Notion"
+                className="flex h-10 w-full rounded-md border border-neutral-800 bg-neutral-900/50 px-3 py-2 text-sm text-neutral-200 placeholder:text-neutral-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors"
+                required
               />
               <p className="text-xs text-neutral-500 mt-1">
-                Este texto aparecerá na página detalhada do projeto. Suporta formato Markdown.
+                Coloque aqui o ID da página pública do Notion que servirá como conteúdo para este
+                projeto.
               </p>
             </div>
 

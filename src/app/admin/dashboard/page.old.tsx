@@ -1,0 +1,312 @@
+import prisma from "@/lib/prisma";
+import { formatDistanceToNow, format } from "date-fns";
+import { ptBR } from "date-fns/locale";
+import Link from "next/link";
+import { deleteMessageAction, markMessageReadAction } from "@/app/actions/contact";
+import { deleteProjectAction } from "@/app/actions/projects";
+import { 
+  FolderGit2, 
+  Mail, 
+  Heart, 
+  Plus, 
+  Edit3, 
+  Trash2, 
+  CheckCircle2, 
+  Globe, 
+  LayoutDashboard, 
+  LogOut,
+  Sparkles
+} from "lucide-react";
+
+export const revalidate = 0; // Ensures data is always fresh in Admin
+
+export default async function AdminDashboardPage() {
+  const messages = await prisma.contactMessage.findMany({
+    orderBy: { createdAt: "desc" },
+  });
+
+  const projects = await prisma.project.findMany({
+    orderBy: { createdAt: "desc" },
+  });
+
+  const totalLikes = projects.reduce((acc, project) => acc + (project.likes || 0), 0);
+  const unreadMessagesCount = messages.filter((m) => !m.read).length;
+
+  return (
+    <div className="min-h-screen relative flex flex-col bg-background selection:bg-accent-cyan/30">
+      {/* Background ambient glow */}
+      <div className="fixed top-[-10%] left-1/2 -translate-x-1/2 w-[600px] h-[500px] rounded-full bg-accent-violet/10 blur-[150px] mix-blend-screen pointer-events-none -z-10" />
+
+      {/* Admin Navbar */}
+      <header className="sticky top-0 z-50 w-full border-b border-white/5 bg-background/80 backdrop-blur-xl">
+        <div className="container mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6">
+          <div className="flex items-center gap-3">
+            <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-accent-cyan/10 border border-accent-cyan/20">
+              <LayoutDashboard className="h-4 w-4 text-accent-cyan" />
+            </div>
+            <span className="font-semibold tracking-tight text-lg text-white">
+              Nexus <span className="text-white/40 font-normal">Admin</span>
+            </span>
+          </div>
+
+          <div className="flex items-center gap-4">
+            <Link 
+              href="/"
+              target="_blank"
+              className="hidden sm:flex items-center gap-2 text-sm text-neutral-400 hover:text-white transition-colors"
+            >
+              <Globe className="h-4 w-4" />
+              Ver Site
+            </Link>
+            <div className="h-4 w-[1px] bg-white/10 hidden sm:block" />
+            <Link 
+              href="/"
+              className="flex items-center gap-2 text-sm text-red-500 hover:text-red-400 transition-colors"
+            >
+              <LogOut className="h-4 w-4" />
+              Sair
+            </Link>
+          </div>
+        </div>
+      </header>
+
+      <main className="flex-1 container mx-auto px-4 max-w-7xl py-10 space-y-10 relative z-10">
+        {/* Header / Intro */}
+        <div className="flex flex-col gap-1">
+          <h1 className="text-3xl font-bold tracking-tight text-white">Dashboard Overview</h1>
+          <p className="text-neutral-400">Aqui você gerencia todo o portfólio e interações com os usuários.</p>
+        </div>
+
+        {/* KPI Grid */}
+        <section className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          <div className="flex flex-col gap-3 rounded-2xl border border-white/5 bg-white/[0.02] p-6 relative overflow-hidden group">
+            <div className="absolute inset-0 bg-gradient-to-br from-accent-cyan/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
+            <div className="flex items-center justify-between z-10">
+              <h3 className="text-sm font-medium text-neutral-400">Projetos Ativos</h3>
+              <FolderGit2 className="h-4 w-4 text-accent-cyan" />
+            </div>
+            <p className="text-3xl font-bold font-mono tracking-tight text-white z-10">{projects.length}</p>
+          </div>
+
+          <div className="flex flex-col gap-3 rounded-2xl border border-white/5 bg-white/[0.02] p-6 relative overflow-hidden group">
+            <div className="absolute inset-0 bg-gradient-to-br from-accent-violet/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
+            <div className="flex items-center justify-between z-10">
+              <h3 className="text-sm font-medium text-neutral-400">Total de Likes</h3>
+              <Heart className="h-4 w-4 text-accent-violet" />
+            </div>
+            <p className="text-3xl font-bold font-mono tracking-tight text-white z-10">{totalLikes}</p>
+          </div>
+
+          <div className="flex flex-col gap-3 rounded-2xl border border-white/5 bg-white/[0.02] p-6 relative overflow-hidden group">
+            <div className="absolute inset-0 bg-gradient-to-br from-emerald-500/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
+            <div className="flex items-center justify-between z-10">
+              <h3 className="text-sm font-medium text-neutral-400">Msgs Não Lidas</h3>
+              <div className="flex items-center justify-center">
+                {unreadMessagesCount > 0 ? (
+                  <span className="relative flex h-3 w-3">
+                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                    <span className="relative inline-flex rounded-full h-3 w-3 bg-emerald-500"></span>
+                  </span>
+                ) : (
+                  <span className="relative flex h-3 w-3 bg-white/10 rounded-full"></span>
+                )}
+              </div>
+            </div>
+            <p className="text-3xl font-bold font-mono tracking-tight text-white z-10">{unreadMessagesCount}</p>
+          </div>
+
+          <div className="flex flex-col gap-3 rounded-2xl border border-white/5 bg-white/[0.02] p-6 relative overflow-hidden group">
+            <div className="absolute inset-0 bg-gradient-to-br from-white/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
+            <div className="flex items-center justify-between z-10">
+              <h3 className="text-sm font-medium text-neutral-400">Total de Contatos</h3>
+              <Mail className="h-4 w-4 text-neutral-400" />
+            </div>
+            <p className="text-3xl font-bold font-mono tracking-tight text-white z-10">{messages.length}</p>
+          </div>
+        </section>
+
+        {/* Content Split: Projects vs Messages */}
+        <div className="grid grid-cols-1 xl:grid-cols-12 gap-8">
+          
+          {/* Projects Management (8 Columns) */}
+          <section className="xl:col-span-8 flex flex-col gap-6">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-3">
+                <div className="h-8 w-1 bg-accent-cyan rounded-full" />
+                <h2 className="text-xl font-bold text-white">Catálogo de Projetos</h2>
+              </div>
+              <Link 
+                href="/admin/projects/new"
+                className="inline-flex h-10 items-center justify-center gap-2 rounded-md bg-accent-cyan px-5 text-sm font-bold text-black transition-all hover:bg-accent-cyan/90 hover:scale-[1.02] active:scale-95 shadow-[0_0_20px_rgba(6,182,212,0.2)]"
+              >
+                <Plus className="h-4 w-4" />
+                Criar Novo
+              </Link>
+            </div>
+            
+            <div className="bg-white/[0.02] border border-white/5 rounded-3xl p-3 min-h-[400px]">
+              {projects.length === 0 ? (
+                <div className="flex flex-col items-center justify-center h-full min-h-[380px] text-center p-8">
+                  <div className="h-16 w-16 rounded-full bg-white/5 flex items-center justify-center mb-4">
+                    <Sparkles className="h-8 w-8 text-accent-cyan/40" />
+                  </div>
+                  <h3 className="text-lg font-semibold text-white mb-1">Nenhum projeto ainda</h3>
+                  <p className="text-neutral-400 max-w-sm">
+                    Clique em "Criar Novo" acima para adicionar o seu primeiro projeto ao banco de dados.
+                  </p>
+                </div>
+              ) : (
+                <div className="flex flex-col gap-2">
+                  {projects.map((project) => (
+                    <div 
+                      key={project.id} 
+                      className="group flex flex-col sm:flex-row sm:items-center justify-between gap-4 rounded-2xl border border-transparent hover:border-white/10 hover:bg-white/5 p-4 transition-all duration-300"
+                    >
+                      <div className="flex items-start sm:items-center gap-4">
+                        <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-xl bg-black/50 border border-white/10 shadow-inner">
+                           <FolderGit2 className="h-6 w-6 text-neutral-500 group-hover:text-accent-cyan transition-colors" />
+                        </div>
+                        <div className="flex flex-col gap-1.5">
+                          <h3 className="font-semibold text-[15px] text-white flex items-center gap-3">
+                            {project.title}
+                            {project.featured && (
+                              <span className="text-[9px] uppercase font-bold tracking-wider px-2 py-0.5 rounded-md bg-accent-cyan/10 text-accent-cyan border border-accent-cyan/20">
+                                Destaque
+                              </span>
+                            )}
+                          </h3>
+                          <div className="flex flex-wrap items-center gap-3 text-[11px] text-neutral-400 font-mono tracking-wide">
+                            <span className="px-2 py-0.5 rounded bg-white/5 border border-white/5 uppercase">{project.category}</span>
+                            <span className="flex items-center gap-1.5">
+                              <Heart className="h-3 w-3 text-accent-violet" /> {project.likes}
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+                      
+                      <div className="flex items-center gap-1 sm:opacity-0 group-hover:opacity-100 transition-opacity self-end sm:self-center bg-black/40 p-1.5 rounded-xl border border-white/5">
+                        <Link 
+                          href={`/projects/${project.id}`}
+                          target="_blank"
+                          className="flex items-center gap-2 px-3 py-1.5 rounded-lg hover:bg-white/10 text-xs font-medium text-accent-cyan/80 hover:text-accent-cyan transition-colors"
+                        >
+                          <Globe className="h-3.5 w-3.5" />
+                          Visualizar
+                        </Link>
+                        <div className="w-[1px] h-4 bg-white/10" />
+                        <Link 
+                          href={`/admin/projects/${project.id}/edit`}
+                          className="flex items-center gap-2 px-3 py-1.5 rounded-lg hover:bg-white/10 text-xs font-medium text-neutral-300 hover:text-white transition-colors"
+                        >
+                          <Edit3 className="h-3.5 w-3.5" />
+                          Editar
+                        </Link>
+                        <form action={async () => {
+                          "use server";
+                          await deleteProjectAction(project.id);
+                        }}>
+                          <button className="flex items-center gap-2 px-3 py-1.5 rounded-lg hover:bg-red-500/20 text-xs font-medium text-neutral-400 hover:text-red-400 transition-colors">
+                            <Trash2 className="h-3.5 w-3.5" />
+                            Excluir
+                          </button>
+                        </form>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+          </section>
+
+          {/* Inbox Management (4 Columns) */}
+          <section className="xl:col-span-4 flex flex-col gap-6">
+             <div className="flex items-center gap-3">
+                <div className="h-8 w-1 bg-accent-violet rounded-full" />
+                <h2 className="text-xl font-bold text-white">Central de Mensagens</h2>
+              </div>
+
+            <div className="flex flex-col gap-4">
+              {messages.length === 0 ? (
+                <div className="rounded-3xl border border-white/5 bg-white/[0.02] p-12 text-center text-neutral-500 flex flex-col items-center">
+                  <Mail className="h-10 w-10 mb-4 opacity-20" />
+                  Sua caixa de entrada está vazia.
+                </div>
+              ) : (
+                messages.map((msg) => (
+                  <div 
+                    key={msg.id} 
+                    className={`relative rounded-3xl border p-5 transition-all duration-300 overflow-hidden group ${
+                      msg.read 
+                        ? 'bg-neutral-900/40 border-white/5 hover:bg-white/5' 
+                        : 'bg-accent-violet/5 border-accent-violet/20 shadow-[0_4px_20px_rgba(139,92,246,0.05)]'
+                    }`}
+                  >
+                    {!msg.read && (
+                      <div className="absolute top-0 right-0 w-24 h-24 bg-accent-violet/20 blur-2xl rounded-full pointer-events-none" />
+                    )}
+                    <div className="flex flex-col gap-4 relative z-10">
+                      {/* Email Header */}
+                      <div className="flex justify-between items-start border-b border-white/5 pb-4">
+                        <div className="flex gap-3 items-start w-full">
+                          <div className={`h-10 w-10 shrink-0 border rounded-full flex items-center justify-center font-bold text-lg ${msg.read ? 'bg-white/5 border-white/10 text-white/50' : 'bg-accent-violet/10 border-accent-violet/30 text-accent-violet'}`}>
+                            {msg.name.charAt(0).toUpperCase()}
+                          </div>
+                          <div className="flex flex-col w-full">
+                            <div className="flex items-center justify-between w-full">
+                              <span className="text-white text-[14px] font-semibold">{msg.name}</span>
+                              <time className="text-[10px] text-neutral-400 font-mono bg-black/40 border border-white/5 px-2 py-1 rounded-md">
+                                {format(msg.createdAt, "dd/MM/yyyy • HH:mm")}
+                              </time>
+                            </div>
+                            <span className="text-neutral-400 text-[12px] mt-0.5">
+                              De: <a href={`mailto:${msg.email}`} className="text-accent-cyan hover:underline">{msg.email}</a>
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+                      
+                      {/* Email Body */}
+                      <div className={`text-[13px] leading-relaxed whitespace-pre-wrap p-1 ${msg.read ? 'text-neutral-400' : 'text-neutral-200 font-medium'}`}>
+                        {msg.message}
+                      </div>
+
+                      {/* Email Actions */}
+                      <div className="flex items-center justify-between mt-2 pt-3 border-t border-white/5">
+                        <div className="text-[10px] text-neutral-500 font-mono">
+                          {formatDistanceToNow(msg.createdAt, { addSuffix: true, locale: ptBR })}
+                        </div>
+                        <div className="flex items-center gap-2">
+                      {!msg.read && (
+                        <form action={async () => {
+                          "use server";
+                          await markMessageReadAction(msg.id);
+                        }}>
+                          <button className="flex items-center gap-1.5 px-3 py-1.5 text-[11px] font-bold tracking-wider uppercase rounded-md bg-emerald-500/10 text-emerald-400 hover:bg-emerald-500/20 transition-colors">
+                            <CheckCircle2 className="h-3.5 w-3.5" />
+                            Marcar Lida
+                          </button>
+                        </form>
+                      )}
+                      <form action={async () => {
+                        "use server";
+                        await deleteMessageAction(msg.id);
+                      }}>
+                        <button className="flex items-center gap-1.5 px-3 py-1.5 text-[11px] font-bold tracking-wider uppercase rounded-md bg-white/5 text-neutral-400 hover:bg-red-500/10 hover:text-red-400 transition-colors opacity-0 group-hover:opacity-100">
+                          <Trash2 className="h-3 w-3" />
+                          Excluir
+                        </button>
+                      </form>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                ))
+              )}
+            </div>
+          </section>
+
+        </div>
+      </main>
+    </div>
+  );
+}
