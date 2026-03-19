@@ -20,7 +20,11 @@ As características principais que demonstram essa ambição são:
 - **Conteúdo Trilíngue (i18n):** Suporte para Inglês (padrão), Português (Brasil) e Alemão.
 - **Tema Claro e Escuro (Light/Dark Mode):** Com seletor manual e detecção da preferência do sistema.
 - **Efeito de Fundo Dinâmico:** Um efeito de partículas conectadas (galáxia) e suaves ondas iluminadas ao fundo simulando aurora boreal.
-- **Sistema de Conteúdo via Arquivos Locais:** Seções como "Blog" ou "Projetos" serão gerenciadas por arquivos `.mdx` locais, combinando a facilidade de escrita do Markdown com o poder dos componentes React.
+- **Custom CMS (Admin Dashboard):** Ao invés de arquivos locais estáticos (`.mdx`), o site terá um painel de controle próprio escondido e protegido por senha. Projetos e conteúdos serão criados, editados e deletados (CRUD completo) via interface, sendo salvos diretamente no banco de dados relacional (Neon/PostgreSQL). Isso demonstra alta proficiência em arquitetura de dados e Next.js Server Actions.
+- **Arquitetura de Backend e Database:**
+  - **Banco de Dados Relacional (PostgreSQL):** Utilizaremos o **Neon**, um banco de dados serverless altamente escalável. Ele permite funcionalidades como _Branching_ (ambiente de dados isolado) e tem custo otimizado (Scale-to-Zero).
+  - **ORM (Prisma):** O `Prisma` será usado para a modelagem do banco e para escrever as queries de forma tipada (Typescript) e segura.
+  - **Server Actions (Next.js):** Toda a comunicação entre o frontend e o banco (Ler projetos, salvar likes, enviar contatos) será feita via _Server Actions_ nativas do Next.js 15, eliminando a necessidade de criar uma camada de API separada.
 - **Funcionalidades com Backend:**
   - **Formulário de Contato:** Salvará as mensagens enviadas em um banco de dados e disparará notificação por email (via Resend).
   - **Sistema de "Likes":** Visitantes poderão "curtir" projetos ou posts do blog, com a contagem persistida no banco de dados.
@@ -63,7 +67,7 @@ Um mergulho profundo na história, formação, visões e objetivos do desenvolve
 
 ### 3.5. Projeto Específico (`/projects/[slug]`)
 
-Páginas geradas dinamicamente via Markdown (`.mdx`).
+Páginas geradas dinamicamente via Server Components (SSR), buscando os conteúdos ricos e dados diretamente da tabela de projetos no banco de dados PostgreSQL.
 
 - **Header:** Título do projeto, ano, role, e botões diretos: **Live Demo** e **GitHub Repo**.
 - **The Challenge / O Desafio:** Qual era o problema a ser resolvido.
@@ -105,16 +109,16 @@ A tipografia combina o universo das interfaces de altíssima clareza com fontes 
 
 ## 5. A Stack de Tecnologia Definitiva
 
-| Categoria                    | Tecnologia Principal                          | Justificativa Breve                                                              |
-| ---------------------------- | --------------------------------------------- | -------------------------------------------------------------------------------- |
-| **Arquitetura & Frontend**   | **Next.js 15+ (App Router) + React 19+ + TS** | Última geração, cache inteligente, Server Actions e performance.                 |
-| **Backend & Banco de Dados** | **Neon (PostgreSQL Serverless) + Prisma**     | Banco rápido com scale-to-zero para redução de custos, perfeito com Prisma.      |
-| **Styling & UI**             | **Tailwind CSS + Shadcn/UI + Framer Motion**  | Para uma interface bonita, customizável e fluida.                                |
-| **Efeitos Visuais**          | **tsParticles + CSS Blur (Aurora)**           | Galáxia fluida com "connected dots" e ondas de Aurora Boreal otimizadas via GPU. |
-| **Infra & Deploy**           | **Vercel + Vercel Analytics**                 | Deploy contínuo perfeito e tracking de tráfego sem esforço extra.                |
-| **Email & Contato**          | **Resend + React Email**                      | Sistema moderno e confiável para disparar e-mails via API do backend.            |
-| **Internacionalização**      | **`next-intl`**                               | Solução nativa para i18n na App Router.                                          |
-| **MDX (Blog/Projetos)**      | **`next-mdx-remote`**                         | Parse flexível dos arquivos Markdown locais para React.                          |
+| Categoria                    | Tecnologia Principal                          | Justificativa Breve                                                                |
+| ---------------------------- | --------------------------------------------- | ---------------------------------------------------------------------------------- |
+| **Arquitetura & Frontend**   | **Next.js 15+ (App Router) + React 19+ + TS** | Última geração, cache inteligente, Server Actions e performance.                   |
+| **Backend & Banco de Dados** | **Neon (PostgreSQL Serverless) + Prisma**     | Banco rápido com scale-to-zero para redução de custos, perfeito com Prisma.        |
+| **Styling & UI**             | **Tailwind CSS + Shadcn/UI + Framer Motion**  | Para uma interface bonita, customizável e fluida.                                  |
+| **Efeitos Visuais**          | **tsParticles + CSS Blur (Aurora)**           | Galáxia fluida com "connected dots" e ondas de Aurora Boreal otimizadas via GPU.   |
+| **Infra & Deploy**           | **Vercel + Vercel Analytics**                 | Deploy contínuo perfeito e tracking de tráfego sem esforço extra.                  |
+| **Email & Contato**          | **Resend + React Email**                      | Sistema moderno e confiável para disparar e-mails via API do backend.              |
+| **Internacionalização**      | **`next-intl`**                               | Solução nativa para i18n na App Router.                                            |
+| **CMS e Gestão**             | **Custom Admin Dashboard (CRUD)**             | Construção de painel próprio protegido e banco para substituir arquivos estáticos. |
 
 ---
 
