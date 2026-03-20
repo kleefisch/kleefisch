@@ -24,7 +24,7 @@ export default function AboutPage() {
         {/* Background Ambient Glow */}
         <div className="pointer-events-none absolute right-0 top-0 -z-10 h-[500px] w-[500px] rounded-full bg-accent-cyan/10 mix-blend-screen blur-[120px]" />
 
-        <div className="mx-auto max-w-4xl">
+        <div className="mx-auto max-w-5xl">
           {/* Header Section */}
           <motion.div initial="hidden" animate="visible" variants={fadeInUp} className="mb-16">
             <div className="mb-6 flex items-center gap-4">

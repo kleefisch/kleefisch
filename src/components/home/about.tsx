@@ -31,7 +31,7 @@ export function About() {
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, margin: "-100px" }}
-          className="mx-auto max-w-6xl"
+          className="mx-auto max-w-7xl"
         >
           <div className="grid grid-cols-1 gap-12 lg:grid-cols-2 lg:gap-16 items-center">
             {/* Left side: Text Pitch */}

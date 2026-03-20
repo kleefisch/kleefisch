@@ -57,7 +57,7 @@ export function Journey() {
       <div className="absolute bottom-0 right-0 translate-y-1/3 translate-x-1/3 w-[600px] h-[600px] rounded-full bg-accent-emerald/10 blur-[120px] mix-blend-screen pointer-events-none" />
 
       <div className="container relative z-10 mx-auto px-4 sm:px-6">
-        <div className="mx-auto max-w-4xl">
+        <div className="mx-auto max-w-5xl">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}

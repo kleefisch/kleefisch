@@ -2,17 +2,17 @@
 
 import { motion } from "framer-motion";
 import { ParticlesBackground } from "@/components/ui/particles-background";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, ChevronDown } from "lucide-react";
 import { Link } from "@/i18n/routing";
 import Image from "next/image";
 import { TypeAnimation } from "react-type-animation";
 
 export function Hero() {
   return (
-    <section className="relative flex min-h-[90vh] items-center justify-center overflow-hidden pt-16">
+    <section className="relative flex min-h-[calc(100dvh-4rem)] items-center justify-center overflow-hidden pt-16">
       {/* Background Aurora Effect */}
       <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
-        <div className="absolute -top-[40%] -left-[10%] w-[70%] h-[70%] rounded-full bg-accent-cyan/20 blur-[120px] mix-blend-screen animate-pulse [animation-duration:12s]" />
+        <div className="absolute -top-[20%] -left-[10%] w-[60%] h-[60%] rounded-full bg-accent-cyan/20 blur-[120px] mix-blend-screen animate-pulse [animation-duration:30s]" />
         <div className="absolute -bottom-[20%] -right-[10%] w-[60%] h-[60%] rounded-full bg-accent-violet/20 blur-[120px] mix-blend-screen animate-pulse [animation-duration:15s] [animation-delay:2s]" />
       </div>
 
@@ -20,7 +20,7 @@ export function Hero() {
       <ParticlesBackground />
 
       <div className="container relative z-10 mx-auto px-4 sm:px-6">
-        <div className="mx-auto max-w-6xl grid grid-cols-1 items-center gap-12 pt-10 lg:grid-cols-2 lg:gap-8 lg:pt-0">
+        <div className="mx-auto max-w-7xl grid grid-cols-1 items-center gap-12 pt-10 lg:grid-cols-2 lg:gap-8 lg:pt-0">
           {/* Left Column: Text Content */}
           <div className="flex flex-col justify-center space-y-6">
             <motion.div
@@ -38,7 +38,7 @@ export function Hero() {
               initial={{ opacity: 0, x: -20 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.5, delay: 0.1 }}
-              className="text-6xl font-bold tracking-tighter md:text-7xl lg:text-[5.5rem]"
+              className="text-7xl font-bold tracking-tighter whitespace-nowrap md:text-8xl lg:text-[7rem]"
             >
               <span className="bg-gradient-to-r from-accent-cyan via-accent-emerald to-accent-violet bg-clip-text text-transparent drop-shadow-[0_0_25px_rgba(6,182,212,0.3)]">
                 John Kleefisch
@@ -104,15 +104,15 @@ export function Hero() {
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.7, delay: 0.3 }}
-            className="relative mt-12 flex items-center justify-center lg:mt-0"
+            className="relative mt-12 flex items-center justify-center lg:mt-0 lg:justify-end"
           >
             {/* Photo Composition Container */}
-            <div className="isolate relative h-[500px] w-[500px]">
+            <div className="isolate relative h-[560px] w-[560px]">
               {/* Inner backdrop for depth */}
               <div className="absolute inset-0 z-0 rounded-full bg-background/40 backdrop-blur-sm" />
 
               {/* Rotating Aura / Glow (Expanding outside the circle) */}
-              <div className="pointer-events-none absolute top-1/2 left-1/2 z-10 h-[680px] w-[680px] -translate-x-1/2 -translate-y-1/2 animate-[spin_15s_linear_infinite] opacity-80 blur-3xl">
+              <div className="pointer-events-none absolute top-1/2 left-1/2 z-10 h-[762px] w-[762px] -translate-x-1/2 -translate-y-1/2 animate-[spin_15s_linear_infinite] opacity-80 blur-3xl">
                 <div
                   className="absolute inset-0 rounded-full bg-[conic-gradient(from_0deg,var(--color-accent-violet)_0%,var(--color-accent-cyan)_33%,var(--color-accent-emerald)_66%,var(--color-accent-violet)_100%)]"
                   style={{
@@ -132,7 +132,7 @@ export function Hero() {
               {/* Emerging Photo Wrapper */}
               <div
                 className="pointer-events-none absolute inset-0 z-30"
-                style={{ clipPath: "inset(-50% 0 0 0 round 0 0 250px 250px)" }}
+                style={{ clipPath: "inset(-50% 0 0 0 round 0 0 280px 280px)" }}
               >
                 <Image
                   src="/images/profile.png"
@@ -140,7 +140,7 @@ export function Hero() {
                   width={500}
                   height={600}
                   priority
-                  className="relative left-1/2 h-[600px] w-auto -translate-x-1/2 object-cover drop-shadow-2xl"
+                  className="relative left-1/2 h-[672px] w-auto -translate-x-1/2 object-cover drop-shadow-2xl"
                   style={{ bottom: "0", position: "absolute" }}
                 />
               </div>
@@ -154,6 +154,24 @@ export function Hero() {
           </motion.div>
         </div>
       </div>
+
+      {/* Scroll Indicator */}
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 1.2, duration: 0.8 }}
+        className="absolute bottom-8 left-1/2 -translate-x-1/2 z-10 flex flex-col items-center gap-1"
+      >
+        <span className="text-[10px] font-mono uppercase tracking-widest text-accent-cyan/60">
+          scroll
+        </span>
+        <motion.div
+          animate={{ y: [0, 5, 0], opacity: [0.5, 1, 0.5] }}
+          transition={{ duration: 1.8, repeat: Infinity, ease: "easeInOut" }}
+        >
+          <ChevronDown className="h-5 w-5 text-accent-violet/80" />
+        </motion.div>
+      </motion.div>
     </section>
   );
 }

@@ -72,7 +72,7 @@ export function Skills() {
       <div className="absolute top-1/2 right-0 -translate-y-1/2 translate-x-1/3 w-[600px] h-[600px] rounded-full bg-accent-violet/10 blur-[120px] mix-blend-screen pointer-events-none" />
 
       <div className="container relative z-10 mx-auto px-4 sm:px-6">
-        <div className="mx-auto max-w-6xl">
+        <div className="mx-auto max-w-7xl">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}

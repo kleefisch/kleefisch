@@ -41,7 +41,6 @@ export function LanguageSwitcher({ className }: { className?: string }) {
     track("Language Changed", { locale: nextLocale });
 
     startTransition(() => {
-      
       router.replace(pathname, { locale: nextLocale, scroll: false });
     });
   };
@@ -52,7 +51,7 @@ export function LanguageSwitcher({ className }: { className?: string }) {
         onClick={() => setIsOpen(!isOpen)}
         disabled={isPending}
         className={cn(
-          "relative flex h-9 px-2 gap-2 items-center justify-center rounded-md border border-zinc-200 dark:border-zinc-800 bg-transparent text-zinc-900 transition-colors hover:bg-zinc-100 dark:text-zinc-100 dark:hover:bg-zinc-800",
+          "relative flex h-9 px-2 gap-2 items-center justify-center rounded-md border border-zinc-200 dark:border-zinc-800 bg-transparent text-zinc-900 transition-all hover:border-accent-cyan/50 hover:text-accent-cyan dark:text-zinc-100 dark:hover:border-accent-cyan/50 dark:hover:text-accent-cyan",
           isPending && "opacity-50 cursor-not-allowed",
         )}
         aria-label="Change language"

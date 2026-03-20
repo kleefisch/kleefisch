@@ -73,7 +73,7 @@ export function ParticlesBackground() {
             default: "bounce",
           },
           random: false,
-          speed: 1.5,
+          speed: 0.5,
           straight: false,
         },
         number: {

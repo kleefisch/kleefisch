@@ -15,7 +15,7 @@ export function Contact() {
     e.preventDefault();
     setStatus("idle");
     const formData = new FormData(e.currentTarget);
-    
+
     startTransition(async () => {
       try {
         const result = await submitContactForm(formData);
@@ -44,7 +44,7 @@ export function Contact() {
       <div className="absolute bottom-0 left-1/2 -translate-x-1/2 translate-y-1/2 w-[800px] h-[400px] rounded-full bg-accent-violet/10 blur-[120px] mix-blend-screen pointer-events-none" />
 
       <div className="container relative z-10 mx-auto px-4 sm:px-6">
-        <div className="mx-auto max-w-5xl">
+        <div className="mx-auto max-w-6xl">
           <motion.div
             initial="hidden"
             whileInView="visible"
@@ -109,7 +109,9 @@ export function Contact() {
                     <CheckCircle className="h-8 w-8 text-emerald-500" />
                   </div>
                   <h3 className="text-2xl font-bold mb-2">Message Sent!</h3>
-                  <p className="text-muted-foreground">Thank you for reaching out. I'll get back to you soon.</p>
+                  <p className="text-muted-foreground">
+                    Thank you for reaching out. I&apos;ll get back to you soon.
+                  </p>
                 </div>
               ) : (
                 <form

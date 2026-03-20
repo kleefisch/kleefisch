@@ -72,7 +72,7 @@ export default async function ProjectDetailPage({ params }: Props) {
         {/* Background ambient glow */}
         <div className="absolute top-[10%] left-1/2 -translate-x-1/2 w-[800px] h-[500px] rounded-full bg-accent-cyan/10 blur-[150px] mix-blend-screen pointer-events-none -z-10" />
 
-        <div className="w-full max-w-4xl mx-auto space-y-8 relative z-10">
+        <div className="w-full max-w-5xl mx-auto space-y-8 relative z-10">
           <Link
             href="/projects"
             className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors mb-4"
