@@ -3,6 +3,7 @@
 import { motion } from "framer-motion";
 import { Code2, Cpu, Globe, ArrowRight } from "lucide-react";
 import { Link } from "@/i18n/routing";
+import { SectionScrollHint } from "@/components/ui/section-scroll-hint";
 
 const containerVariants = {
   hidden: { opacity: 0 },
@@ -144,6 +145,7 @@ export function About() {
           </div>
         </motion.div>
       </div>
+      <SectionScrollHint />
     </section>
   );
 }

@@ -49,11 +49,13 @@ import "prismjs/components/prism-yaml.js";
 import "katex/dist/katex.min.css";
 
 import { type ExtendedRecordMap } from "notion-types";
-import { useTheme } from "next-themes";
+import { useTheme } from "@/components/providers/theme-provider";
 import dynamic from "next/dynamic";
 import Image from "next/image";
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useSyncExternalStore } from "react";
+
+const emptySubscribe = () => () => {};
 
 const Code = dynamic(() => import("react-notion-x/build/third-party/code").then((m) => m.Code), {
   ssr: false,
@@ -75,11 +77,11 @@ const Modal = dynamic(() => import("react-notion-x/build/third-party/modal").the
 
 export function NotionRenderer({ recordMap }: { recordMap: ExtendedRecordMap }) {
   const { resolvedTheme } = useTheme();
-  const [mounted, setMounted] = useState(false);
-
-  useEffect(() => {
-    setMounted(true);
-  }, []);
+  const mounted = useSyncExternalStore(
+    emptySubscribe,
+    () => true,
+    () => false,
+  );
 
   if (!mounted) return <div className="h-96 w-full animate-pulse bg-neutral-900/50 rounded-xl" />;
 

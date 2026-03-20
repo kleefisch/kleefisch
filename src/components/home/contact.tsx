@@ -6,6 +6,7 @@ import { useState, useTransition } from "react";
 import { submitContactForm } from "@/app/actions/contact";
 import { track } from "@vercel/analytics";
 import { Footer } from "@/components/layout/footer";
+import { SectionScrollHint } from "@/components/ui/section-scroll-hint";
 
 export function Contact() {
   const [isPending, startTransition] = useTransition();
@@ -59,8 +60,10 @@ export function Contact() {
         className="absolute top-0 right-0 w-[750px] h-[650px] rounded-full bg-accent-cyan/14 blur-[150px] mix-blend-screen pointer-events-none"
       />
 
+      <SectionScrollHint variant="up" />
+
       <div className="relative z-10 flex flex-1 flex-col">
-        <div className="flex flex-1 flex-col justify-center py-16 lg:py-20">
+        <div className="relative flex flex-1 flex-col justify-center py-16 lg:py-20">
           <div className="container mx-auto px-4 sm:px-6">
             <div className="mx-auto max-w-6xl">
               <motion.div

@@ -21,6 +21,7 @@ import {
   SiJest,
   SiFigma,
 } from "react-icons/si";
+import { SectionScrollHint } from "@/components/ui/section-scroll-hint";
 
 // Data structure for skills
 const skillCategories = [
@@ -186,6 +187,7 @@ export function Skills() {
           </motion.div>
         </div>
       </div>
+      <SectionScrollHint />
     </section>
   );
 }

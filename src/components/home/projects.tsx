@@ -5,6 +5,7 @@ import { ArrowRight, ExternalLink, Github, MonitorPlay } from "lucide-react";
 import { Link } from "@/i18n/routing";
 import Image from "next/image";
 import { LikeButton } from "@/components/ui/like-button";
+import { SectionScrollHint } from "@/components/ui/section-scroll-hint";
 
 type Project = {
   id: string;
@@ -196,6 +197,7 @@ export function Projects({ featuredProjects }: { featuredProjects: Project[] }) 
           </motion.div>
         </div>
       </div>
+      <SectionScrollHint />
     </section>
   );
 }

@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import { Briefcase, GraduationCap, CalendarDays } from "lucide-react";
+import { SectionScrollHint } from "@/components/ui/section-scroll-hint";
 
 // Mock data for the timeline
 const journeyItems = [
@@ -175,6 +176,7 @@ export function Journey() {
           </motion.div>
         </div>
       </div>
+      <SectionScrollHint />
     </section>
   );
 }
