@@ -35,6 +35,202 @@
   --font-mono: var(--font-geist-mono), ui-monospace, SFMono-Regular, Menlo, monospace;
 }
 
+/* Section snap is handled via JS wheel handler in SectionNav */
+
+/* Disable native elastic/rubber-band overscroll at page boundaries */
+html,
+body {
+  overscroll-behavior: none;
+}
+
+/* ── Scrollbar (design system + secção ativa + auto-hide) ────────────────
+   data-active-section é definido pelo SectionNav (hero, about, skills, …).
+   .scrollbar-idle: ScrollbarAutoHide após ~2s sem scroll/wheel/toque/clique. */
+html {
+  scrollbar-gutter: stable;
+  scrollbar-width: thin;
+  /* Firefox: cor sólida aproximada do gradiente */
+  --sb-track: rgba(255, 255, 255, 0.06);
+  --sb-border: color-mix(in srgb, var(--color-background) 92%, transparent);
+  --sb-from: color-mix(in srgb, var(--color-accent-cyan) 90%, transparent);
+  --sb-to: color-mix(in srgb, var(--color-accent-violet) 85%, transparent);
+  --sb-hover-from: var(--color-accent-cyan);
+  --sb-hover-to: color-mix(in srgb, var(--color-accent-violet) 88%, var(--color-accent-cyan) 12%);
+  --sb-thumb-fx: color-mix(in srgb, var(--color-accent-cyan) 70%, var(--color-accent-violet) 30%);
+  scrollbar-color: var(--sb-thumb-fx) var(--sb-track);
+}
+
+html[data-active-section="hero"] {
+  --sb-from: color-mix(in srgb, var(--color-accent-cyan) 90%, transparent);
+  --sb-to: color-mix(in srgb, var(--color-accent-violet) 85%, transparent);
+  --sb-hover-from: var(--color-accent-cyan);
+  --sb-hover-to: color-mix(in srgb, var(--color-accent-violet) 88%, var(--color-accent-cyan) 12%);
+  --sb-thumb-fx: color-mix(in srgb, var(--color-accent-cyan) 65%, var(--color-accent-violet) 35%);
+}
+
+html[data-active-section="about"] {
+  --sb-from: color-mix(in srgb, var(--color-accent-emerald) 88%, transparent);
+  --sb-to: color-mix(in srgb, var(--color-accent-cyan) 82%, transparent);
+  --sb-hover-from: var(--color-accent-emerald);
+  --sb-hover-to: var(--color-accent-cyan);
+  --sb-thumb-fx: color-mix(in srgb, var(--color-accent-emerald) 55%, var(--color-accent-cyan) 45%);
+}
+
+html[data-active-section="skills"] {
+  --sb-from: color-mix(in srgb, var(--color-accent-violet) 88%, transparent);
+  --sb-to: color-mix(in srgb, var(--color-accent-cyan) 82%, transparent);
+  --sb-hover-from: var(--color-accent-violet);
+  --sb-hover-to: var(--color-accent-cyan);
+  --sb-thumb-fx: color-mix(in srgb, var(--color-accent-violet) 55%, var(--color-accent-cyan) 45%);
+}
+
+html[data-active-section="projects"] {
+  --sb-from: color-mix(in srgb, var(--color-accent-cyan) 85%, transparent);
+  --sb-to: color-mix(in srgb, var(--color-accent-emerald) 82%, transparent);
+  --sb-hover-from: var(--color-accent-cyan);
+  --sb-hover-to: var(--color-accent-emerald);
+  --sb-thumb-fx: color-mix(in srgb, var(--color-accent-cyan) 50%, var(--color-accent-emerald) 50%);
+}
+
+html[data-active-section="journey"] {
+  --sb-from: color-mix(in srgb, var(--color-accent-violet) 85%, transparent);
+  --sb-to: color-mix(in srgb, var(--color-accent-emerald) 82%, transparent);
+  --sb-hover-from: var(--color-accent-violet);
+  --sb-hover-to: var(--color-accent-emerald);
+  --sb-thumb-fx: color-mix(
+    in srgb,
+    var(--color-accent-violet) 50%,
+    var(--color-accent-emerald) 50%
+  );
+}
+
+html[data-active-section="contact"] {
+  --sb-from: color-mix(in srgb, var(--color-accent-violet) 88%, transparent);
+  --sb-to: color-mix(in srgb, var(--color-accent-cyan) 82%, transparent);
+  --sb-hover-from: var(--color-accent-violet);
+  --sb-hover-to: var(--color-accent-cyan);
+  --sb-thumb-fx: color-mix(in srgb, var(--color-accent-violet) 55%, var(--color-accent-cyan) 45%);
+}
+
+html::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+html::-webkit-scrollbar-track {
+  background: var(--sb-track);
+  border-radius: 999px;
+}
+
+html::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, var(--sb-from), var(--sb-to));
+  border-radius: 999px;
+  border: 2px solid var(--sb-border);
+  background-clip: padding-box;
+}
+
+html::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(180deg, var(--sb-hover-from), var(--sb-hover-to));
+  border: 2px solid var(--color-background);
+  background-clip: padding-box;
+}
+
+html::-webkit-scrollbar-corner {
+  background: transparent;
+}
+
+/* Tema claro: trilho + misturas mais claras por secção */
+html.light {
+  --sb-track: rgba(0, 0, 0, 0.07);
+  --sb-border: color-mix(in srgb, var(--color-background) 96%, transparent);
+}
+
+html.light[data-active-section="hero"],
+html.light:not([data-active-section]) {
+  --sb-from: color-mix(in srgb, var(--color-accent-cyan) 72%, #fff);
+  --sb-to: color-mix(in srgb, var(--color-accent-violet) 72%, #fff);
+  --sb-hover-from: var(--color-accent-cyan);
+  --sb-hover-to: var(--color-accent-violet);
+  --sb-thumb-fx: color-mix(in srgb, var(--color-accent-cyan) 60%, var(--color-accent-violet) 40%);
+}
+
+html.light[data-active-section="about"] {
+  --sb-from: color-mix(in srgb, var(--color-accent-emerald) 70%, #fff);
+  --sb-to: color-mix(in srgb, var(--color-accent-cyan) 70%, #fff);
+  --sb-hover-from: var(--color-accent-emerald);
+  --sb-hover-to: var(--color-accent-cyan);
+  --sb-thumb-fx: color-mix(in srgb, var(--color-accent-emerald) 55%, var(--color-accent-cyan) 45%);
+}
+
+html.light[data-active-section="skills"] {
+  --sb-from: color-mix(in srgb, var(--color-accent-violet) 70%, #fff);
+  --sb-to: color-mix(in srgb, var(--color-accent-cyan) 70%, #fff);
+  --sb-hover-from: var(--color-accent-violet);
+  --sb-hover-to: var(--color-accent-cyan);
+  --sb-thumb-fx: color-mix(in srgb, var(--color-accent-violet) 55%, var(--color-accent-cyan) 45%);
+}
+
+html.light[data-active-section="projects"] {
+  --sb-from: color-mix(in srgb, var(--color-accent-cyan) 68%, #fff);
+  --sb-to: color-mix(in srgb, var(--color-accent-emerald) 68%, #fff);
+  --sb-hover-from: var(--color-accent-cyan);
+  --sb-hover-to: var(--color-accent-emerald);
+  --sb-thumb-fx: color-mix(in srgb, var(--color-accent-cyan) 50%, var(--color-accent-emerald) 50%);
+}
+
+html.light[data-active-section="journey"] {
+  --sb-from: color-mix(in srgb, var(--color-accent-violet) 68%, #fff);
+  --sb-to: color-mix(in srgb, var(--color-accent-emerald) 68%, #fff);
+  --sb-hover-from: var(--color-accent-violet);
+  --sb-hover-to: var(--color-accent-emerald);
+  --sb-thumb-fx: color-mix(
+    in srgb,
+    var(--color-accent-violet) 50%,
+    var(--color-accent-emerald) 50%
+  );
+}
+
+html.light[data-active-section="contact"] {
+  --sb-from: color-mix(in srgb, var(--color-accent-violet) 70%, #fff);
+  --sb-to: color-mix(in srgb, var(--color-accent-cyan) 70%, #fff);
+  --sb-hover-from: var(--color-accent-violet);
+  --sb-hover-to: var(--color-accent-cyan);
+  --sb-thumb-fx: color-mix(in srgb, var(--color-accent-violet) 55%, var(--color-accent-cyan) 45%);
+}
+
+html.light {
+  scrollbar-color: var(--sb-thumb-fx) var(--sb-track);
+}
+
+/* Esconder barra após inatividade (mantém gutter estável no layout) */
+html.scrollbar-idle {
+  scrollbar-width: none;
+  scrollbar-color: transparent transparent;
+}
+
+html.scrollbar-idle::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+}
+
+/* Scan line sweep animation */
+@keyframes scan-sweep {
+  0% {
+    top: 0%;
+    opacity: 0;
+  }
+  5% {
+    opacity: 1;
+  }
+  95% {
+    opacity: 1;
+  }
+  100% {
+    top: 100%;
+    opacity: 0;
+  }
+}
+
 @keyframes shimmer-slide {
   0% {
     background-position: 0% center;
@@ -42,6 +238,11 @@
   100% {
     background-position: 200% center;
   }
+}
+
+.bg-dot-grid {
+  background-image: radial-gradient(circle, rgba(255, 255, 255, 0.04) 1px, transparent 1px);
+  background-size: 28px 28px;
 }
 
 body {

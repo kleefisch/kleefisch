@@ -52,9 +52,24 @@ const itemVariants = {
 
 export function Journey() {
   return (
-    <section id="journey" className="relative py-24 overflow-hidden">
-      {/* Background Glow - Emerald focus */}
-      <div className="absolute bottom-0 right-0 translate-y-1/3 translate-x-1/3 w-[600px] h-[600px] rounded-full bg-accent-emerald/10 blur-[120px] mix-blend-screen pointer-events-none" />
+    <section
+      id="journey"
+      className="relative min-h-screen flex flex-col justify-center py-32 overflow-hidden scroll-mt-16"
+    >
+      {/* Dot grid texture */}
+      <div className="absolute inset-0 bg-dot-grid pointer-events-none opacity-60" />
+      {/* Emerald aurora — slow drift bottom-right to top-left */}
+      <motion.div
+        animate={{ x: [180, -160, 180], y: [140, -100, 140] }}
+        transition={{ duration: 36, repeat: Infinity, ease: "easeInOut" }}
+        className="absolute bottom-0 right-0 w-[900px] h-[800px] rounded-full bg-accent-emerald/17 blur-[140px] mix-blend-screen pointer-events-none"
+      />
+      {/* Violet aurora — slow drift top-left to bottom-right */}
+      <motion.div
+        animate={{ x: [-150, 180, -150], y: [-100, 120, -100] }}
+        transition={{ duration: 44, repeat: Infinity, ease: "easeInOut", delay: 12 }}
+        className="absolute top-0 left-0 w-[800px] h-[700px] rounded-full bg-accent-violet/15 blur-[150px] mix-blend-screen pointer-events-none"
+      />
 
       <div className="container relative z-10 mx-auto px-4 sm:px-6">
         <div className="mx-auto max-w-5xl">
@@ -81,9 +96,19 @@ export function Journey() {
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true, margin: "-50px" }}
-            className="relative border-l border-white/10 ml-4 md:ml-8"
+            className="relative ml-4 md:ml-8"
           >
-            {journeyItems.map((item, index) => (
+            {/* Gradient timeline line */}
+            <div
+              className="absolute left-0 top-0 w-[1px] h-full"
+              style={{
+                background:
+                  "linear-gradient(to bottom, var(--color-accent-violet), var(--color-accent-emerald), var(--color-accent-cyan))",
+                opacity: 0.4,
+              }}
+            />
+
+            {journeyItems.map((item) => (
               <motion.div
                 key={item.id}
                 variants={itemVariants}
@@ -91,8 +116,12 @@ export function Journey() {
               >
                 {/* Timeline Icon Node */}
                 <div
-                  className={`absolute -left-[20px] top-1 h-10 w-10 rounded-full border border-white/10 bg-background flex items-center justify-center shadow-[0_0_15px_rgba(0,0,0,0.5)] z-10
-                  ${item.type === "work" ? "text-accent-cyan shadow-accent-cyan/20" : "text-accent-violet shadow-accent-violet/20"}
+                  className={`absolute -left-[20px] top-1 h-10 w-10 rounded-full border bg-background flex items-center justify-center z-10 transition-all
+                  ${
+                    item.type === "work"
+                      ? "border-accent-cyan/50 text-accent-cyan shadow-[0_0_16px_rgba(6,182,212,0.4)]"
+                      : "border-accent-violet/50 text-accent-violet shadow-[0_0_16px_rgba(139,92,246,0.4)]"
+                  }
                 `}
                 >
                   {item.type === "work" ? (

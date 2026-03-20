@@ -2,6 +2,25 @@
 
 import { motion } from "framer-motion";
 import { MonitorSmartphone, TerminalSquare, Database, Wrench } from "lucide-react";
+import {
+  SiReact,
+  SiNextdotjs,
+  SiTailwindcss,
+  SiTypescript,
+  SiFramer,
+  SiNodedotjs,
+  SiGraphql,
+  SiExpress,
+  SiPostgresql,
+  SiPrisma,
+  SiRedis,
+  SiVercel,
+  SiDocker,
+  SiGit,
+  SiGithub,
+  SiJest,
+  SiFigma,
+} from "react-icons/si";
 
 // Data structure for skills
 const skillCategories = [
@@ -10,37 +29,49 @@ const skillCategories = [
     icon: <MonitorSmartphone className="h-6 w-6 text-accent-cyan" />,
     color: "from-accent-cyan/20 to-transparent",
     skills: [
-      "React 19",
-      "Next.js 15",
-      "Tailwind CSS v4",
-      "TypeScript",
-      "Framer Motion",
-      "Shadcn/UI",
+      { label: "React 19", Icon: SiReact },
+      { label: "Next.js 15", Icon: SiNextdotjs },
+      { label: "Tailwind CSS v4", Icon: SiTailwindcss },
+      { label: "TypeScript", Icon: SiTypescript },
+      { label: "Framer Motion", Icon: SiFramer },
     ],
   },
   {
     title: "Backend & APIs",
     icon: <TerminalSquare className="h-6 w-6 text-accent-violet" />,
     color: "from-accent-violet/20 to-transparent",
-    skills: ["Node.js", "RESTful APIs", "GraphQL", "Server Actions", "NextAuth.js", "Express"],
+    skills: [
+      { label: "Node.js", Icon: SiNodedotjs },
+      { label: "GraphQL", Icon: SiGraphql },
+      { label: "Express", Icon: SiExpress },
+      { label: "RESTful APIs", Icon: null },
+      { label: "Server Actions", Icon: null },
+    ],
   },
   {
     title: "Data & Cloud",
     icon: <Database className="h-6 w-6 text-accent-emerald" />,
     color: "from-accent-emerald/20 to-transparent",
-    skills: ["PostgreSQL (Neon)", "Prisma ORM", "Redis", "Vercel", "AWS", "Docker"],
+    skills: [
+      { label: "PostgreSQL", Icon: SiPostgresql },
+      { label: "Prisma ORM", Icon: SiPrisma },
+      { label: "Redis", Icon: SiRedis },
+      { label: "Vercel", Icon: SiVercel },
+      { label: "AWS", Icon: null },
+      { label: "Docker", Icon: SiDocker },
+    ],
   },
   {
     title: "Tools & Workflow",
     icon: <Wrench className="h-6 w-6 text-muted-foreground" />,
     color: "from-white/10 to-transparent",
     skills: [
-      "Git & GitHub",
-      "CI/CD",
-      "Jest / Cypress",
-      "ESLint & Prettier",
-      "Figma",
-      "Agile/Scrum",
+      { label: "Git", Icon: SiGit },
+      { label: "GitHub", Icon: SiGithub },
+      { label: "Jest", Icon: SiJest },
+      { label: "Figma", Icon: SiFigma },
+      { label: "CI/CD", Icon: null },
+      { label: "Agile/Scrum", Icon: null },
     ],
   },
 ];
@@ -67,9 +98,24 @@ const pillVariants = {
 
 export function Skills() {
   return (
-    <section id="skills" className="relative py-24 overflow-hidden">
-      {/* Subtle Background Glow - Violet to contrast with About's Emerald */}
-      <div className="absolute top-1/2 right-0 -translate-y-1/2 translate-x-1/3 w-[600px] h-[600px] rounded-full bg-accent-violet/10 blur-[120px] mix-blend-screen pointer-events-none" />
+    <section
+      id="skills"
+      className="relative min-h-screen flex flex-col justify-center py-32 overflow-hidden scroll-mt-16"
+    >
+      {/* Dot grid texture */}
+      <div className="absolute inset-0 bg-dot-grid pointer-events-none opacity-60" />
+      {/* Violet aurora — slow drift from right to left */}
+      <motion.div
+        animate={{ x: [200, -150, 200], y: [-120, 100, -120] }}
+        transition={{ duration: 32, repeat: Infinity, ease: "easeInOut" }}
+        className="absolute top-0 right-0 w-[900px] h-[750px] rounded-full bg-accent-violet/18 blur-[140px] mix-blend-screen pointer-events-none"
+      />
+      {/* Cyan aurora — slow drift bottom-left to top-right */}
+      <motion.div
+        animate={{ x: [-180, 160, -180], y: [120, -80, 120] }}
+        transition={{ duration: 40, repeat: Infinity, ease: "easeInOut", delay: 8 }}
+        className="absolute bottom-0 left-0 w-[750px] h-[650px] rounded-full bg-accent-cyan/14 blur-[150px] mix-blend-screen pointer-events-none"
+      />
 
       <div className="container relative z-10 mx-auto px-4 sm:px-6">
         <div className="mx-auto max-w-7xl">
@@ -122,14 +168,15 @@ export function Skills() {
 
                   {/* Tech Pills Grid */}
                   <motion.div className="flex flex-wrap gap-2 mt-auto" variants={containerVariants}>
-                    {category.skills.map((skill, skillIndex) => (
+                    {category.skills.map(({ label, Icon }, skillIndex) => (
                       <motion.span
                         key={skillIndex}
                         variants={pillVariants}
                         whileHover={{ scale: 1.05 }}
-                        className="px-3 py-1.5 text-xs font-mono font-medium rounded-full bg-background border border-white/10 text-muted-foreground transition-colors hover:text-foreground hover:border-white/25 cursor-default"
+                        className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-mono font-medium rounded-full bg-background border border-white/10 text-muted-foreground transition-colors hover:text-foreground hover:border-white/25 cursor-default"
                       >
-                        {skill}
+                        {Icon && <Icon className="h-3 w-3 shrink-0" />}
+                        {label}
                       </motion.span>
                     ))}
                   </motion.div>

@@ -24,7 +24,10 @@ const SOCIAL_LINKS = [
 
 export function Hero() {
   return (
-    <section className="relative flex min-h-[calc(100dvh-4rem)] items-center justify-center overflow-hidden pt-16">
+    <section
+      id="hero"
+      className="relative flex min-h-[calc(100dvh-4rem)] items-center justify-center overflow-hidden pt-16"
+    >
       {/* Background Aurora Effect */}
       <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
         <div className="absolute -top-[20%] -left-[10%] w-[60%] h-[60%] rounded-full bg-accent-cyan/20 blur-[120px] mix-blend-screen animate-pulse [animation-duration:30s]" />

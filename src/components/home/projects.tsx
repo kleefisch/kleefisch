@@ -20,23 +20,52 @@ type Project = {
 
 const containerVariants = {
   hidden: { opacity: 0 },
-  visible: { opacity: 1, transition: { staggerChildren: 0.2 } },
+  visible: { opacity: 1, transition: { staggerChildren: 0.15 } },
 };
 
 const itemVariants = {
-  hidden: { opacity: 0, y: 30 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.6 } },
+  hidden: { opacity: 0, y: 24 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.5 } },
 };
 
 export function Projects({ featuredProjects }: { featuredProjects: Project[] }) {
   const gradients = [
-    { color: "from-accent-cyan/20 to-transparent", iconColor: "text-accent-cyan" },
-    { color: "from-accent-violet/20 to-transparent", iconColor: "text-accent-violet" },
+    {
+      color: "from-accent-cyan/20 to-transparent",
+      iconColor: "text-accent-cyan",
+      borderHover: "hover:border-accent-cyan/30",
+    },
+    {
+      color: "from-accent-violet/20 to-transparent",
+      iconColor: "text-accent-violet",
+      borderHover: "hover:border-accent-violet/30",
+    },
+    {
+      color: "from-accent-emerald/20 to-transparent",
+      iconColor: "text-accent-emerald",
+      borderHover: "hover:border-accent-emerald/30",
+    },
   ];
 
   return (
-    <section id="projects" className="relative py-24 overflow-hidden">
-      <div className="absolute top-1/2 left-0 -translate-y-1/2 -ml-[150px] w-[500px] h-[500px] rounded-full bg-accent-cyan/10 blur-[120px] mix-blend-screen pointer-events-none" />
+    <section
+      id="projects"
+      className="relative min-h-screen flex flex-col justify-start pt-24 pb-16 overflow-hidden scroll-mt-16"
+    >
+      {/* Dot grid texture */}
+      <div className="absolute inset-0 bg-dot-grid pointer-events-none opacity-60" />
+      {/* Cyan aurora — slow drift left to right */}
+      <motion.div
+        animate={{ x: [-200, 180, -200], y: [-60, 140, -60] }}
+        transition={{ duration: 34, repeat: Infinity, ease: "easeInOut" }}
+        className="absolute top-1/3 -left-[200px] w-[850px] h-[700px] rounded-full bg-accent-cyan/18 blur-[130px] mix-blend-screen pointer-events-none"
+      />
+      {/* Emerald aurora — slow drift bottom-right */}
+      <motion.div
+        animate={{ x: [160, -140, 160], y: [100, -120, 100] }}
+        transition={{ duration: 42, repeat: Infinity, ease: "easeInOut", delay: 10 }}
+        className="absolute bottom-0 right-0 w-[800px] h-[700px] rounded-full bg-accent-emerald/14 blur-[150px] mix-blend-screen pointer-events-none"
+      />
 
       <div className="container relative z-10 mx-auto px-4 sm:px-6">
         <div className="mx-auto max-w-7xl">
@@ -45,7 +74,7 @@ export function Projects({ featuredProjects }: { featuredProjects: Project[] }) 
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-100px" }}
             transition={{ duration: 0.5 }}
-            className="mb-16 flex flex-col md:flex-row md:items-end justify-between gap-6"
+            className="mb-10 flex flex-col md:flex-row md:items-end justify-between gap-6"
           >
             <div>
               <div className="flex items-center gap-4 mb-4">
@@ -74,7 +103,7 @@ export function Projects({ featuredProjects }: { featuredProjects: Project[] }) 
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true, margin: "-50px" }}
-            className="grid grid-cols-1 gap-12"
+            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
           >
             {featuredProjects?.map((project, index) => {
               const style = gradients[index % gradients.length];
@@ -82,57 +111,63 @@ export function Projects({ featuredProjects }: { featuredProjects: Project[] }) 
                 <motion.div
                   key={project.id}
                   variants={itemVariants}
-                  className="group relative flex flex-col lg:flex-row gap-8 items-center rounded-3xl bg-foreground/[0.02] border border-white/5 p-4 sm:p-6 lg:p-8 backdrop-blur-sm transition-all hover:bg-foreground/[0.04]"
+                  className={`group relative flex flex-col rounded-2xl bg-foreground/[0.02] border border-white/5 overflow-hidden backdrop-blur-sm transition-all hover:bg-foreground/[0.05] ${style.borderHover}`}
                 >
-                  <div className="w-full lg:w-1/2 overflow-hidden rounded-2xl bg-background/50 relative aspect-video border border-white/5 flex items-center justify-center group-hover:border-white/10 transition-colors">
+                  {/* Image */}
+                  <div className="relative aspect-video overflow-hidden bg-background/50 border-b border-white/5 flex items-center justify-center shrink-0">
                     {project.imageUrl ? (
                       <Image
                         src={project.imageUrl}
                         alt={project.title}
                         fill
                         className="object-cover transition-transform duration-700 group-hover:scale-105"
-                        sizes="(max-width: 1024px) 100vw, 50vw"
+                        sizes="(max-width: 768px) 100vw, (max-width: 1280px) 50vw, 33vw"
                       />
                     ) : (
                       <>
                         <div
-                          className={`absolute inset-0 bg-gradient-to-br ${style.color} opacity-40 group-hover:opacity-60 transition-opacity z-10`}
+                          className={`absolute inset-0 bg-gradient-to-br ${style.color} opacity-50 group-hover:opacity-70 transition-opacity`}
                         />
-                        <div className="relative z-20 flex flex-col items-center gap-4 text-muted-foreground">
-                          <MonitorPlay className={`h-12 w-12 ${style.iconColor} opacity-50`} />
-                          <span className="font-mono text-sm opacity-50">[{project.category}]</span>
+                        <div className="relative z-10 flex flex-col items-center gap-3 text-muted-foreground">
+                          <MonitorPlay className={`h-10 w-10 ${style.iconColor} opacity-60`} />
+                          <span className="font-mono text-xs opacity-50">[{project.category}]</span>
                         </div>
                       </>
                     )}
                   </div>
 
-                  <div className="w-full lg:w-1/2 flex flex-col justify-center">
-                    <h3 className="text-2xl sm:text-3xl font-bold text-foreground mb-4 transition-colors">
-                      {project.title}
-                    </h3>
-                    <p className="text-muted-foreground text-lg mb-6 leading-relaxed">
+                  {/* Content */}
+                  <div className="flex flex-col flex-1 p-6">
+                    <h3 className="text-xl font-bold text-foreground mb-2">{project.title}</h3>
+                    <p className="text-muted-foreground text-sm leading-relaxed line-clamp-2 mb-4">
                       {project.description}
                     </p>
-                    <div className="flex flex-wrap gap-2 mb-8">
-                      {project.tags.map((tag, tagIndex) => (
+
+                    <div className="flex flex-wrap gap-1.5 mb-6">
+                      {project.tags.slice(0, 4).map((tag, tagIndex) => (
                         <span
                           key={tagIndex}
-                          className="px-3 py-1 text-xs font-mono font-medium rounded-full bg-background border border-white/10 text-muted-foreground"
+                          className="px-2.5 py-1 text-[10px] font-mono font-medium rounded-full bg-background border border-white/10 text-muted-foreground"
                         >
                           {tag}
                         </span>
                       ))}
                     </div>
 
-                    <div className="flex items-center gap-4 mt-auto">
+                    <div className="flex items-center gap-3 mt-auto">
                       {project.liveUrl && (
                         <Link
                           href={project.liveUrl}
                           target="_blank"
                           rel="noreferrer"
-                          className="inline-flex items-center gap-2 h-10 px-6 rounded-md bg-foreground text-background font-medium transition-all hover:bg-foreground/90 active:scale-95"
+                          className="inline-flex items-center gap-1.5 h-9 px-4 rounded-md text-sm font-medium text-foreground transition-all hover:shadow-[0_0_14px_rgba(6,182,212,0.25)] active:scale-95"
+                          style={{
+                            background:
+                              "linear-gradient(var(--color-background), var(--color-background)) padding-box, linear-gradient(135deg, var(--color-accent-cyan), var(--color-accent-violet)) border-box",
+                            border: "1px solid transparent",
+                          }}
                         >
-                          <ExternalLink className="h-4 w-4" /> Live Demo
+                          <ExternalLink className="h-3.5 w-3.5" /> Demo
                         </Link>
                       )}
                       {project.githubUrl && (
@@ -140,9 +175,14 @@ export function Projects({ featuredProjects }: { featuredProjects: Project[] }) 
                           href={project.githubUrl}
                           target="_blank"
                           rel="noreferrer"
-                          className="inline-flex items-center gap-2 h-10 px-6 rounded-md bg-white/5 border border-white/10 text-foreground font-medium transition-all hover:bg-white/10 active:scale-95"
+                          className="inline-flex items-center gap-1.5 h-9 px-4 rounded-md text-sm font-medium text-muted-foreground transition-all hover:text-foreground hover:shadow-[0_0_14px_rgba(139,92,246,0.2)] active:scale-95"
+                          style={{
+                            background:
+                              "linear-gradient(var(--color-background), var(--color-background)) padding-box, linear-gradient(135deg, var(--color-accent-violet), var(--color-accent-cyan)) border-box",
+                            border: "1px solid transparent",
+                          }}
                         >
-                          <Github className="h-4 w-4" /> Source
+                          <Github className="h-3.5 w-3.5" /> Source
                         </Link>
                       )}
                       <div className="ml-auto">

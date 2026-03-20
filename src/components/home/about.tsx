@@ -21,9 +21,24 @@ const itemVariants = {
 
 export function About() {
   return (
-    <section id="about" className="relative py-24 overflow-hidden">
-      {/* Subtle Background Glow for immersion */}
-      <div className="absolute top-1/2 left-0 -translate-y-1/2 -ml-[250px] w-[500px] h-[500px] rounded-full bg-accent-emerald/10 blur-[120px] mix-blend-screen pointer-events-none" />
+    <section
+      id="about"
+      className="relative min-h-screen flex flex-col justify-center py-32 overflow-hidden scroll-mt-16"
+    >
+      {/* Dot grid texture */}
+      <div className="absolute inset-0 bg-dot-grid pointer-events-none opacity-60" />
+      {/* Emerald aurora — slow drift across section */}
+      <motion.div
+        animate={{ x: [-220, 120, -220], y: [-80, 120, -80] }}
+        transition={{ duration: 30, repeat: Infinity, ease: "easeInOut" }}
+        className="absolute top-1/4 -left-[180px] w-[850px] h-[750px] rounded-full bg-accent-emerald/18 blur-[130px] mix-blend-screen pointer-events-none"
+      />
+      {/* Violet aurora — slow drift, offset phase */}
+      <motion.div
+        animate={{ x: [180, -120, 180], y: [100, -100, 100] }}
+        transition={{ duration: 38, repeat: Infinity, ease: "easeInOut", delay: 6 }}
+        className="absolute bottom-0 right-0 w-[800px] h-[700px] rounded-full bg-accent-violet/15 blur-[150px] mix-blend-screen pointer-events-none"
+      />
 
       <div className="container relative z-10 mx-auto px-4 sm:px-6">
         <motion.div
@@ -76,10 +91,17 @@ export function About() {
               <motion.div variants={itemVariants} className="pt-4">
                 <Link
                   href="/about"
-                  className="group inline-flex items-center gap-2 text-foreground font-medium transition-colors hover:text-accent-cyan"
+                  className="group inline-flex items-center gap-2 font-medium text-muted-foreground transition-all hover:text-accent-cyan"
+                  style={{
+                    background:
+                      "linear-gradient(var(--color-background), var(--color-background)) padding-box, linear-gradient(135deg, var(--color-accent-cyan), var(--color-accent-violet)) border-box",
+                    border: "1px solid transparent",
+                    borderRadius: "6px",
+                    padding: "8px 20px",
+                  }}
                 >
                   Read my full story
-                  <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1 group-hover:text-accent-cyan" />
+                  <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
                 </Link>
               </motion.div>
             </div>
