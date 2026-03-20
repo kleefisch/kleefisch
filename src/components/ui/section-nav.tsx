@@ -1,7 +1,9 @@
 "use client";
 
 import { useEffect, useState, useRef, useCallback } from "react";
+import { usePathname } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
+import { isLocaleHomePath } from "@/lib/is-locale-home";
 
 const SECTIONS = [
   { id: "hero", label: "Home" },
@@ -26,14 +28,31 @@ function sectionStillHasContentToScroll(sectionEl: HTMLElement, direction: 1 | -
   return rect.top < -epsilon;
 }
 
+function isTypingTarget(target: EventTarget | null) {
+  if (!(target instanceof HTMLElement)) return false;
+  return Boolean(
+    target.closest('input:not([type="hidden"]), textarea, select, [contenteditable="true"]'),
+  );
+}
+
+/** block = smooth snap in progress (consume input); snap = moved section; pass = let browser handle */
+type NavigateResult = "block" | "snap" | "pass";
+
 export function SectionNav() {
+  const pathname = usePathname();
+  const isHome = isLocaleHomePath(pathname);
+
   const [activeSection, setActiveSection] = useState("hero");
   const [isScrolling, setIsScrolling] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
 
   useEffect(() => {
+    if (!isHome) {
+      document.documentElement.removeAttribute("data-active-section");
+      return;
+    }
     document.documentElement.dataset.activeSection = activeSection;
-  }, [activeSection]);
+  }, [isHome, activeSection]);
 
   const scrollTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const snapReleaseTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
@@ -99,6 +118,8 @@ export function SectionNav() {
   );
 
   useEffect(() => {
+    if (!isHome) return;
+
     const rafId = requestAnimationFrame(() => {
       updateActiveSection();
     });
@@ -125,57 +146,87 @@ export function SectionNav() {
       }
     };
 
+    const attemptSectionNavigate = (direction: 1 | -1): NavigateResult => {
+      if (isSnappingRef.current) return "block";
+
+      const currentIdx = activeSectionIdxRef.current;
+      const nextIdx = currentIdx + direction;
+
+      if (nextIdx < 0 || nextIdx >= SECTIONS.length) return "pass";
+
+      const currentEl = document.getElementById(SECTIONS[currentIdx].id);
+      if (currentEl && sectionStillHasContentToScroll(currentEl, direction)) {
+        return "pass";
+      }
+
+      snapTo(nextIdx);
+      return "snap";
+    };
+
     const handleWheel = (e: WheelEvent) => {
-      // Accumulate delta to handle trackpad sensitivity
       wheelAccRef.current += e.deltaY;
       if (wheelFlushRef.current) clearTimeout(wheelFlushRef.current);
       wheelFlushRef.current = setTimeout(() => {
         wheelAccRef.current = 0;
       }, 80);
 
-      // While snapping to a section, block all scroll
       if (isSnappingRef.current) {
         e.preventDefault();
         return;
       }
 
-      // Require enough intent to avoid micro-movements on trackpad
       if (Math.abs(wheelAccRef.current) < 40) return;
 
       const direction = wheelAccRef.current > 0 ? 1 : -1;
       wheelAccRef.current = 0;
       if (wheelFlushRef.current) clearTimeout(wheelFlushRef.current);
 
-      const currentIdx = activeSectionIdxRef.current;
-      const nextIdx = currentIdx + direction;
+      const result = attemptSectionNavigate(direction);
+      if (result !== "pass") e.preventDefault();
+    };
 
-      // At boundaries: allow natural scroll (footer below last section, nothing above hero)
-      if (nextIdx < 0 || nextIdx >= SECTIONS.length) return;
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.metaKey || e.ctrlKey || e.altKey) return;
+      if (isTypingTarget(e.target)) return;
 
-      const currentEl = document.getElementById(SECTIONS[currentIdx].id);
-      if (currentEl && sectionStillHasContentToScroll(currentEl, direction)) {
+      if (e.key === "Home") {
+        e.preventDefault();
+        snapTo(0);
+        return;
+      }
+      if (e.key === "End") {
+        e.preventDefault();
+        snapTo(SECTIONS.length - 1);
         return;
       }
 
-      e.preventDefault();
-      snapTo(nextIdx);
+      let direction: 1 | -1 | null = null;
+      if (e.key === "ArrowDown") direction = 1;
+      else if (e.key === "ArrowUp") direction = -1;
+
+      if (direction === null) return;
+
+      const result = attemptSectionNavigate(direction);
+      if (result !== "pass") e.preventDefault();
     };
 
     window.addEventListener("scroll", handleScroll, { passive: true });
     window.addEventListener("wheel", handleWheel, { passive: false });
     window.addEventListener("scrollend", handleScrollEnd);
+    window.addEventListener("keydown", handleKeyDown);
 
     return () => {
       cancelAnimationFrame(rafId);
       window.removeEventListener("scroll", handleScroll);
       window.removeEventListener("wheel", handleWheel);
       window.removeEventListener("scrollend", handleScrollEnd);
+      window.removeEventListener("keydown", handleKeyDown);
       if (scrollTimerRef.current) clearTimeout(scrollTimerRef.current);
       if (snapReleaseTimerRef.current) clearTimeout(snapReleaseTimerRef.current);
       if (fallbackReleaseTimerRef.current) clearTimeout(fallbackReleaseTimerRef.current);
       if (wheelFlushRef.current) clearTimeout(wheelFlushRef.current);
     };
-  }, [updateActiveSection, snapTo, releaseSnap]);
+  }, [isHome, updateActiveSection, snapTo, releaseSnap]);
 
   const scrollTo = (id: string) => {
     const idx = SECTIONS.findIndex((s) => s.id === id);
@@ -183,6 +234,8 @@ export function SectionNav() {
   };
 
   const visible = isScrolling || isHovered;
+
+  if (!isHome) return null;
 
   return (
     <motion.div
