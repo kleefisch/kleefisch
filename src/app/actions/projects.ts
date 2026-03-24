@@ -9,8 +9,25 @@ import sanitizeHtml from "sanitize-html";
 const MAX_FILE_SIZE = 5 * 1024 * 1024; // 5MB
 const ALLOWED_FILE_TYPES = ["image/jpeg", "image/png", "image/webp", "image/gif"];
 
+function generateSlug(text: string) {
+  return text
+    .toString()
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .toLowerCase()
+    .trim()
+    .replace(/\s+/g, "-")
+    .replace(/[^\w-]+/g, "")
+    .replace(/--+/g, "-");
+}
+
 export async function createProjectAction(formData: FormData) {
   const title = formData.get("title") as string;
+  let slug = (formData.get("slug") as string) || "";
+  if (!slug && title) {
+    slug = generateSlug(title);
+  }
+
   const description = formData.get("description") as string;
   const category = formData.get("category") as string;
   const liveUrl = (formData.get("liveUrl") as string) || null;
@@ -51,18 +68,26 @@ export async function createProjectAction(formData: FormData) {
     }
 
     try {
-      const blob = await put(imageFile.name, imageFile, { access: "public" });
+      const uniqueName = `${Date.now()}-${imageFile.name || "project.jpg"}`;
+      const blob = await put(uniqueName, imageFile, { access: "public" });
       imageUrl = blob.url;
-    } catch (e) {
+    } catch (e: any) {
       console.error("Vercel Blob failed:", e);
-      return { error: "Falha ao fazer upload da imagem." };
+      return { error: `Falha ao fazer upload da imagem. ${e?.message || String(e)}` };
     }
   }
 
   try {
+    // Check if slug exists
+    const existing = await prisma.project.findUnique({ where: { slug } });
+    if (existing) {
+      slug = `${slug}-${Math.random().toString(36).substring(2, 6)}`;
+    }
+
     await prisma.project.create({
       data: {
         title,
+        slug,
         description,
         category,
         liveUrl,
@@ -85,6 +110,11 @@ export async function createProjectAction(formData: FormData) {
 
 export async function updateProjectAction(id: string, formData: FormData) {
   const title = formData.get("title") as string;
+  let slug = (formData.get("slug") as string) || "";
+  if (!slug && title) {
+    slug = generateSlug(title);
+  }
+
   const description = formData.get("description") as string;
   const category = formData.get("category") as string;
   const liveUrl = (formData.get("liveUrl") as string) || null;
@@ -121,18 +151,25 @@ export async function updateProjectAction(id: string, formData: FormData) {
     }
 
     try {
-      const blob = await put(imageFile.name, imageFile, { access: "public" });
+      const uniqueName = `${Date.now()}-${imageFile.name || "project.jpg"}`;
+      const blob = await put(uniqueName, imageFile, { access: "public" });
       imageUrl = blob.url;
-    } catch (e) {
+    } catch (e: any) {
       console.error("Vercel Blob failed:", e);
-      return { error: "Falha ao fazer upload da imagem." };
+      return { error: `Falha ao fazer upload da imagem. ${e?.message || String(e)}` };
     }
   }
 
   try {
     // using strictly typed update structure
+    const existingSameSlug = await prisma.project.findUnique({ where: { slug } });
+    if (existingSameSlug && existingSameSlug.id !== id) {
+      slug = `${slug}-${Math.random().toString(36).substring(2, 6)}`;
+    }
+
     const updateData: Parameters<typeof prisma.project.update>[0]["data"] = {
       title,
+      slug,
       description,
       category,
       liveUrl,
@@ -141,7 +178,11 @@ export async function updateProjectAction(id: string, formData: FormData) {
       featured,
       content,
     };
-    if (imageUrl) updateData.imageUrl = imageUrl;
+    if (imageUrl) {
+      updateData.imageUrl = imageUrl;
+    } else if (formData.get("removeImage") === "true") {
+      updateData.imageUrl = null;
+    }
 
     await prisma.project.update({
       where: { id },
@@ -152,9 +193,11 @@ export async function updateProjectAction(id: string, formData: FormData) {
     revalidatePath(`/projects/${id}`);
     revalidatePath("/");
     return { success: true };
-  } catch (error) {
+  } catch (error: any) {
     console.error("Error updating project:", error);
-    return { error: "Database error: Could not update the project." };
+    return {
+      error: `Database error: Could not update the project. Dica: ${error?.message || String(error)}`,
+    };
   }
 }
 

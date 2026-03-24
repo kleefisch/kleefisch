@@ -5,8 +5,120 @@
     "projects": "Projects",
     "contact": "Contact"
   },
+  "Footer": {
+    "built_with": "built with",
+    "all_rights_reserved": "Kleefisch. All rights reserved."
+  },
   "Hero": {
-    "title": "Welcome to My Portfolio",
-    "subtitle": "Building Digital Experiences"
+    "greeting": "Hello, I'm",
+    "cta_projects": "See my Work",
+    "cta_contact": "Get in Touch"
+  },
+  "About": {
+    "badge": "Elevator Pitch",
+    "title": "Bridging the gap between <gradient1>design</gradient1> & <gradient2>engineering</gradient2>.",
+    "description_1": "I am a Full Stack Developer passionate about crafting digital experiences that are not only visually stunning but also technically robust under the hood.",
+    "description_2": "With a deep understanding of modern web architectures, I build scalable solutions that solve real-world problems. My philosophy is simple: write clean code, prioritize user experience, and always stay curious.",
+    "cta": "Read my full story",
+    "card1_title": "Clean Code",
+    "card1_desc": "Maintainable, strictly typed, and well-documented codebases built for scalability.",
+    "card2_title": "Pixel Perfect",
+    "card2_desc": "Fluid animations and responsive, accessible interfaces that captivate users.",
+    "card3_title": "Modern Stack",
+    "card3_desc": "Leveraging Next.js App Router, Server Actions, and solid CI/CD workflows."
+  },
+  "Skills": {
+    "badge": "Tech Stack",
+    "title": "Skills & Technologies",
+    "description": "My technical arsenal is built around modern, scalable, and high-performance tools. Here is what I use to bring ideas to life.",
+    "category_1": "Frontend & UI",
+    "category_2": "Backend & APIs",
+    "category_3": "Data & Cloud",
+    "category_4": "Tools & Workflow"
+  },
+  "Projects": {
+    "badge": "Portfolio",
+    "title": "Featured Projects",
+    "view_all": "View all projects",
+    "empty_state": "No featured projects found.",
+    "view_repo": "Source"
+  },
+  "Journey": {
+    "badge": "Experience",
+    "title": "Professional Journey",
+    "item1_title": "Senior Full Stack Engineer",
+    "item1_company": "TechNova Solutions",
+    "item1_period": "2023 - Present",
+    "item1_desc": "Leading the migration of legacy monoliths to Next.js App Router and microservices. Architected a new real-time analytics dashboard used by over 10k enterprise clients.",
+    "item2_title": "Software Developer",
+    "item2_company": "Creative Digital Agency",
+    "item2_period": "2020 - 2023",
+    "item2_desc": "Developed high-conversion landing pages and interactive web applications. Improved core vitals score by 40% across all main products.",
+    "item3_title": "B.S. in Computer Science",
+    "item3_company": "University of Technology",
+    "item3_period": "2016 - 2020",
+    "item3_desc": "Graduated with honors. Specialized in distributed systems and human-computer interaction."
+  },
+  "Contact": {
+    "badge": "Get in Touch",
+    "title": "Let's work <br/>together.",
+    "description": "I'm currently open for new opportunities. Whether you have a question or just want to say hi, I'll try my best to get back to you!",
+    "email_label": "Email",
+    "location_label": "Location",
+    "location_value": "Remote / Earth",
+    "form_name": "Name",
+    "form_name_placeholder": "John Doe",
+    "form_email": "Email",
+    "form_email_placeholder": "john@example.com",
+    "form_message": "Message",
+    "form_message_placeholder": "Tell me about your project...",
+    "form_send": "Send Message",
+    "form_sending": "Sending...",
+    "success_title": "Message Sent!",
+    "success_desc": "Thank you for reaching out. I'll get back to you soon.",
+    "error_fallback": "An error occurred while sending the message.",
+    "error_server": "Connection error with the server."
+  },
+  "AboutPage": {
+    "badge": "About Me",
+    "title": "The person behind <br></br> <gradient>the code.</gradient>",
+    "bio_1": "Hi, I'm John. I build digital products that balance aesthetic beauty with engineering rigor.",
+    "bio_2": "My journey into software development didn't start with a formal computer science degree. It started with a relentless curiosity to understand how things work on the internet. What began as modifying HTML templates evolved into engineering complex, scalable full-stack applications.",
+    "bio_3": "Over the past few years, I've had the privilege of working across various industries—from early-stage startups to established digital agencies. This diversity has taught me that the best code isn't just clever; it's code that solves real human problems efficiently.",
+    "bio_4": "Today, my main focus is on modern web architectures using the React/Next.js ecosystem. I believe in the power of serverless technologies, edge computing, and strict typing with TypeScript to deliver flawless user experiences.",
+    "photoSlot": "[Photo Slot]",
+    "outOfOfficeTitle": "Out of Office",
+    "outOfOfficeDesc": "Writing code is my profession, but I believe that the best ideas often come when stepping away from the keyboard. Here is what keeps me grounded:",
+    "hobby1Title": "Specialty Coffee",
+    "hobby1Desc": "I treat making coffee like writing a complex algorithm. Perfecting the grind size and brewing methods.",
+    "hobby2Title": "Gaming",
+    "hobby2Desc": "Appreciating the immense engineering and narrative design behind modern video game development.",
+    "hobby3Title": "Open Source",
+    "hobby3Desc": "Contributing to tools I use daily, studying repositories, and learning from the global community."
+  },
+  "ProjectsPage": {
+    "badge": "Portfolio Showcase",
+    "title": "Projects",
+    "description": "A collection of things I've built, from side projects to complex web applications.",
+    "filterAll": "All",
+    "noProjects": "No projects found for this category.",
+    "viewDetails": "View Details"
+  },
+  "ProjectDetailPage": {
+    "backToProjects": "Back to projects",
+    "accessLive": "Live Demo",
+    "viewCode": "Source Code (GitHub)",
+    "aboutProject": "About the Project",
+    "notionError": "Could not load detailed content for this project at the moment."
+  },
+  "NotFoundPage": {
+    "initDiagnostic": "> Initializing system diagnostics...",
+    "seq1": "> Status: File not found.",
+    "seq2": "> Critical Error: Dev forgot to build this page.",
+    "seq3": "> Trying to bribe the server with coffee...",
+    "seq4": "> Failed: Server demanded pizza.",
+    "seq5": "> Solution: Return to safety.",
+    "returnBase": "Return to Base",
+    "tryAgain": "Try Again"
   }
 }

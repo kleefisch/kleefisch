@@ -5,6 +5,7 @@ import { ArrowLeft, ExternalLink, Github, MonitorPlay } from "lucide-react";
 import Image from "next/image";
 import { getNotionPage } from "@/lib/notion";
 import { NotionRenderer } from "@/components/notion-renderer";
+import { getTranslations } from "next-intl/server";
 
 export const revalidate = 60; // ISR para manter a performance alta
 
@@ -39,9 +40,12 @@ function extractNotionId(content: string): string | null {
 export default async function ProjectDetailPage({ params }: Props) {
   // No Next.js 15+, os params são tratados de forma assíncrona
   const resolvedParams = await params;
+  const t = await getTranslations("ProjectDetailPage");
 
-  const project = await prisma.project.findUnique({
-    where: { id: resolvedParams.id },
+  const project = await prisma.project.findFirst({
+    where: {
+      OR: [{ id: resolvedParams.id }, { slug: resolvedParams.id }],
+    },
   });
 
   if (!project) {
@@ -78,7 +82,7 @@ export default async function ProjectDetailPage({ params }: Props) {
             className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors mb-4"
           >
             <ArrowLeft className="h-4 w-4" />
-            Voltar para projetos
+            {t("backToProjects")}
           </Link>
 
           {project.imageUrl ? (
@@ -127,7 +131,7 @@ export default async function ProjectDetailPage({ params }: Props) {
                   className="inline-flex items-center gap-2 px-6 py-2.5 rounded-md bg-foreground text-background font-medium hover:bg-foreground/90 transition-colors"
                 >
                   <ExternalLink className="h-4 w-4" />
-                  Acessar ao Vivo
+                  {t("accessLive")}
                 </a>
               )}
               {project.githubUrl && (
@@ -138,14 +142,14 @@ export default async function ProjectDetailPage({ params }: Props) {
                   className="inline-flex items-center gap-2 px-6 py-2.5 rounded-md bg-white/5 border border-white/10 text-foreground font-medium hover:bg-white/10 transition-colors"
                 >
                   <Github className="h-4 w-4" />
-                  Ver Código (GitHub)
+                  {t("viewCode")}
                 </a>
               )}
             </div>
           </div>
 
           <div className="prose prose-invert max-w-none pb-12 w-full">
-            <h2 className="text-2xl font-bold text-foreground mb-4">Sobre o Projeto</h2>
+            <h2 className="text-2xl font-bold text-foreground mb-4">{t("aboutProject")}</h2>
             <p className="text-lg leading-relaxed text-muted-foreground whitespace-pre-wrap">
               {project.description}
             </p>
@@ -165,7 +169,7 @@ export default async function ProjectDetailPage({ params }: Props) {
 
             {notionError && (
               <div className="mt-8 p-4 bg-red-500/10 border border-red-500/20 text-red-400 rounded-lg">
-                Não foi possível carregar o conteúdo detalhado deste projeto no momento.
+                {t("notionError")}
               </div>
             )}
           </div>

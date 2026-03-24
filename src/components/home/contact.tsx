@@ -4,11 +4,13 @@ import { motion } from "framer-motion";
 import { Send, Mail, MapPin, Loader2, CheckCircle, AlertCircle } from "lucide-react";
 import { useState, useTransition } from "react";
 import { submitContactForm } from "@/app/actions/contact";
+import { useTranslations } from "next-intl";
 import { track } from "@vercel/analytics";
 import { Footer } from "@/components/layout/footer";
 import { SectionScrollHint } from "@/components/ui/section-scroll-hint";
 
 export function Contact() {
+  const t = useTranslations("Contact");
   const [isPending, startTransition] = useTransition();
   const [status, setStatus] = useState<"idle" | "success" | "error">("idle");
   const [errorMsg, setErrorMsg] = useState("");
@@ -26,11 +28,11 @@ export function Contact() {
           track("Contact Form Submitted");
         } else {
           setStatus("error");
-          setErrorMsg(result.error || "Ocorreu um erro ao enviar a mensagem.");
+          setErrorMsg(result.error || t("error_fallback"));
         }
       } catch {
         setStatus("error");
-        setErrorMsg("Erro de conexão com o servidor.");
+        setErrorMsg(t("error_server"));
       }
     });
   };
@@ -81,17 +83,15 @@ export function Contact() {
                   <motion.div variants={itemVariants}>
                     <div className="flex items-center gap-4 mb-4">
                       <div className="h-[1px] w-8 bg-accent-cyan" />
-                      <span className="text-accent-cyan font-mono text-sm uppercase tracking-wider">
-                        Get in Touch
+                      <span className="text-accent-cyan font-mono text-sm tracking-widest uppercase">
+                        {t("badge")}
                       </span>
                     </div>
-                    <h2 className="text-4xl font-bold tracking-tight md:text-5xl mb-4">
-                      Let&apos;s work <br /> together.
-                    </h2>
-                    <p className="text-muted-foreground text-lg">
-                      I&apos;m currently open for new opportunities. Whether you have a question or
-                      just want to say hi, I&apos;ll try my best to get back to you!
-                    </p>
+                    <h2
+                      className="text-4xl font-bold tracking-tight md:text-5xl mb-4"
+                      dangerouslySetInnerHTML={{ __html: t.raw("title") as string }}
+                    />
+                    <p className="text-muted-foreground text-lg">{t("description")}</p>
                   </motion.div>
 
                   <motion.div variants={itemVariants} className="space-y-6">
@@ -100,7 +100,7 @@ export function Contact() {
                         <Mail className="h-5 w-5" />
                       </div>
                       <div>
-                        <h4 className="text-sm font-mono text-foreground">Email</h4>
+                        <h4 className="text-sm font-mono text-foreground">{t("email_label")}</h4>
                         <a
                           href="mailto:hello@example.com"
                           className="hover:text-accent-cyan transition-colors"
@@ -115,8 +115,8 @@ export function Contact() {
                         <MapPin className="h-5 w-5" />
                       </div>
                       <div>
-                        <h4 className="text-sm font-mono text-foreground">Location</h4>
-                        <span>Remote / Earth</span>
+                        <h4 className="text-sm font-mono text-foreground">{t("location_label")}</h4>
+                        <span>{t("location_value")}</span>
                       </div>
                     </div>
                   </motion.div>
@@ -129,10 +129,8 @@ export function Contact() {
                       <div className="h-16 w-16 rounded-full bg-emerald-500/10 flex items-center justify-center mb-6">
                         <CheckCircle className="h-8 w-8 text-emerald-500" />
                       </div>
-                      <h3 className="text-2xl font-bold mb-2">Message Sent!</h3>
-                      <p className="text-muted-foreground">
-                        Thank you for reaching out. I&apos;ll get back to you soon.
-                      </p>
+                      <h3 className="text-2xl font-bold mb-2">{t("success_title")}</h3>
+                      <p className="text-muted-foreground">{t("success_desc")}</p>
                     </div>
                   ) : (
                     <form
@@ -142,7 +140,7 @@ export function Contact() {
                       <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                         <div className="space-y-1">
                           <label htmlFor="name" className="text-sm font-medium text-foreground">
-                            Name
+                            {t("form_name")}
                           </label>
                           <input
                             id="name"
@@ -150,13 +148,13 @@ export function Contact() {
                             type="text"
                             required
                             disabled={isPending}
-                            placeholder="John Doe"
+                            placeholder={t("form_name_placeholder")}
                             className="w-full h-12 px-4 rounded-md bg-background border border-white/10 text-foreground placeholder:text-muted-foreground/50 focus:outline-none focus:ring-2 focus:ring-accent-cyan/50 focus:border-transparent transition-all disabled:opacity-50"
                           />
                         </div>
                         <div className="space-y-1">
                           <label htmlFor="email" className="text-sm font-medium text-foreground">
-                            Email
+                            {t("form_email")}
                           </label>
                           <input
                             id="email"
@@ -164,7 +162,7 @@ export function Contact() {
                             type="email"
                             required
                             disabled={isPending}
-                            placeholder="john@example.com"
+                            placeholder={t("form_email_placeholder")}
                             className="w-full h-12 px-4 rounded-md bg-background border border-white/10 text-foreground placeholder:text-muted-foreground/50 focus:outline-none focus:ring-2 focus:ring-accent-cyan/50 focus:border-transparent transition-all disabled:opacity-50"
                           />
                         </div>
@@ -172,7 +170,7 @@ export function Contact() {
 
                       <div className="space-y-1">
                         <label htmlFor="message" className="text-sm font-medium text-foreground">
-                          Message
+                          {t("form_message")}
                         </label>
                         <textarea
                           id="message"
@@ -180,7 +178,7 @@ export function Contact() {
                           required
                           disabled={isPending}
                           rows={4}
-                          placeholder="Tell me about your project..."
+                          placeholder={t("form_message_placeholder")}
                           className="w-full p-4 rounded-md bg-background border border-white/10 text-foreground placeholder:text-muted-foreground/50 focus:outline-none focus:ring-2 focus:ring-accent-cyan/50 focus:border-transparent transition-all resize-none disabled:opacity-50"
                         />
                       </div>
@@ -206,10 +204,11 @@ export function Contact() {
                           {isPending ? (
                             <>
                               <Loader2 className="h-4 w-4 animate-spin" />
-                              Sending...
+                              {t("form_sending")}
                             </>
                           ) : (
                             <>
+                              {t("form_send")}
                               Send Message
                               <Send className="h-4 w-4 transition-transform group-hover:-translate-y-1 group-hover:translate-x-1" />
                             </>

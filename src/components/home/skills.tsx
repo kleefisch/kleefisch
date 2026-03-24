@@ -21,61 +21,10 @@ import {
   SiJest,
   SiFigma,
 } from "react-icons/si";
+import { useTranslations } from "next-intl";
 import { SectionScrollHint } from "@/components/ui/section-scroll-hint";
 
-// Data structure for skills
-const skillCategories = [
-  {
-    title: "Frontend & UI",
-    icon: <MonitorSmartphone className="h-6 w-6 text-accent-cyan" />,
-    color: "from-accent-cyan/20 to-transparent",
-    skills: [
-      { label: "React 19", Icon: SiReact },
-      { label: "Next.js 15", Icon: SiNextdotjs },
-      { label: "Tailwind CSS v4", Icon: SiTailwindcss },
-      { label: "TypeScript", Icon: SiTypescript },
-      { label: "Framer Motion", Icon: SiFramer },
-    ],
-  },
-  {
-    title: "Backend & APIs",
-    icon: <TerminalSquare className="h-6 w-6 text-accent-violet" />,
-    color: "from-accent-violet/20 to-transparent",
-    skills: [
-      { label: "Node.js", Icon: SiNodedotjs },
-      { label: "GraphQL", Icon: SiGraphql },
-      { label: "Express", Icon: SiExpress },
-      { label: "RESTful APIs", Icon: null },
-      { label: "Server Actions", Icon: null },
-    ],
-  },
-  {
-    title: "Data & Cloud",
-    icon: <Database className="h-6 w-6 text-accent-emerald" />,
-    color: "from-accent-emerald/20 to-transparent",
-    skills: [
-      { label: "PostgreSQL", Icon: SiPostgresql },
-      { label: "Prisma ORM", Icon: SiPrisma },
-      { label: "Redis", Icon: SiRedis },
-      { label: "Vercel", Icon: SiVercel },
-      { label: "AWS", Icon: null },
-      { label: "Docker", Icon: SiDocker },
-    ],
-  },
-  {
-    title: "Tools & Workflow",
-    icon: <Wrench className="h-6 w-6 text-muted-foreground" />,
-    color: "from-white/10 to-transparent",
-    skills: [
-      { label: "Git", Icon: SiGit },
-      { label: "GitHub", Icon: SiGithub },
-      { label: "Jest", Icon: SiJest },
-      { label: "Figma", Icon: SiFigma },
-      { label: "CI/CD", Icon: null },
-      { label: "Agile/Scrum", Icon: null },
-    ],
-  },
-];
+// Removed unused mock data
 
 const containerVariants = {
   hidden: { opacity: 0 },
@@ -98,6 +47,62 @@ const pillVariants = {
 };
 
 export function Skills() {
+  const t = useTranslations("Skills");
+
+  // Re-build categories with translation
+  const categories = [
+    {
+      title: t("category_1"),
+      icon: <MonitorSmartphone className="h-6 w-6 text-accent-cyan" />,
+      color: "from-accent-cyan/20 to-transparent",
+      skills: [
+        { label: "React 19", Icon: SiReact },
+        { label: "Next.js 15", Icon: SiNextdotjs },
+        { label: "Tailwind CSS v4", Icon: SiTailwindcss },
+        { label: "TypeScript", Icon: SiTypescript },
+        { label: "Framer Motion", Icon: SiFramer },
+      ],
+    },
+    {
+      title: t("category_2"),
+      icon: <TerminalSquare className="h-6 w-6 text-accent-violet" />,
+      color: "from-accent-violet/20 to-transparent",
+      skills: [
+        { label: "Node.js", Icon: SiNodedotjs },
+        { label: "GraphQL", Icon: SiGraphql },
+        { label: "Express", Icon: SiExpress },
+        { label: "RESTful APIs", Icon: null },
+        { label: "Server Actions", Icon: null },
+      ],
+    },
+    {
+      title: t("category_3"),
+      icon: <Database className="h-6 w-6 text-accent-emerald" />,
+      color: "from-accent-emerald/20 to-transparent",
+      skills: [
+        { label: "PostgreSQL", Icon: SiPostgresql },
+        { label: "Prisma ORM", Icon: SiPrisma },
+        { label: "Redis", Icon: SiRedis },
+        { label: "Vercel", Icon: SiVercel },
+        { label: "AWS", Icon: null },
+        { label: "Docker", Icon: SiDocker },
+      ],
+    },
+    {
+      title: t("category_4"),
+      icon: <Wrench className="h-6 w-6 text-muted-foreground" />,
+      color: "from-white/10 to-transparent",
+      skills: [
+        { label: "Git", Icon: SiGit },
+        { label: "GitHub", Icon: SiGithub },
+        { label: "Jest", Icon: SiJest },
+        { label: "Figma", Icon: SiFigma },
+        { label: "CI/CD", Icon: null },
+        { label: "Agile/Scrum", Icon: null },
+      ],
+    },
+  ];
+
   return (
     <section
       id="skills"
@@ -148,7 +153,7 @@ export function Skills() {
             viewport={{ once: true, margin: "-50px" }}
             className="grid grid-cols-1 md:grid-cols-2 gap-6"
           >
-            {skillCategories.map((category, index) => (
+            {categories.map((category, index) => (
               <motion.div
                 key={index}
                 variants={cardVariants}

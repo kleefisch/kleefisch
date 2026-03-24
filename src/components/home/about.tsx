@@ -3,6 +3,7 @@
 import { motion } from "framer-motion";
 import { Code2, Cpu, Globe, ArrowRight } from "lucide-react";
 import { Link } from "@/i18n/routing";
+import { useTranslations } from "next-intl";
 import { SectionScrollHint } from "@/components/ui/section-scroll-hint";
 
 const containerVariants = {
@@ -21,6 +22,8 @@ const itemVariants = {
 };
 
 export function About() {
+  const t = useTranslations("About");
+
   return (
     <section
       id="about"
@@ -55,7 +58,7 @@ export function About() {
               <motion.div variants={itemVariants} className="flex items-center gap-4">
                 <div className="h-[1px] w-8 bg-accent-cyan" />
                 <span className="text-accent-cyan font-mono text-sm uppercase tracking-wider">
-                  Elevator Pitch
+                  {t("badge")}
                 </span>
               </motion.div>
 
@@ -63,30 +66,26 @@ export function About() {
                 variants={itemVariants}
                 className="text-4xl font-bold tracking-tight md:text-5xl"
               >
-                Bridging the gap between <br />
-                <span className="bg-gradient-to-r from-accent-cyan to-accent-violet bg-clip-text text-transparent">
-                  design
-                </span>{" "}
-                &{" "}
-                <span className="bg-gradient-to-r from-accent-violet to-accent-emerald bg-clip-text text-transparent">
-                  engineering
-                </span>
-                .
+                {t.rich("title", {
+                  gradient1: (chunks) => (
+                    <span className="bg-gradient-to-r from-accent-cyan to-accent-violet bg-clip-text text-transparent">
+                      {chunks}
+                    </span>
+                  ),
+                  gradient2: (chunks) => (
+                    <span className="bg-gradient-to-r from-accent-violet to-accent-emerald bg-clip-text text-transparent">
+                      {chunks}
+                    </span>
+                  ),
+                })}
               </motion.h2>
 
               <motion.div
                 variants={itemVariants}
                 className="space-y-4 text-lg text-muted-foreground"
               >
-                <p>
-                  I am a Full Stack Developer passionate about crafting digital experiences that are
-                  not only visually stunning but also technically robust under the hood.
-                </p>
-                <p>
-                  With a deep understanding of modern web architectures, I build scalable solutions
-                  that solve real-world problems. My philosophy is simple: write clean code,
-                  prioritize user experience, and always stay curious.
-                </p>
+                <p>{t("description_1")}</p>
+                <p>{t("description_2")}</p>
               </motion.div>
 
               <motion.div variants={itemVariants} className="pt-4">
@@ -101,7 +100,7 @@ export function About() {
                     padding: "8px 20px",
                   }}
                 >
-                  Read my full story
+                  {t("cta")}
                   <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
                 </Link>
               </motion.div>
@@ -116,30 +115,24 @@ export function About() {
               <div className="group relative p-6 rounded-2xl bg-foreground/[0.03] border border-white/5 backdrop-blur-md transition-colors hover:bg-foreground/[0.05]">
                 <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-accent-cyan/10 to-transparent opacity-0 transition-opacity group-hover:opacity-100" />
                 <Code2 className="h-8 w-8 text-accent-cyan mb-4" />
-                <h3 className="mb-2 text-xl font-semibold text-foreground">Clean Code</h3>
-                <p className="text-sm text-muted-foreground">
-                  Maintainable, strictly typed, and well-documented codebases built for scalability.
-                </p>
+                <h3 className="mb-2 text-xl font-semibold text-foreground">{t("card1_title")}</h3>
+                <p className="text-sm text-muted-foreground">{t("card1_desc")}</p>
               </div>
 
               {/* Card 2 - Offset for asymmetrical grid layout */}
               <div className="group relative p-6 rounded-2xl bg-foreground/[0.03] border border-white/5 backdrop-blur-md transition-colors hover:bg-foreground/[0.05] sm:translate-y-8">
                 <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-accent-violet/10 to-transparent opacity-0 transition-opacity group-hover:opacity-100" />
                 <Globe className="h-8 w-8 text-accent-violet mb-4" />
-                <h3 className="mb-2 text-xl font-semibold text-foreground">Pixel Perfect</h3>
-                <p className="text-sm text-muted-foreground">
-                  Fluid animations and responsive, accessible interfaces that captivate users.
-                </p>
+                <h3 className="mb-2 text-xl font-semibold text-foreground">{t("card2_title")}</h3>
+                <p className="text-sm text-muted-foreground">{t("card2_desc")}</p>
               </div>
 
               {/* Card 3 */}
               <div className="group relative p-6 rounded-2xl bg-foreground/[0.03] border border-white/5 backdrop-blur-md transition-colors hover:bg-foreground/[0.05]">
                 <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-accent-emerald/10 to-transparent opacity-0 transition-opacity group-hover:opacity-100" />
                 <Cpu className="h-8 w-8 text-accent-emerald mb-4" />
-                <h3 className="mb-2 text-xl font-semibold text-foreground">Modern Stack</h3>
-                <p className="text-sm text-muted-foreground">
-                  Leveraging Next.js App Router, Server Actions, and solid CI/CD workflows.
-                </p>
+                <h3 className="mb-2 text-xl font-semibold text-foreground">{t("card3_title")}</h3>
+                <p className="text-sm text-muted-foreground">{t("card3_desc")}</p>
               </div>
             </motion.div>
           </div>

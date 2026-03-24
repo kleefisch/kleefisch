@@ -3,6 +3,7 @@
 import { motion } from "framer-motion";
 import { ArrowRight, ExternalLink, Github, MonitorPlay } from "lucide-react";
 import { Link } from "@/i18n/routing";
+import { useTranslations } from "next-intl";
 import Image from "next/image";
 import { SectionScrollHint } from "@/components/ui/section-scroll-hint";
 
@@ -15,6 +16,7 @@ type Project = {
   liveUrl: string | null;
   githubUrl: string | null;
   imageUrl?: string | null;
+  slug?: string | null;
 };
 
 const containerVariants = {
@@ -28,6 +30,8 @@ const itemVariants = {
 };
 
 export function Projects({ featuredProjects }: { featuredProjects: Project[] }) {
+  const t = useTranslations("Projects");
+
   const gradients = [
     {
       color: "from-accent-cyan/20 to-transparent",
@@ -79,22 +83,22 @@ export function Projects({ featuredProjects }: { featuredProjects: Project[] }) 
               <div className="flex items-center gap-4 mb-4">
                 <div className="h-[1px] w-8 bg-accent-cyan" />
                 <span className="text-accent-cyan font-mono text-sm uppercase tracking-wider">
-                  Portfolio
+                  {t("badge")}
                 </span>
               </div>
-              <h2 className="text-4xl font-bold tracking-tight md:text-5xl">Featured Projects</h2>
+              <h2 className="text-4xl font-bold tracking-tight md:text-5xl">{t("title")}</h2>
             </div>
             <Link
               href="/projects"
               className="group inline-flex items-center gap-2 text-muted-foreground transition-colors hover:text-foreground mb-2"
             >
-              View all projects
+              {t("view_all")}
               <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
             </Link>
           </motion.div>
 
           {(!featuredProjects || featuredProjects.length === 0) && (
-            <div className="text-muted-foreground text-lg py-12">No featured projects found.</div>
+            <div className="text-muted-foreground text-lg py-12">{t("empty_state")}</div>
           )}
 
           <motion.div
@@ -175,21 +179,16 @@ export function Projects({ featuredProjects }: { featuredProjects: Project[] }) 
                             href={project.githubUrl}
                             target="_blank"
                             rel="noreferrer"
-                            className="inline-flex items-center gap-1.5 h-10 px-4 rounded-md text-sm font-medium text-muted-foreground transition-all hover:text-foreground hover:shadow-[0_0_14px_rgba(139,92,246,0.2)] active:scale-95"
-                            style={{
-                              background:
-                                "linear-gradient(var(--color-background), var(--color-background)) padding-box, linear-gradient(135deg, var(--color-accent-violet), var(--color-accent-cyan)) border-box",
-                              border: "1px solid transparent",
-                            }}
+                            className="inline-flex items-center gap-1.5 h-10 px-4 rounded-md text-sm font-medium text-muted-foreground border border-white/10 bg-white/5 hover:bg-white/10 hover:text-foreground transition-colors active:scale-95"
                           >
-                            <Github className="h-4 w-4" /> Source
+                            <Github className="h-4 w-4" /> Code
                           </Link>
                         )}
                       </div>
 
                       {/* Link para página interna */}
                       <Link
-                        href={`/projects/${project.id}`}
+                        href={`/projects/${project.slug || project.id}`}
                         className="inline-flex items-center gap-2 text-sm font-semibold text-foreground hover:text-accent-cyan transition-colors group/link whitespace-nowrap"
                       >
                         Ver Detalhes

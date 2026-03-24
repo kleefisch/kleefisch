@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import { ParticlesBackground } from "@/components/ui/particles-background";
 import { ArrowRight, ChevronDown, Github, Linkedin, Mail } from "lucide-react";
 import { Link } from "@/i18n/routing";
+import { useTranslations } from "next-intl";
 import Image from "next/image";
 import { TypeAnimation } from "react-type-animation";
 
@@ -23,6 +24,8 @@ const SOCIAL_LINKS = [
 ];
 
 export function Hero() {
+  const t = useTranslations("Hero");
+
   return (
     <section
       id="hero"
@@ -48,7 +51,7 @@ export function Hero() {
               className="flex items-center gap-4 text-xl font-medium text-muted-foreground md:text-2xl"
             >
               <div className="h-[2px] w-8 bg-foreground/50 sm:w-12 border-0" />
-              <span>Hello, I&apos;m</span>
+              <span>{t("greeting")}</span>
             </motion.div>
 
             {/* Name with shimmer */}
@@ -111,14 +114,14 @@ export function Hero() {
                   border: "1px solid transparent",
                 }}
               >
-                See my Work
+                {t("cta_projects")}
                 <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
               </Link>
               <Link
                 href="/contact"
                 className="group flex h-12 w-full items-center justify-center gap-2 rounded-md border border-accent-violet/40 bg-background px-8 font-medium text-muted-foreground transition-all hover:border-accent-violet/80 hover:text-foreground hover:shadow-[0_0_16px_rgba(139,92,246,0.2)] active:scale-95 sm:w-auto"
               >
-                Get in Touch
+                {t("cta_contact")}
                 <Mail className="h-4 w-4 transition-transform group-hover:scale-110" />
               </Link>
             </motion.div>

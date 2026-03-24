@@ -5,6 +5,7 @@ import { ExternalLink, Github, MonitorPlay, ArrowRight } from "lucide-react";
 import { Link } from "@/i18n/routing";
 import Image from "next/image";
 import { useState } from "react";
+import { useTranslations } from "next-intl";
 
 type Project = {
   id: string;
@@ -16,16 +17,18 @@ type Project = {
   githubUrl: string | null;
   imageUrl: string | null;
   createdAt: Date;
+  slug?: string | null;
 };
 
 export default function ProjectsClient({ projects }: { projects: Project[] }) {
-  const [activeCategory, setActiveCategory] = useState("All");
+  const t = useTranslations("ProjectsPage");
+  const [activeCategory, setActiveCategory] = useState(t("filterAll"));
 
   // Get distinct categories from the DB projects + "All"
-  const categories = ["All", ...Array.from(new Set(projects.map((p) => p.category)))];
+  const categories = [t("filterAll"), ...Array.from(new Set(projects.map((p) => p.category)))];
 
   const filteredProjects = projects.filter(
-    (project) => activeCategory === "All" || project.category === activeCategory,
+    (project) => activeCategory === t("filterAll") || project.category === activeCategory,
   );
 
   const containerVariants = {
@@ -40,10 +43,22 @@ export default function ProjectsClient({ projects }: { projects: Project[] }) {
 
   // Helper properties to add dynamic styling to the DB projects based on their index
   const gradients = [
-    { color: "from-accent-cyan/20 to-transparent", iconColor: "text-accent-cyan" },
-    { color: "from-accent-violet/20 to-transparent", iconColor: "text-accent-violet" },
-    { color: "from-accent-emerald/20 to-transparent", iconColor: "text-accent-emerald" },
-    { color: "from-blue-500/20 to-transparent", iconColor: "text-blue-500" },
+    {
+      color: "from-accent-cyan",
+      iconColor: "text-accent-cyan",
+      borderHover: "hover:border-accent-cyan/50",
+    },
+    {
+      color: "from-accent-violet",
+      iconColor: "text-accent-violet",
+      borderHover: "hover:border-accent-violet/50",
+    },
+    {
+      color: "from-emerald-400",
+      iconColor: "text-emerald-400",
+      borderHover: "hover:border-emerald-400/50",
+    },
+    { color: "from-blue-500", iconColor: "text-blue-500", borderHover: "hover:border-blue-500/50" },
   ];
 
   return (
@@ -64,16 +79,13 @@ export default function ProjectsClient({ projects }: { projects: Project[] }) {
               <div className="flex items-center gap-4 mb-6">
                 <div className="h-[1px] w-12 bg-accent-violet" />
                 <span className="text-accent-violet font-mono text-sm uppercase tracking-wider">
-                  Portfolio Showcase
+                  {t("badge")}
                 </span>
               </div>
               <h1 className="text-5xl md:text-6xl font-bold tracking-tight mb-4 text-foreground">
-                Projects
+                {t("title")}
               </h1>
-              <p className="text-xl text-muted-foreground max-w-2xl">
-                A collection of things I&apos;ve built, from side projects to complex web
-                applications.
-              </p>
+              <p className="text-xl text-muted-foreground max-w-2xl">{t("description")}</p>
             </div>
 
             {/* Filter Navigation */}
@@ -100,11 +112,11 @@ export default function ProjectsClient({ projects }: { projects: Project[] }) {
             initial="hidden"
             animate="visible"
             key={activeCategory} // Force re-render animation when filter changes
-            className="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8"
+            className="grid grid-cols-1 lg:grid-cols-3 gap-6"
           >
             {filteredProjects.length === 0 && (
               <div className="text-muted-foreground col-span-full py-12 text-center text-lg">
-                No projects found for this category.
+                {t("noProjects")}
               </div>
             )}
 
@@ -115,10 +127,10 @@ export default function ProjectsClient({ projects }: { projects: Project[] }) {
                 <motion.div
                   key={project.id}
                   variants={itemVariants}
-                  className="group flex flex-col h-full rounded-3xl bg-foreground/[0.02] border border-white/5 overflow-hidden backdrop-blur-sm transition-colors hover:bg-foreground/[0.04]"
+                  className={`group relative flex flex-col rounded-2xl bg-foreground/[0.02] border border-white/5 overflow-hidden backdrop-blur-sm transition-all hover:bg-foreground/[0.05] h-full shadow-lg ${gradient.borderHover}`}
                 >
                   {/* Imagem / Mockup Topo */}
-                  <div className="relative aspect-video w-full border-b border-white/5 bg-background flex items-center justify-center overflow-hidden">
+                  <div className="relative aspect-video overflow-hidden bg-background/50 border-b border-white/5 flex items-center justify-center shrink-0 min-h-[200px]">
                     {project.imageUrl ? (
                       <Image
                         src={project.imageUrl}
@@ -130,87 +142,77 @@ export default function ProjectsClient({ projects }: { projects: Project[] }) {
                     ) : (
                       <>
                         <div
-                          className={`absolute inset-0 bg-gradient-to-br ${gradient.color} opacity-40 group-hover:opacity-60 transition-opacity z-10`}
+                          className={`absolute inset-0 bg-gradient-to-br ${gradient.color} opacity-50 group-hover:opacity-70 transition-opacity`}
                         />
 
-                        <div className="relative z-20 flex flex-col items-center gap-2">
-                          <MonitorPlay
-                            className={`h-10 w-10 ${gradient.iconColor} opacity-50 transition-transform group-hover:scale-110`}
-                          />
+                        <div className="relative z-10 flex flex-col items-center gap-3 text-muted-foreground">
+                          <MonitorPlay className={`h-10 w-10 ${gradient.iconColor} opacity-60`} />
+                          <span className="font-mono text-xs opacity-50">[{project.category}]</span>
                         </div>
                       </>
                     )}
-
-                    {/* Etiqueta de Categoria no canto */}
-                    <div className="absolute top-4 right-4 z-30 px-3 py-1 rounded-full bg-background/80 backdrop-blur-md border border-white/10 text-xs font-mono text-muted-foreground">
-                      {project.category}
-                    </div>
                   </div>
 
                   {/* Conteúdo Abaixo */}
-                  <div className="flex flex-col flex-1 p-6 sm:p-8">
-                    <h3 className="text-2xl font-bold text-foreground mb-3 group-hover:text-accent-cyan transition-colors">
+                  <div className="flex flex-col flex-1 p-5 sm:p-6">
+                    <h3 className="text-xl font-bold text-foreground mb-2 group-hover:text-accent-cyan transition-colors">
                       {project.title}
                     </h3>
 
-                    <p className="text-muted-foreground text-base mb-6 leading-relaxed flex-1">
+                    <p className="text-muted-foreground text-sm mb-5 leading-relaxed line-clamp-2">
                       {project.description}
                     </p>
 
                     {/* Tech stack */}
-                    <div className="flex flex-wrap gap-2 mb-8">
-                      {project.tags.slice(0, 3).map((tag, tagIndex) => (
+                    <div className="flex flex-wrap gap-2 mb-6">
+                      {project.tags.slice(0, 4).map((tag, tagIndex) => (
                         <span
                           key={tagIndex}
-                          className="px-2.5 py-1 text-xs font-mono rounded bg-white/5 text-foreground/70"
+                          className="px-3 py-1 text-xs font-mono font-medium rounded-full bg-background border border-white/10 text-muted-foreground"
                         >
                           {tag}
                         </span>
                       ))}
-                      {project.tags.length > 3 && (
-                        <span className="px-2.5 py-1 text-xs font-mono rounded bg-white/5 text-foreground/70">
-                          +{project.tags.length - 3}
-                        </span>
-                      )}
                     </div>
 
                     {/* Interações Bottom */}
-                    <div className="flex flex-col gap-4 mt-auto pt-4 border-t border-white/5">
-                      <div className="flex items-center justify-between">
-                        <div className="flex gap-4">
-                          {project.githubUrl && (
-                            <a
-                              href={project.githubUrl}
-                              target="_blank"
-                              rel="noreferrer"
-                              className="text-muted-foreground hover:text-foreground transition-colors"
-                              aria-label="Source code"
-                            >
-                              <Github className="h-5 w-5" />
-                            </a>
-                          )}
-                          {project.liveUrl && (
-                            <a
-                              href={project.liveUrl}
-                              target="_blank"
-                              rel="noreferrer"
-                              className="text-muted-foreground hover:text-foreground transition-colors"
-                              aria-label="Live Demo"
-                            >
-                              <ExternalLink className="h-5 w-5" />
-                            </a>
-                          )}
-                        </div>
-
-                        {/* Link para página interna */}
-                        <Link
-                          href={`/projects/${project.id}`}
-                          className="inline-flex items-center gap-2 text-sm font-medium text-foreground hover:text-accent-cyan transition-colors group/link ml-auto"
-                        >
-                          Ver Detalhes
-                          <ArrowRight className="h-4 w-4 transition-transform group-hover/link:-translate-x-1" />
-                        </Link>
+                    <div className="flex flex-wrap items-center justify-between gap-4 mt-auto pt-5 border-t border-white/5">
+                      <div className="flex flex-wrap items-center gap-2.5">
+                        {project.liveUrl && (
+                          <Link
+                            href={project.liveUrl}
+                            target="_blank"
+                            rel="noreferrer"
+                            className="inline-flex items-center gap-1.5 h-10 px-4 rounded-md text-sm font-medium text-foreground transition-all hover:shadow-[0_0_14px_rgba(6,182,212,0.25)] active:scale-95"
+                            style={{
+                              background:
+                                "linear-gradient(var(--color-background), var(--color-background)) padding-box, linear-gradient(135deg, var(--color-accent-cyan), var(--color-accent-violet)) border-box",
+                              border: "1px solid transparent",
+                            }}
+                          >
+                            <ExternalLink className="h-4 w-4" /> Demo
+                          </Link>
+                        )}
+                        {project.githubUrl && (
+                          <Link
+                            href={project.githubUrl}
+                            target="_blank"
+                            rel="noreferrer"
+                            className="inline-flex items-center gap-1.5 h-10 px-4 rounded-md text-sm font-medium text-muted-foreground border border-white/10 bg-white/5 hover:bg-white/10 hover:text-foreground transition-colors active:scale-95"
+                          >
+                            <Github className="h-4 w-4" /> Code
+                          </Link>
+                        )}
                       </div>
+
+                      {/* Link para página interna */}
+                      <Link
+                        href={`/projects/${project.slug || project.id}`}
+                        className="inline-flex items-center gap-2 text-sm font-semibold text-foreground hover:text-accent-cyan transition-colors group/link whitespace-nowrap ml-auto"
+                      >
+                        {t("viewDetails")}
+                        <ArrowRight className="h-4 w-4 transition-transform group-hover/link:translate-x-1" />
+                      </Link>
                     </div>
                   </div>
                 </motion.div>

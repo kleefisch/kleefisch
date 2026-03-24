@@ -4,7 +4,11 @@ import { motion } from "framer-motion";
 import { Coffee, Gamepad2, Code2, Camera } from "lucide-react";
 import Image from "next/image";
 
+import { useTranslations } from "next-intl";
+
 export default function AboutPage() {
+  const t = useTranslations("AboutPage");
+
   const fadeInUp = {
     hidden: { opacity: 0, y: 20 },
     visible: { opacity: 1, y: 0, transition: { duration: 0.6 } },
@@ -30,14 +34,18 @@ export default function AboutPage() {
             <div className="mb-6 flex items-center gap-4">
               <div className="h-[1px] w-12 bg-accent-cyan" />
               <span className="font-mono text-sm uppercase tracking-wider text-accent-cyan">
-                About Me
+                {t("badge")}
               </span>
             </div>
             <h1 className="mb-8 text-5xl font-bold tracking-tight md:text-6xl md:leading-[1.1]">
-              The person behind <br />
-              <span className="bg-gradient-to-r from-accent-cyan via-accent-violet to-accent-emerald bg-clip-text text-transparent">
-                the code.
-              </span>
+              {t.rich("title", {
+                br: () => <br />,
+                gradient: (chunks) => (
+                  <span className="bg-gradient-to-r from-accent-cyan via-accent-violet to-accent-emerald bg-clip-text text-transparent">
+                    {chunks}
+                  </span>
+                ),
+              })}
             </h1>
           </motion.div>
 
@@ -50,27 +58,10 @@ export default function AboutPage() {
           >
             <div className="mb-16 grid grid-cols-1 gap-12 md:grid-cols-3">
               <motion.div variants={fadeInUp} className="space-y-6 md:col-span-2">
-                <p className="text-xl font-medium text-foreground">
-                  Hi, I&apos;m John. I build digital products that balance aesthetic beauty with
-                  engineering rigor.
-                </p>
-                <p>
-                  My journey into software development didn&apos;t start with a formal computer
-                  science degree. It started with a relentless curiosity to understand how things
-                  work on the internet. What began as modifying HTML templates evolved into
-                  engineering complex, scalable full-stack applications.
-                </p>
-                <p>
-                  Over the past few years, I&apos;ve had the privilege of working across various
-                  industries—from early-stage startups to established digital agencies. This
-                  diversity has taught me that the best code isn&apos;t just clever; it&apos;s code
-                  that solves real human problems efficiently.
-                </p>
-                <p>
-                  Today, my main focus is on modern web architectures using the React/Next.js
-                  ecosystem. I believe in the power of serverless technologies, edge computing, and
-                  strict typing with TypeScript to deliver flawless user experiences.
-                </p>
+                <p className="text-xl font-medium text-foreground">{t("bio_1")}</p>
+                <p>{t("bio_2")}</p>
+                <p>{t("bio_3")}</p>
+                <p>{t("bio_4")}</p>
               </motion.div>
 
               <motion.div variants={fadeInUp} className="relative md:col-span-1">
@@ -79,7 +70,7 @@ export default function AboutPage() {
                   <div className="absolute inset-0 z-10 bg-gradient-to-tr from-accent-cyan/20 to-accent-violet/20 opacity-50 mix-blend-overlay" />
                   <div className="absolute inset-0 z-20 flex flex-col items-center justify-center text-muted-foreground">
                     <Camera className="mb-2 h-8 w-8 opacity-50" />
-                    <span className="font-mono text-xs opacity-50">[Photo Slot]</span>
+                    <span className="font-mono text-xs opacity-50">{t("photoSlot")}</span>
                   </div>
                   {/* Using next image as placeholder config */}
                   <Image
@@ -94,38 +85,26 @@ export default function AboutPage() {
 
             {/* Filosofias & Hobbies */}
             <motion.div variants={fadeInUp} className="border-t border-white/10 pt-12">
-              <h3 className="mb-8 text-3xl font-bold text-foreground">Out of Office</h3>
-              <p className="mb-10">
-                Writing code is my profession, but I believe that the best ideas often come when
-                stepping away from the keyboard. Here is what keeps me grounded:
-              </p>
+              <h3 className="mb-8 text-3xl font-bold text-foreground">{t("outOfOfficeTitle")}</h3>
+              <p className="mb-10">{t("outOfOfficeDesc")}</p>
 
               <div className="not-prose grid grid-cols-1 gap-6 sm:grid-cols-3">
                 <div className="rounded-2xl border border-white/5 bg-foreground/[0.02] p-6 backdrop-blur-sm">
                   <Coffee className="mb-4 h-6 w-6 text-orange-400" />
-                  <h4 className="mb-2 text-lg font-semibold text-foreground">Specialty Coffee</h4>
-                  <p className="text-sm text-muted-foreground">
-                    I treat making coffee like writing a complex algorithm. Perfecting the grind
-                    size and brewing methods.
-                  </p>
+                  <h4 className="mb-2 text-lg font-semibold text-foreground">{t("hobby1Title")}</h4>
+                  <p className="text-sm text-muted-foreground">{t("hobby1Desc")}</p>
                 </div>
 
                 <div className="rounded-2xl border border-white/5 bg-foreground/[0.02] p-6 backdrop-blur-sm">
                   <Gamepad2 className="mb-4 h-6 w-6 text-accent-violet" />
-                  <h4 className="mb-2 text-lg font-semibold text-foreground">Gaming</h4>
-                  <p className="text-sm text-muted-foreground">
-                    Appreciating the immense engineering and narrative design behind modern video
-                    game development.
-                  </p>
+                  <h4 className="mb-2 text-lg font-semibold text-foreground">{t("hobby2Title")}</h4>
+                  <p className="text-sm text-muted-foreground">{t("hobby2Desc")}</p>
                 </div>
 
                 <div className="rounded-2xl border border-white/5 bg-foreground/[0.02] p-6 backdrop-blur-sm">
                   <Code2 className="mb-4 h-6 w-6 text-accent-emerald" />
-                  <h4 className="mb-2 text-lg font-semibold text-foreground">Open Source</h4>
-                  <p className="text-sm text-muted-foreground">
-                    Contributing to tools I use daily, studying repositories, and learning from the
-                    global community.
-                  </p>
+                  <h4 className="mb-2 text-lg font-semibold text-foreground">{t("hobby3Title")}</h4>
+                  <p className="text-sm text-muted-foreground">{t("hobby3Desc")}</p>
                 </div>
               </div>
             </motion.div>

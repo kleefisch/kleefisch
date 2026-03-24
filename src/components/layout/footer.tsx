@@ -1,5 +1,6 @@
 import * as React from "react";
 import { Link } from "@/i18n/routing";
+import { useTranslations } from "next-intl";
 import { Github, Linkedin, Twitter, Mail } from "lucide-react";
 
 const SOCIAL_LINKS = [
@@ -30,6 +31,7 @@ const SOCIAL_LINKS = [
 ];
 
 export function Footer() {
+  const t = useTranslations("Footer");
   const currentYear = new Date().getFullYear();
 
   return (
@@ -61,7 +63,7 @@ export function Footer() {
                 </span>
               </Link>
               <p className="font-mono text-xs text-muted-foreground/50">
-                <span className="text-accent-emerald/60">{"//"}</span> built with{" "}
+                <span className="text-accent-emerald/60">{"//"}</span> {t("built_with")}{" "}
                 <span className="text-accent-cyan/80">Next.js</span> &amp;{" "}
                 <span className="text-accent-violet/80">Tailwind v4</span>
               </p>
@@ -69,7 +71,7 @@ export function Footer() {
 
             {/* Center: Copyright */}
             <p className="font-mono text-xs text-muted-foreground/40">
-              © {currentYear} Kleefisch. All rights reserved.
+              © {currentYear} {t("all_rights_reserved")}
             </p>
 
             {/* Right: Social Links */}

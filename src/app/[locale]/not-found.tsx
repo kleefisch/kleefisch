@@ -4,8 +4,11 @@ import { motion } from "framer-motion";
 import { Link } from "@/i18n/routing";
 import { TerminalSquare, RefreshCw, MoveLeft } from "lucide-react";
 import { TypeAnimation } from "react-type-animation";
+import { useTranslations } from "next-intl";
 
 export default function NotFoundPage() {
+  const t = useTranslations("NotFoundPage");
+
   return (
     <div className="relative min-h-[80vh] flex flex-col items-center justify-center overflow-hidden px-4">
       {/* Background Glows */}
@@ -90,21 +93,19 @@ export default function NotFoundPage() {
 
           {/* Terminal Body */}
           <div className="p-4 sm:p-6 text-left font-mono text-sm sm:text-base min-h-[120px] text-muted-foreground">
-            <div className="text-accent-cyan mb-2">
-              &gt; Inicializando diagnóstico do sistema...
-            </div>
+            <div className="text-accent-cyan mb-2">{t("initDiagnostic")}</div>
             <TypeAnimation
               sequence={[
                 1000,
-                "> Status: Arquivo não encontrado.",
+                t("seq1"),
                 1000,
-                "> Erro crítico: O dev esqueceu de criar essa página.",
+                t("seq2"),
                 1000,
-                "> Tentando subornar o servidor com café...",
+                t("seq3"),
                 1000,
-                "> Falha: O servidor exigiu pizza.",
+                t("seq4"),
                 1000,
-                "> Solução: Voltar para segurança.",
+                t("seq5"),
                 2000,
               ]}
               wrapper="div"
@@ -127,7 +128,7 @@ export default function NotFoundPage() {
             className="group relative flex items-center justify-center gap-2 overflow-hidden rounded-full bg-foreground px-8 py-3 text-sm font-medium text-background transition-transform hover:scale-105"
           >
             <MoveLeft className="h-4 w-4 transition-transform group-hover:-translate-x-1" />
-            <span>Retornar à Base</span>
+            <span>{t("returnBase")}</span>
           </Link>
 
           <button
@@ -135,7 +136,7 @@ export default function NotFoundPage() {
             className="group relative flex items-center justify-center gap-2 overflow-hidden rounded-full border border-border bg-background px-8 py-3 text-sm font-medium text-foreground transition-all hover:bg-muted"
           >
             <RefreshCw className="h-4 w-4 transition-transform group-hover:rotate-180" />
-            <span>Tentar Novamente</span>
+            <span>{t("tryAgain")}</span>
           </button>
         </motion.div>
       </motion.div>

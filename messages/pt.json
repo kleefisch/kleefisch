@@ -5,8 +5,120 @@
     "projects": "Projetos",
     "contact": "Contato"
   },
+  "Footer": {
+    "built_with": "desenvolvido com",
+    "all_rights_reserved": "Kleefisch. Todos os direitos reservados."
+  },
   "Hero": {
-    "title": "Bem-vindo ao meu Portfólio",
-    "subtitle": "Construindo Experiências Digitais"
+    "greeting": "Olá, eu sou",
+    "cta_projects": "Veja meu Trabalho",
+    "cta_contact": "Entre em Contato"
+  },
+  "About": {
+    "badge": "Resumo Rápido",
+    "title": "Unindo a ponte entre <gradient1>design</gradient1> & <gradient2>engenharia</gradient2>.",
+    "description_1": "Sou um Desenvolvedor Full Stack apaixonado por criar experiências digitais que não são apenas visualmente impressionantes, mas também tecnicamente robustas.",
+    "description_2": "Com um profundo entendimento de arquiteturas web modernas, desenvolvo soluções escaláveis que resolvem problemas reais. Minha filosofia é simples: escreva código limpo, priorize a experiência do usuário e sempre seja curioso.",
+    "cta": "Leia minha história completa",
+    "card1_title": "Código Limpo",
+    "card1_desc": "Bases de código de fácil manutenção, estritamente tipadas e bem documentadas, construídas para escalabilidade.",
+    "card2_title": "Pixel Perfect",
+    "card2_desc": "Animações fluidas e interfaces responsivas e acessíveis que cativam os usuários.",
+    "card3_title": "Stack Moderno",
+    "card3_desc": "Aproveitando as vantagens do Next.js App Router, Server Actions e fluxos de CI/CD sólidos."
+  },
+  "Skills": {
+    "badge": "Tech Stack",
+    "title": "Habilidades & Tecnologias",
+    "description": "Meu arsenal técnico é construído em torno de ferramentas modernas, escaláveis e de alta performance. Aqui está o que eu uso para dar vida a ideias.",
+    "category_1": "Frontend & UI",
+    "category_2": "Backend & APIs",
+    "category_3": "Dados & Cloud",
+    "category_4": "Ferramentas & Workflow"
+  },
+  "Projects": {
+    "badge": "Portfólio",
+    "title": "Projetos em Destaque",
+    "view_all": "Ver todos os projetos",
+    "empty_state": "Nenhum projeto em destaque encontrado.",
+    "view_repo": "Código"
+  },
+  "Journey": {
+    "badge": "Experiência",
+    "title": "Jornada Profissional",
+    "item1_title": "Engenheiro Full Stack Sênior",
+    "item1_company": "TechNova Solutions",
+    "item1_period": "2023 - Presente",
+    "item1_desc": "Liderando a migração de monólitos legados para Next.js App Router e microsserviços. Arquitetei um novo dashboard de análise em tempo real usado por mais de 10 mil clientes enterprise.",
+    "item2_title": "Desenvolvedor de Software",
+    "item2_company": "Creative Digital Agency",
+    "item2_period": "2020 - 2023",
+    "item2_desc": "Desenvolvimento de landing pages de alta conversão e aplicações web interativas. Melhoria da pontuação do core vitals em 40% em todos os principais produtos.",
+    "item3_title": "Bacharel em Ciência da Computação",
+    "item3_company": "University of Technology",
+    "item3_period": "2016 - 2020",
+    "item3_desc": "Graduado com honras. Especialização em sistemas distribuídos e interação humano-computador."
+  },
+  "Contact": {
+    "badge": "Contato",
+    "title": "Vamos trabalhar <br/>juntos.",
+    "description": "Atualmente estou aberto a novas oportunidades. Se você tem uma pergunta ou quer apenas dizer um oi, farei o possível para te responder!",
+    "email_label": "E-mail",
+    "location_label": "Localização",
+    "location_value": "Remoto / Terra",
+    "form_name": "Nome",
+    "form_name_placeholder": "João Silva",
+    "form_email": "E-mail",
+    "form_email_placeholder": "joao@exemplo.com",
+    "form_message": "Mensagem",
+    "form_message_placeholder": "Fale sobre o seu projeto...",
+    "form_send": "Enviar Mensagem",
+    "form_sending": "Enviando...",
+    "success_title": "Mensagem Enviada!",
+    "success_desc": "Obrigado pelo contato. Responderei em breve.",
+    "error_fallback": "Ocorreu um erro ao enviar a mensagem.",
+    "error_server": "Erro de conexão com o servidor."
+  },
+  "AboutPage": {
+    "badge": "Sobre Mim",
+    "title": "A pessoa por trás <br></br> <gradient>do código.</gradient>",
+    "bio_1": "Olá, eu sou o John. Construo produtos digitais que equilibram estética e rigor na engenharia.",
+    "bio_2": "Minha jornada no desenvolvimento de software não começou com um diploma formal. Começou com uma curiosidade incansável de entender como as coisas funcionam na internet. O que começou modificando templates HTML evoluiu para a engenharia de aplicações full-stack complexas e escaláveis.",
+    "bio_3": "Nos últimos anos, tive o privilégio de trabalhar em diversas indústrias — de startups em estágio inicial a agências digitais estabelecidas. Essa diversidade me ensinou que o melhor código não é apenas inteligente; é um código que resolve problemas reais de pessoas de forma eficiente.",
+    "bio_4": "Hoje, meu foco principal são arquiteturas web modernas usando o ecossistema React/Next.js. Acredito no poder das tecnologias serverless, edge computing e tipagem estrita com TypeScript para entregar experiências perfeitas.",
+    "photoSlot": "[Espaço para Foto]",
+    "outOfOfficeTitle": "Fora do Escritório",
+    "outOfOfficeDesc": "Escrever código é minha profissão, mas acredito que as melhores ideias muitas vezes surgem ao nos afastarmos do teclado. Aqui está o que me mantém equilibrado:",
+    "hobby1Title": "Café Especial",
+    "hobby1Desc": "Eu trato o preparo de café como a escrita de um algoritmo complexo. Aperfeiçoando a moagem e os métodos de extração.",
+    "hobby2Title": "Jogos",
+    "hobby2Desc": "Apreciando a imensa engenharia e design narrativo por trás do desenvolvimento de jogos modernos.",
+    "hobby3Title": "Código Aberto",
+    "hobby3Desc": "Contribuindo para ferramentas que use diariamente, estudando repositórios e aprendendo com a comunidade global."
+  },
+  "ProjectsPage": {
+    "badge": "Mostruário do Portfólio",
+    "title": "Projetos",
+    "description": "Uma coleção de coisas que construí, desde projetos pessoais a aplicações web complexas.",
+    "filterAll": "Todos",
+    "noProjects": "Nenhum projeto encontrado nesta categoria.",
+    "viewDetails": "Ver Detalhes"
+  },
+  "ProjectDetailPage": {
+    "backToProjects": "Voltar para projetos",
+    "accessLive": "Acessar ao Vivo",
+    "viewCode": "Ver Código (GitHub)",
+    "aboutProject": "Sobre o Projeto",
+    "notionError": "Não foi possível carregar o conteúdo detalhado deste projeto no momento."
+  },
+  "NotFoundPage": {
+    "initDiagnostic": "> Inicializando diagnóstico do sistema...",
+    "seq1": "> Status: Arquivo não encontrado.",
+    "seq2": "> Erro crítico: O dev esqueceu de criar essa página.",
+    "seq3": "> Tentando subornar o servidor com café...",
+    "seq4": "> Falha: O servidor exigiu pizza.",
+    "seq5": "> Solução: Voltar para segurança.",
+    "returnBase": "Retornar à Base",
+    "tryAgain": "Tentar Novamente"
   }
 }

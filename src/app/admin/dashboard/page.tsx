@@ -9,6 +9,7 @@ import {
 } from "@/app/actions/contact";
 import { deleteProjectAction } from "@/app/actions/projects";
 import { DeleteButton } from "@/components/admin/delete-button";
+import { ProjectModalController } from "@/components/admin/project-modal-controller";
 import {
   FolderGit2,
   Mail,
@@ -69,6 +70,7 @@ export default async function AdminDashboardPage({
 
   return (
     <div className="min-h-screen relative flex flex-col bg-background selection:bg-accent-cyan/30 pb-20">
+      <ProjectModalController projects={projects} />
       <div className="fixed top-[-10%] left-1/2 -translate-x-1/2 w-[600px] h-[500px] rounded-full bg-accent-violet/10 blur-[150px] mix-blend-screen pointer-events-none -z-10" />
 
       {/* Admin Navbar */}
@@ -196,7 +198,7 @@ export default async function AdminDashboardPage({
                   <h2 className="text-xl font-bold text-white">Gerenciar Projetos</h2>
                 </div>
                 <Link
-                  href="/admin/projects/new"
+                  href="?action=new"
                   className="inline-flex h-10 items-center justify-center gap-2 rounded-md bg-accent-cyan px-5 text-sm font-bold text-black transition-all hover:bg-accent-cyan/90 hover:scale-[1.02] active:scale-95 shadow-[0_0_20px_rgba(6,182,212,0.2)]"
                 >
                   <Plus className="h-4 w-4" />
@@ -246,7 +248,7 @@ export default async function AdminDashboardPage({
 
                         <div className="flex items-center gap-1 sm:opacity-0 group-hover:opacity-100 transition-opacity self-end sm:self-center bg-black/40 p-1.5 rounded-xl border border-white/5">
                           <Link
-                            href={`/projects/${project.id}`}
+                            href={`/projects/${project.slug || project.id}`}
                             target="_blank"
                             className="flex items-center gap-2 px-3 py-1.5 rounded-lg hover:bg-white/10 text-xs font-medium text-accent-cyan/80 hover:text-accent-cyan transition-colors"
                           >
@@ -255,7 +257,7 @@ export default async function AdminDashboardPage({
                           </Link>
                           <div className="w-[1px] h-4 bg-white/10" />
                           <Link
-                            href={`/admin/projects/${project.id}/edit`}
+                            href={`?action=edit&id=${project.id}`}
                             className="flex items-center gap-2 px-3 py-1.5 rounded-lg hover:bg-white/10 text-xs font-medium text-neutral-300 hover:text-white transition-colors"
                           >
                             <Edit3 className="h-3.5 w-3.5" />

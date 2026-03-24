@@ -2,41 +2,10 @@
 
 import { motion } from "framer-motion";
 import { Briefcase, GraduationCap, CalendarDays } from "lucide-react";
+import { useTranslations } from "next-intl";
 import { SectionScrollHint } from "@/components/ui/section-scroll-hint";
 
-// Mock data for the timeline
-const journeyItems = [
-  {
-    id: 1,
-    type: "work",
-    title: "Senior Full Stack Engineer",
-    company: "TechNova Solutions",
-    period: "2023 - Present",
-    description:
-      "Leading the migration of legacy monoliths to Next.js App Router and microservices. Architected a new real-time analytics dashboard used by over 10k enterprise clients.",
-    skills: ["Next.js", "PostgreSQL", "AWS", "WebSockets"],
-  },
-  {
-    id: 2,
-    type: "work",
-    title: "Software Developer",
-    company: "Creative Digital Agency",
-    period: "2020 - 2023",
-    description:
-      "Developed high-conversion landing pages and interactive web applications. Improved core vitals score by 40% across all main products.",
-    skills: ["React", "TypeScript", "Tailwind CSS", "Framer Motion"],
-  },
-  {
-    id: 3,
-    type: "education",
-    title: "B.S. in Computer Science",
-    company: "University of Technology",
-    period: "2016 - 2020",
-    description:
-      "Graduated with honors. Specialized in distributed systems and human-computer interaction.",
-    skills: ["Data Structures", "Algorithms", "System Design"],
-  },
-];
+// Removed unused mock data
 
 const containerVariants = {
   hidden: { opacity: 0 },
@@ -52,6 +21,39 @@ const itemVariants = {
 };
 
 export function Journey() {
+  const t = useTranslations("Journey");
+
+  // Rebuild items to use translations
+  const items = [
+    {
+      id: 1,
+      type: "work",
+      title: t("item1_title"),
+      company: t("item1_company"),
+      period: t("item1_period"),
+      description: t("item1_desc"),
+      skills: ["Next.js", "PostgreSQL", "AWS", "WebSockets"],
+    },
+    {
+      id: 2,
+      type: "work",
+      title: t("item2_title"),
+      company: t("item2_company"),
+      period: t("item2_period"),
+      description: t("item2_desc"),
+      skills: ["React", "TypeScript", "Tailwind CSS", "Framer Motion"],
+    },
+    {
+      id: 3,
+      type: "education",
+      title: t("item3_title"),
+      company: t("item3_company"),
+      period: t("item3_period"),
+      description: t("item3_desc"),
+      skills: ["Data Structures", "Algorithms", "System Design"],
+    },
+  ];
+
   return (
     <section
       id="journey"
@@ -84,11 +86,11 @@ export function Journey() {
             <div className="flex items-center justify-center gap-4 mb-4">
               <div className="h-[1px] w-8 bg-accent-emerald" />
               <span className="text-accent-emerald font-mono text-sm uppercase tracking-wider">
-                Experience
+                {t("badge")}
               </span>
               <div className="h-[1px] w-8 bg-accent-emerald" />
             </div>
-            <h2 className="text-4xl font-bold tracking-tight md:text-5xl">Professional Journey</h2>
+            <h2 className="text-4xl font-bold tracking-tight md:text-5xl">{t("title")}</h2>
           </motion.div>
 
           {/* Timeline Container */}
@@ -109,7 +111,7 @@ export function Journey() {
               }}
             />
 
-            {journeyItems.map((item) => (
+            {items.map((item) => (
               <motion.div
                 key={item.id}
                 variants={itemVariants}
