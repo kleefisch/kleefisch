@@ -7,24 +7,29 @@ import {
   SiNextdotjs,
   SiTailwindcss,
   SiTypescript,
+  SiJavascript,
   SiFramer,
   SiNodedotjs,
+  SiNestjs,
+  SiPython,
   SiGraphql,
   SiExpress,
   SiPostgresql,
   SiPrisma,
   SiRedis,
-  SiVercel,
+  SiMongodb,
   SiDocker,
+  SiVercel,
   SiGit,
   SiGithub,
   SiJest,
   SiFigma,
+  SiTestinglibrary,
+  SiGithubactions,
 } from "react-icons/si";
 import { useTranslations } from "next-intl";
+import { FaAws } from "react-icons/fa6";
 import { SectionScrollHint } from "@/components/ui/section-scroll-hint";
-
-// Removed unused mock data
 
 const containerVariants = {
   hidden: { opacity: 0 },
@@ -49,18 +54,43 @@ const pillVariants = {
 export function Skills() {
   const t = useTranslations("Skills");
 
-  // Re-build categories with translation
   const categories = [
     {
       title: t("category_1"),
       icon: <MonitorSmartphone className="h-6 w-6 text-accent-cyan" />,
       color: "from-accent-cyan/20 to-transparent",
       skills: [
-        { label: "React 19", Icon: SiReact },
-        { label: "Next.js 15", Icon: SiNextdotjs },
-        { label: "Tailwind CSS v4", Icon: SiTailwindcss },
-        { label: "TypeScript", Icon: SiTypescript },
-        { label: "Framer Motion", Icon: SiFramer },
+        {
+          label: "React",
+          Icon: SiReact,
+          color: "text-muted-foreground group-hover/skill:text-[#61DAFB]",
+        },
+        {
+          label: "Next.js",
+          Icon: SiNextdotjs,
+          color:
+            "text-muted-foreground group-hover/skill:text-black dark:group-hover/skill:text-white",
+        },
+        {
+          label: "TypeScript",
+          Icon: SiTypescript,
+          color: "text-muted-foreground group-hover/skill:text-[#3178C6]",
+        },
+        {
+          label: "JavaScript",
+          Icon: SiJavascript,
+          color: "text-muted-foreground group-hover/skill:text-[#F7DF1E]",
+        },
+        {
+          label: "Tailwind CSS",
+          Icon: SiTailwindcss,
+          color: "text-muted-foreground group-hover/skill:text-[#06B6D4]",
+        },
+        {
+          label: "Framer Motion",
+          Icon: SiFramer,
+          color: "text-muted-foreground group-hover/skill:text-[#0055FF]",
+        },
       ],
     },
     {
@@ -68,11 +98,32 @@ export function Skills() {
       icon: <TerminalSquare className="h-6 w-6 text-accent-violet" />,
       color: "from-accent-violet/20 to-transparent",
       skills: [
-        { label: "Node.js", Icon: SiNodedotjs },
-        { label: "GraphQL", Icon: SiGraphql },
-        { label: "Express", Icon: SiExpress },
-        { label: "RESTful APIs", Icon: null },
-        { label: "Server Actions", Icon: null },
+        {
+          label: "Node.js",
+          Icon: SiNodedotjs,
+          color: "text-muted-foreground group-hover/skill:text-[#339933]",
+        },
+        {
+          label: "NestJS",
+          Icon: SiNestjs,
+          color: "text-muted-foreground group-hover/skill:text-[#E0234E]",
+        },
+        {
+          label: "Express",
+          Icon: SiExpress,
+          color:
+            "text-muted-foreground group-hover/skill:text-black dark:group-hover/skill:text-white",
+        },
+        {
+          label: "Python",
+          Icon: SiPython,
+          color: "text-muted-foreground group-hover/skill:text-[#3776AB]",
+        },
+        {
+          label: "GraphQL",
+          Icon: SiGraphql,
+          color: "text-muted-foreground group-hover/skill:text-[#E10098]",
+        },
       ],
     },
     {
@@ -80,12 +131,38 @@ export function Skills() {
       icon: <Database className="h-6 w-6 text-accent-emerald" />,
       color: "from-accent-emerald/20 to-transparent",
       skills: [
-        { label: "PostgreSQL", Icon: SiPostgresql },
-        { label: "Prisma ORM", Icon: SiPrisma },
-        { label: "Redis", Icon: SiRedis },
-        { label: "Vercel", Icon: SiVercel },
-        { label: "AWS", Icon: null },
-        { label: "Docker", Icon: SiDocker },
+        {
+          label: "PostgreSQL",
+          Icon: SiPostgresql,
+          color: "text-muted-foreground group-hover/skill:text-[#4169E1]",
+        },
+        {
+          label: "MongoDB",
+          Icon: SiMongodb,
+          color: "text-muted-foreground group-hover/skill:text-[#47A248]",
+        },
+        {
+          label: "Redis",
+          Icon: SiRedis,
+          color: "text-muted-foreground group-hover/skill:text-[#DC382D]",
+        },
+        {
+          label: "Prisma",
+          Icon: SiPrisma,
+          color:
+            "text-muted-foreground group-hover/skill:text-black dark:group-hover/skill:text-white",
+        },
+        {
+          label: "AWS",
+          Icon: FaAws,
+          color: "text-muted-foreground group-hover/skill:text-[#FF9900]",
+        },
+        {
+          label: "Vercel",
+          Icon: SiVercel,
+          color:
+            "text-muted-foreground group-hover/skill:text-black dark:group-hover/skill:text-white",
+        },
       ],
     },
     {
@@ -93,12 +170,42 @@ export function Skills() {
       icon: <Wrench className="h-6 w-6 text-muted-foreground" />,
       color: "from-white/10 to-transparent",
       skills: [
-        { label: "Git", Icon: SiGit },
-        { label: "GitHub", Icon: SiGithub },
-        { label: "Jest", Icon: SiJest },
-        { label: "Figma", Icon: SiFigma },
-        { label: "CI/CD", Icon: null },
-        { label: "Agile/Scrum", Icon: null },
+        {
+          label: "Docker",
+          Icon: SiDocker,
+          color: "text-muted-foreground group-hover/skill:text-[#2496ED]",
+        },
+        {
+          label: "Git",
+          Icon: SiGit,
+          color: "text-muted-foreground group-hover/skill:text-[#F05032]",
+        },
+        {
+          label: "GitHub",
+          Icon: SiGithub,
+          color:
+            "text-muted-foreground group-hover/skill:text-black dark:group-hover/skill:text-white",
+        },
+        {
+          label: "GitHub Actions",
+          Icon: SiGithubactions,
+          color: "text-muted-foreground group-hover/skill:text-[#2088FF]",
+        },
+        {
+          label: "Jest",
+          Icon: SiJest,
+          color: "text-muted-foreground group-hover/skill:text-[#C21325]",
+        },
+        {
+          label: "RTL",
+          Icon: SiTestinglibrary,
+          color: "text-muted-foreground group-hover/skill:text-[#E33332]",
+        },
+        {
+          label: "Figma",
+          Icon: SiFigma,
+          color: "text-muted-foreground group-hover/skill:text-[#F24E1E]",
+        },
       ],
     },
   ];
@@ -133,11 +240,11 @@ export function Skills() {
             className="mb-16 text-center"
           >
             <div className="flex items-center justify-center gap-4 mb-4">
-              <div className="h-[1px] w-8 bg-accent-violet" />
-              <span className="text-accent-violet font-mono text-sm uppercase tracking-wider">
+              <div className="h-[1px] w-8 bg-accent-violet/50" />
+              <span className="text-accent-violet font-sans font-semibold text-sm uppercase tracking-widest">
                 Tech Stack
               </span>
-              <div className="h-[1px] w-8 bg-accent-violet" />
+              <div className="h-[1px] w-8 bg-accent-violet/50" />
             </div>
             <h2 className="text-4xl font-bold tracking-tight md:text-5xl">Skills & Technologies</h2>
             <p className="mt-4 text-lg text-muted-foreground max-w-2xl mx-auto">
@@ -157,31 +264,36 @@ export function Skills() {
               <motion.div
                 key={index}
                 variants={cardVariants}
-                className="group relative p-8 rounded-2xl bg-foreground/[0.02] border border-white/5 backdrop-blur-sm overflow-hidden transition-all hover:bg-foreground/[0.04]"
+                className="group relative p-8 rounded-2xl bg-card border border-black/5 dark:border-white/5 shadow-md hover:shadow-xl hover:-translate-y-1 transition-all duration-300 overflow-hidden"
               >
-                {/* Background Gradient Mesh inside Card */}
+                {/* Material Elevation Interactive State */}
                 <div
-                  className={`absolute top-0 left-0 w-full h-full bg-gradient-to-br ${category.color} opacity-0 transition-opacity duration-500 group-hover:opacity-100 pointer-events-none`}
+                  className={`absolute inset-0 bg-foreground/5 opacity-0 transition-opacity duration-300 group-hover:opacity-100 pointer-events-none`}
                 />
 
                 <div className="relative z-10 flex flex-col h-full">
                   <div className="flex items-center gap-4 mb-6">
-                    <div className="p-3 bg-background rounded-lg border border-white/5 shadow-sm">
+                    <div className="p-3 bg-muted/50 rounded-xl shadow-inner border border-black/5 dark:border-white/5">
                       {category.icon}
                     </div>
-                    <h3 className="text-xl font-semibold text-foreground">{category.title}</h3>
+                    <h3 className="text-xl font-semibold tracking-tight text-foreground">
+                      {category.title}
+                    </h3>
                   </div>
 
                   {/* Tech Pills Grid */}
-                  <motion.div className="flex flex-wrap gap-2 mt-auto" variants={containerVariants}>
-                    {category.skills.map(({ label, Icon }, skillIndex) => (
+                  <motion.div
+                    className="flex flex-wrap gap-2.5 mt-auto"
+                    variants={containerVariants}
+                  >
+                    {category.skills.map(({ label, Icon, color }, skillIndex) => (
                       <motion.span
                         key={skillIndex}
                         variants={pillVariants}
                         whileHover={{ scale: 1.05 }}
-                        className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-mono font-medium rounded-full bg-background border border-white/10 text-muted-foreground transition-colors hover:text-foreground hover:border-white/25 cursor-default"
+                        className="group/skill flex items-center gap-2 px-3.5 py-2 text-[13px] font-sans font-medium tracking-wide rounded-lg bg-zinc-100 dark:bg-zinc-800/50 border border-transparent shadow-sm text-zinc-600 dark:text-zinc-400 transition-all duration-300 hover:bg-white dark:hover:bg-zinc-800 hover:shadow-md hover:-translate-y-0.5 hover:text-foreground cursor-default"
                       >
-                        {Icon && <Icon className="h-3 w-3 shrink-0" />}
+                        {Icon && <Icon className={`h-4 w-4 shrink-0 transition-colors ${color}`} />}
                         {label}
                       </motion.span>
                     ))}
