@@ -39,6 +39,10 @@ model ContactMessage {
   read      Boolean  @default(false)
   archived  Boolean  @default(false)
   createdAt DateTime @default(now())
+
+  @@index([read])
+  @@index([archived])
+  @@index([createdAt])
 }
 
 model AdminUser {
@@ -49,4 +53,15 @@ model AdminUser {
   isTwoFactorEnabled Boolean  @default(false)
   createdAt          DateTime @default(now())
   updatedAt          DateTime @updatedAt
+}
+
+model RateLimit {
+  id        String   @id @default(cuid())
+  ip        String
+  action    String   // "contact" or "like"
+  count     Int      @default(1)
+  resetAt   DateTime
+
+  @@unique([ip, action])
+  @@index([resetAt])
 }

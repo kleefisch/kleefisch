@@ -4,21 +4,24 @@ import bcrypt from "bcryptjs";
 import { generateSecret, generateURI } from "otplib";
 
 export async function setupAdminAction() {
-  const email = "johnffreires@gmail.com";
-  const plainPassword = "admin-portfolio-secure";
+  const email = process.env.SETUP_ADMIN_EMAIL;
+  const plainPassword = process.env.SETUP_ADMIN_PASSWORD;
 
-  // Check if admin already exists
-  const existingAdmin = await prisma.adminUser.findUnique({
-    where: { email },
-  });
-
-  if (existingAdmin) {
+  if (!email || !plainPassword) {
     return {
       success: false,
-      message: "Usuário Admin já existe.",
-      admin: existingAdmin,
-      plainPassword:
-        "Já foi definida, olhe os logs se perdeu, não posso mostrar de volta, tem que resetar ou usar a senha atual.",
+      message: "Credenciais não configuradas no .env (SETUP_ADMIN_EMAIL e SETUP_ADMIN_PASSWORD).",
+    };
+  }
+
+  // Check if ANY admin already exists to prevent takeover
+  const existingConfig = await prisma.adminUser.count();
+
+  if (existingConfig > 0) {
+    return {
+      success: false,
+      message:
+        "Acesso Negado: Já existe um admin configurado. Delete os dados do banco para recriar.",
     };
   }
 
@@ -29,7 +32,7 @@ export async function setupAdminAction() {
   const twoFactorSecret = generateSecret();
 
   // Create Admin
-  const adminUser = await prisma.adminUser.create({
+  await prisma.adminUser.create({
     data: {
       email,
       passwordHash,

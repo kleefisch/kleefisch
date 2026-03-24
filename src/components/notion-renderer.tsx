@@ -54,6 +54,7 @@ import dynamic from "next/dynamic";
 import Image from "next/image";
 import Link from "next/link";
 import { useSyncExternalStore } from "react";
+import { ErrorBoundary } from "@/components/error-boundary";
 
 const emptySubscribe = () => () => {};
 
@@ -86,22 +87,24 @@ export function NotionRenderer({ recordMap }: { recordMap: ExtendedRecordMap }) 
   if (!mounted) return <div className="h-96 w-full animate-pulse bg-neutral-900/50 rounded-xl" />;
 
   return (
-    <div className="w-full relative notion-custom-wrapper">
-      <NotionRendererComponent
-        recordMap={recordMap}
-        fullPage={false}
-        darkMode={resolvedTheme === "dark"}
-        showTableOfContents={false}
-        components={{
-          nextImage: Image,
-          nextLink: Link,
-          Code,
-          Collection,
-          Equation,
-          Pdf,
-          Modal,
-        }}
-      />
-    </div>
+    <ErrorBoundary>
+      <div className="w-full relative notion-custom-wrapper">
+        <NotionRendererComponent
+          recordMap={recordMap}
+          fullPage={false}
+          darkMode={resolvedTheme === "dark"}
+          showTableOfContents={false}
+          components={{
+            nextImage: Image,
+            nextLink: Link,
+            Code,
+            Collection,
+            Equation,
+            Pdf,
+            Modal,
+          }}
+        />
+      </div>
+    </ErrorBoundary>
   );
 }
