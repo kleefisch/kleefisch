@@ -9,26 +9,35 @@ import {
   SiTypescript,
   SiJavascript,
   SiFramer,
+  SiHtml5,
+  SiCss as SiCss3,
   SiNodedotjs,
   SiNestjs,
   SiPython,
   SiGraphql,
   SiExpress,
+  SiTrpc,
+  SiSocketdotio,
+  SiJsonwebtokens,
   SiPostgresql,
   SiPrisma,
   SiRedis,
   SiMongodb,
-  SiDocker,
   SiVercel,
+  SiNotion,
+  SiResend,
+  SiDocker,
   SiGit,
   SiGithub,
+  SiGithubactions,
   SiJest,
   SiFigma,
   SiTestinglibrary,
-  SiGithubactions,
+  SiEslint,
+  SiPrettier,
 } from "react-icons/si";
-import { useTranslations } from "next-intl";
 import { FaAws } from "react-icons/fa6";
+import { useTranslations } from "next-intl";
 import { SectionScrollHint } from "@/components/ui/section-scroll-hint";
 
 const containerVariants = {
@@ -56,10 +65,9 @@ export function Skills() {
 
   const categories = [
     {
-      title: t("category_1"),
-      icon: <MonitorSmartphone className="h-6 w-6 text-accent-cyan" />,
-      color: "from-accent-cyan/20 to-transparent",
-      borderHover: "hover:border-accent-cyan/50",
+      title: t("category_1"), // Frontend
+      icon: <MonitorSmartphone className="h-8 w-8 text-accent-cyan" />,
+      gradientHover: "from-accent-cyan/10 to-transparent",
       skills: [
         {
           label: "React",
@@ -69,8 +77,7 @@ export function Skills() {
         {
           label: "Next.js",
           Icon: SiNextdotjs,
-          color:
-            "text-muted-foreground group-hover/skill:text-black dark:group-hover/skill:text-white",
+          color: "text-muted-foreground group-hover/skill:text-foreground",
         },
         {
           label: "TypeScript",
@@ -92,13 +99,22 @@ export function Skills() {
           Icon: SiFramer,
           color: "text-muted-foreground group-hover/skill:text-[#0055FF]",
         },
+        {
+          label: "HTML5",
+          Icon: SiHtml5,
+          color: "text-muted-foreground group-hover/skill:text-[#E34F26]",
+        },
+        {
+          label: "CSS3",
+          Icon: SiCss3,
+          color: "text-muted-foreground group-hover/skill:text-[#1572B6]",
+        },
       ],
     },
     {
-      title: t("category_2"),
-      icon: <TerminalSquare className="h-6 w-6 text-accent-violet" />,
-      color: "from-accent-violet/20 to-transparent",
-      borderHover: "hover:border-accent-violet/50",
+      title: t("category_2"), // Backend
+      icon: <TerminalSquare className="h-8 w-8 text-accent-violet" />,
+      gradientHover: "from-accent-violet/10 to-transparent",
       skills: [
         {
           label: "Node.js",
@@ -113,8 +129,7 @@ export function Skills() {
         {
           label: "Express",
           Icon: SiExpress,
-          color:
-            "text-muted-foreground group-hover/skill:text-black dark:group-hover/skill:text-white",
+          color: "text-muted-foreground group-hover/skill:text-foreground",
         },
         {
           label: "Python",
@@ -126,13 +141,27 @@ export function Skills() {
           Icon: SiGraphql,
           color: "text-muted-foreground group-hover/skill:text-[#E10098]",
         },
+        {
+          label: "tRPC",
+          Icon: SiTrpc,
+          color: "text-muted-foreground group-hover/skill:text-[#2596BE]",
+        },
+        {
+          label: "Socket.io",
+          Icon: SiSocketdotio,
+          color: "text-muted-foreground group-hover/skill:text-foreground",
+        },
+        {
+          label: "JWT",
+          Icon: SiJsonwebtokens,
+          color: "text-muted-foreground group-hover/skill:text-[#FB015B]",
+        },
       ],
     },
     {
-      title: t("category_3"),
-      icon: <Database className="h-6 w-6 text-accent-emerald" />,
-      color: "from-accent-emerald/20 to-transparent",
-      borderHover: "hover:border-accent-emerald/50",
+      title: t("category_3"), // Database & Cloud
+      icon: <Database className="h-8 w-8 text-accent-emerald" />,
+      gradientHover: "from-accent-emerald/10 to-transparent",
       skills: [
         {
           label: "PostgreSQL",
@@ -152,8 +181,7 @@ export function Skills() {
         {
           label: "Prisma",
           Icon: SiPrisma,
-          color:
-            "text-muted-foreground group-hover/skill:text-black dark:group-hover/skill:text-white",
+          color: "text-muted-foreground group-hover/skill:text-foreground",
         },
         {
           label: "AWS",
@@ -163,16 +191,24 @@ export function Skills() {
         {
           label: "Vercel",
           Icon: SiVercel,
-          color:
-            "text-muted-foreground group-hover/skill:text-black dark:group-hover/skill:text-white",
+          color: "text-muted-foreground group-hover/skill:text-foreground",
+        },
+        {
+          label: "Notion API",
+          Icon: SiNotion,
+          color: "text-muted-foreground group-hover/skill:text-foreground",
+        },
+        {
+          label: "Resend",
+          Icon: SiResend,
+          color: "text-muted-foreground group-hover/skill:text-foreground",
         },
       ],
     },
     {
-      title: t("category_4"),
-      icon: <Wrench className="h-6 w-6 text-muted-foreground" />,
-      color: "from-white/10 to-transparent",
-      borderHover: "hover:border-foreground/30",
+      title: t("category_4"), // DevOps & Tools
+      icon: <Wrench className="h-8 w-8 text-muted-foreground" />,
+      gradientHover: "from-white/10 to-transparent",
       skills: [
         {
           label: "Docker",
@@ -187,11 +223,10 @@ export function Skills() {
         {
           label: "GitHub",
           Icon: SiGithub,
-          color:
-            "text-muted-foreground group-hover/skill:text-black dark:group-hover/skill:text-white",
+          color: "text-muted-foreground group-hover/skill:text-foreground",
         },
         {
-          label: "GitHub Actions",
+          label: "CI/CD",
           Icon: SiGithubactions,
           color: "text-muted-foreground group-hover/skill:text-[#2088FF]",
         },
@@ -206,9 +241,14 @@ export function Skills() {
           color: "text-muted-foreground group-hover/skill:text-[#E33332]",
         },
         {
-          label: "Figma",
-          Icon: SiFigma,
-          color: "text-muted-foreground group-hover/skill:text-[#F24E1E]",
+          label: "ESLint",
+          Icon: SiEslint,
+          color: "text-muted-foreground group-hover/skill:text-[#4B32C3]",
+        },
+        {
+          label: "Prettier",
+          Icon: SiPrettier,
+          color: "text-muted-foreground group-hover/skill:text-[#F7B93E]",
         },
       ],
     },
@@ -268,18 +308,16 @@ export function Skills() {
               <motion.div
                 key={index}
                 variants={cardVariants}
-                className={`group relative p-8 rounded-2xl bg-white dark:bg-[#111827] border border-black/5 dark:border-white/5 shadow-md hover:shadow-xl hover:-translate-y-1 transition-all duration-300 overflow-hidden ${category.borderHover}`}
+                className="group relative p-8 rounded-2xl bg-foreground/[0.03] border border-white/5 backdrop-blur-md transition-colors hover:bg-foreground/[0.05] overflow-hidden"
               >
-                {/* Material Elevation Interactive State */}
+                {/* Background Gradient Mesh inside Card */}
                 <div
-                  className={`absolute inset-0 bg-foreground/5 opacity-0 transition-opacity duration-300 group-hover:opacity-100 pointer-events-none`}
+                  className={`absolute inset-0 bg-gradient-to-br ${category.gradientHover} opacity-0 transition-opacity duration-500 group-hover:opacity-100 pointer-events-none`}
                 />
 
                 <div className="relative z-10 flex flex-col h-full">
                   <div className="flex items-center gap-4 mb-6">
-                    <div className="p-3 bg-muted/50 rounded-xl shadow-inner border border-black/5 dark:border-white/5">
-                      {category.icon}
-                    </div>
+                    {category.icon}
                     <h3 className="text-xl font-semibold tracking-tight text-foreground">
                       {category.title}
                     </h3>
