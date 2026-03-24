@@ -59,6 +59,7 @@ export function Skills() {
       title: t("category_1"),
       icon: <MonitorSmartphone className="h-6 w-6 text-accent-cyan" />,
       color: "from-accent-cyan/20 to-transparent",
+      borderHover: "hover:border-accent-cyan/50",
       skills: [
         {
           label: "React",
@@ -97,6 +98,7 @@ export function Skills() {
       title: t("category_2"),
       icon: <TerminalSquare className="h-6 w-6 text-accent-violet" />,
       color: "from-accent-violet/20 to-transparent",
+      borderHover: "hover:border-accent-violet/50",
       skills: [
         {
           label: "Node.js",
@@ -130,6 +132,7 @@ export function Skills() {
       title: t("category_3"),
       icon: <Database className="h-6 w-6 text-accent-emerald" />,
       color: "from-accent-emerald/20 to-transparent",
+      borderHover: "hover:border-accent-emerald/50",
       skills: [
         {
           label: "PostgreSQL",
@@ -169,6 +172,7 @@ export function Skills() {
       title: t("category_4"),
       icon: <Wrench className="h-6 w-6 text-muted-foreground" />,
       color: "from-white/10 to-transparent",
+      borderHover: "hover:border-foreground/30",
       skills: [
         {
           label: "Docker",
@@ -264,7 +268,7 @@ export function Skills() {
               <motion.div
                 key={index}
                 variants={cardVariants}
-                className="group relative p-8 rounded-2xl bg-card border border-black/5 dark:border-white/5 shadow-md hover:shadow-xl hover:-translate-y-1 transition-all duration-300 overflow-hidden"
+                className={`group relative p-8 rounded-2xl bg-white dark:bg-[#111827] border border-black/5 dark:border-white/5 shadow-md hover:shadow-xl hover:-translate-y-1 transition-all duration-300 overflow-hidden ${category.borderHover}`}
               >
                 {/* Material Elevation Interactive State */}
                 <div
