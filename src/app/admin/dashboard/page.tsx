@@ -12,7 +12,6 @@ import { DeleteButton } from "@/components/admin/delete-button";
 import {
   FolderGit2,
   Mail,
-  Heart,
   Plus,
   Edit3,
   Globe,
@@ -40,17 +39,12 @@ export default async function AdminDashboardPage({
   const take = 20;
   const skip = (page - 1) * take;
 
-  const [totalProjects, metrics] = await Promise.all([
-    prisma.project.count(),
-    prisma.project.aggregate({ _sum: { likes: true } }),
-  ]);
+  const totalProjects = await prisma.project.count();
 
   const [totalMessages, unreadMessagesCount] = await Promise.all([
     prisma.contactMessage.count(),
     prisma.contactMessage.count({ where: { read: false, archived: false } }),
   ]);
-
-  const totalLikes = metrics._sum.likes || 0;
 
   const allMessages =
     view === "messages"
@@ -120,7 +114,7 @@ export default async function AdminDashboardPage({
         </div>
 
         {/* KPI Grid */}
-        <section className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        <section className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
           <div className="flex flex-col gap-3 rounded-2xl border border-white/5 bg-white/[0.02] p-6 relative overflow-hidden group">
             <div className="absolute inset-0 bg-gradient-to-br from-accent-cyan/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
             <div className="flex items-center justify-between z-10">
@@ -129,17 +123,6 @@ export default async function AdminDashboardPage({
             </div>
             <p className="text-3xl font-bold font-mono tracking-tight text-white z-10">
               {totalProjects}
-            </p>
-          </div>
-
-          <div className="flex flex-col gap-3 rounded-2xl border border-white/5 bg-white/[0.02] p-6 relative overflow-hidden group">
-            <div className="absolute inset-0 bg-gradient-to-br from-accent-violet/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
-            <div className="flex items-center justify-between z-10">
-              <h3 className="text-sm font-medium text-neutral-400">Total de Likes</h3>
-              <Heart className="h-4 w-4 text-accent-violet" />
-            </div>
-            <p className="text-3xl font-bold font-mono tracking-tight text-white z-10">
-              {totalLikes}
             </p>
           </div>
 
@@ -256,9 +239,6 @@ export default async function AdminDashboardPage({
                             <div className="flex flex-wrap items-center gap-3 text-[11px] text-neutral-400 font-mono tracking-wide">
                               <span className="px-2 py-0.5 rounded bg-white/5 border border-white/5 uppercase">
                                 {project.category}
-                              </span>
-                              <span className="flex items-center gap-1.5">
-                                <Heart className="h-3 w-3 text-accent-violet" /> {project.likes}
                               </span>
                             </div>
                           </div>

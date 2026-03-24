@@ -4,7 +4,6 @@ import { motion } from "framer-motion";
 import { ArrowRight, ExternalLink, Github, MonitorPlay } from "lucide-react";
 import { Link } from "@/i18n/routing";
 import Image from "next/image";
-import { LikeButton } from "@/components/ui/like-button";
 import { SectionScrollHint } from "@/components/ui/section-scroll-hint";
 
 type Project = {
@@ -16,7 +15,6 @@ type Project = {
   liveUrl: string | null;
   githubUrl: string | null;
   imageUrl?: string | null;
-  likes: number;
 };
 
 const containerVariants = {
@@ -51,7 +49,7 @@ export function Projects({ featuredProjects }: { featuredProjects: Project[] }) 
   return (
     <section
       id="projects"
-      className="relative min-h-screen flex flex-col justify-start pt-24 pb-16 overflow-hidden scroll-mt-16"
+      className="relative min-h-screen flex flex-col pt-24 pb-8 overflow-hidden scroll-mt-16"
     >
       {/* Dot grid texture */}
       <div className="absolute inset-0 bg-dot-grid pointer-events-none opacity-60" />
@@ -68,14 +66,14 @@ export function Projects({ featuredProjects }: { featuredProjects: Project[] }) 
         className="absolute bottom-0 right-0 w-[800px] h-[700px] rounded-full bg-accent-emerald/14 blur-[150px] mix-blend-screen pointer-events-none"
       />
 
-      <div className="container relative z-10 mx-auto px-4 sm:px-6">
-        <div className="mx-auto max-w-7xl">
+      <div className="container relative z-10 mx-auto px-4 sm:px-6 flex-1 flex flex-col justify-center pb-6">
+        <div className="mx-auto max-w-7xl w-full flex flex-col">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-100px" }}
             transition={{ duration: 0.5 }}
-            className="mb-10 flex flex-col md:flex-row md:items-end justify-between gap-6"
+            className="mb-8 flex flex-col md:flex-row md:items-end justify-between gap-6"
           >
             <div>
               <div className="flex items-center gap-4 mb-4">
@@ -104,7 +102,7 @@ export function Projects({ featuredProjects }: { featuredProjects: Project[] }) 
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true, margin: "-50px" }}
-            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
+            className="grid grid-cols-1 lg:grid-cols-3 gap-6"
           >
             {featuredProjects?.map((project, index) => {
               const style = gradients[index % gradients.length];
@@ -112,10 +110,10 @@ export function Projects({ featuredProjects }: { featuredProjects: Project[] }) 
                 <motion.div
                   key={project.id}
                   variants={itemVariants}
-                  className={`group relative flex flex-col rounded-2xl bg-foreground/[0.02] border border-white/5 overflow-hidden backdrop-blur-sm transition-all hover:bg-foreground/[0.05] ${style.borderHover}`}
+                  className={`group relative flex flex-col rounded-2xl bg-foreground/[0.02] border border-white/5 overflow-hidden backdrop-blur-sm transition-all hover:bg-foreground/[0.05] h-full shadow-lg ${style.borderHover}`}
                 >
                   {/* Image */}
-                  <div className="relative aspect-video overflow-hidden bg-background/50 border-b border-white/5 flex items-center justify-center shrink-0">
+                  <div className="relative aspect-video overflow-hidden bg-background/50 border-b border-white/5 flex items-center justify-center shrink-0 min-h-[200px]">
                     {project.imageUrl ? (
                       <Image
                         src={project.imageUrl}
@@ -138,57 +136,65 @@ export function Projects({ featuredProjects }: { featuredProjects: Project[] }) 
                   </div>
 
                   {/* Content */}
-                  <div className="flex flex-col flex-1 p-6">
+                  <div className="flex flex-col flex-1 p-5 sm:p-6">
                     <h3 className="text-xl font-bold text-foreground mb-2">{project.title}</h3>
-                    <p className="text-muted-foreground text-sm leading-relaxed line-clamp-2 mb-4">
+                    <p className="text-muted-foreground text-sm leading-relaxed line-clamp-2 mb-5">
                       {project.description}
                     </p>
 
-                    <div className="flex flex-wrap gap-1.5 mb-6">
+                    <div className="flex flex-wrap gap-2 mb-6">
                       {project.tags.slice(0, 4).map((tag, tagIndex) => (
                         <span
                           key={tagIndex}
-                          className="px-2.5 py-1 text-[10px] font-mono font-medium rounded-full bg-background border border-white/10 text-muted-foreground"
+                          className="px-3 py-1 text-xs font-mono font-medium rounded-full bg-background border border-white/10 text-muted-foreground"
                         >
                           {tag}
                         </span>
                       ))}
                     </div>
 
-                    <div className="flex items-center gap-3 mt-auto">
-                      {project.liveUrl && (
-                        <Link
-                          href={project.liveUrl}
-                          target="_blank"
-                          rel="noreferrer"
-                          className="inline-flex items-center gap-1.5 h-9 px-4 rounded-md text-sm font-medium text-foreground transition-all hover:shadow-[0_0_14px_rgba(6,182,212,0.25)] active:scale-95"
-                          style={{
-                            background:
-                              "linear-gradient(var(--color-background), var(--color-background)) padding-box, linear-gradient(135deg, var(--color-accent-cyan), var(--color-accent-violet)) border-box",
-                            border: "1px solid transparent",
-                          }}
-                        >
-                          <ExternalLink className="h-3.5 w-3.5" /> Demo
-                        </Link>
-                      )}
-                      {project.githubUrl && (
-                        <Link
-                          href={project.githubUrl}
-                          target="_blank"
-                          rel="noreferrer"
-                          className="inline-flex items-center gap-1.5 h-9 px-4 rounded-md text-sm font-medium text-muted-foreground transition-all hover:text-foreground hover:shadow-[0_0_14px_rgba(139,92,246,0.2)] active:scale-95"
-                          style={{
-                            background:
-                              "linear-gradient(var(--color-background), var(--color-background)) padding-box, linear-gradient(135deg, var(--color-accent-violet), var(--color-accent-cyan)) border-box",
-                            border: "1px solid transparent",
-                          }}
-                        >
-                          <Github className="h-3.5 w-3.5" /> Source
-                        </Link>
-                      )}
-                      <div className="ml-auto">
-                        <LikeButton projectId={project.id} initialLikes={project.likes} />
+                    <div className="flex flex-wrap items-center justify-between gap-4 mt-auto pt-5 border-t border-white/5">
+                      <div className="flex flex-wrap items-center gap-2.5">
+                        {project.liveUrl && (
+                          <Link
+                            href={project.liveUrl}
+                            target="_blank"
+                            rel="noreferrer"
+                            className="inline-flex items-center gap-1.5 h-10 px-4 rounded-md text-sm font-medium text-foreground transition-all hover:shadow-[0_0_14px_rgba(6,182,212,0.25)] active:scale-95"
+                            style={{
+                              background:
+                                "linear-gradient(var(--color-background), var(--color-background)) padding-box, linear-gradient(135deg, var(--color-accent-cyan), var(--color-accent-violet)) border-box",
+                              border: "1px solid transparent",
+                            }}
+                          >
+                            <ExternalLink className="h-4 w-4" /> Demo
+                          </Link>
+                        )}
+                        {project.githubUrl && (
+                          <Link
+                            href={project.githubUrl}
+                            target="_blank"
+                            rel="noreferrer"
+                            className="inline-flex items-center gap-1.5 h-10 px-4 rounded-md text-sm font-medium text-muted-foreground transition-all hover:text-foreground hover:shadow-[0_0_14px_rgba(139,92,246,0.2)] active:scale-95"
+                            style={{
+                              background:
+                                "linear-gradient(var(--color-background), var(--color-background)) padding-box, linear-gradient(135deg, var(--color-accent-violet), var(--color-accent-cyan)) border-box",
+                              border: "1px solid transparent",
+                            }}
+                          >
+                            <Github className="h-4 w-4" /> Source
+                          </Link>
+                        )}
                       </div>
+
+                      {/* Link para página interna */}
+                      <Link
+                        href={`/projects/${project.id}`}
+                        className="inline-flex items-center gap-2 text-sm font-semibold text-foreground hover:text-accent-cyan transition-colors group/link whitespace-nowrap"
+                      >
+                        Ver Detalhes
+                        <ArrowRight className="h-4 w-4 transition-transform group-hover/link:translate-x-1" />
+                      </Link>
                     </div>
                   </div>
                 </motion.div>

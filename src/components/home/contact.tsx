@@ -43,7 +43,7 @@ export function Contact() {
   return (
     <section
       id="contact"
-      className="relative flex min-h-screen flex-col overflow-hidden scroll-mt-16"
+      className="relative flex min-h-[calc(100dvh-4rem)] flex-col overflow-hidden scroll-mt-16"
     >
       {/* Dot grid texture */}
       <div className="absolute inset-0 bg-dot-grid pointer-events-none opacity-60" />
@@ -63,7 +63,7 @@ export function Contact() {
       <SectionScrollHint variant="up" />
 
       <div className="relative z-10 flex flex-1 flex-col">
-        <div className="relative flex flex-1 flex-col justify-center py-8 lg:py-12">
+        <div className="relative flex flex-1 flex-col justify-center pt-24 pb-8 lg:pt-28 lg:pb-10">
           <div className="container mx-auto px-4 sm:px-6">
             <div className="mx-auto max-w-6xl">
               <motion.div
@@ -74,7 +74,7 @@ export function Contact() {
                   hidden: { opacity: 0 },
                   visible: { opacity: 1, transition: { staggerChildren: 0.2 } },
                 }}
-                className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-6 bg-foreground/[0.02] border border-white/5 rounded-3xl p-4 sm:p-6 lg:p-8 backdrop-blur-sm"
+                className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-6 bg-foreground/[0.02] border border-white/5 rounded-3xl p-6 sm:p-10 lg:p-12 backdrop-blur-sm"
               >
                 {/* Left Column: Info & Text */}
                 <div className="lg:col-span-5 flex flex-col justify-center space-y-8">
@@ -137,9 +137,9 @@ export function Contact() {
                   ) : (
                     <form
                       onSubmit={handleSubmit}
-                      className="space-y-4 flex flex-col bg-background/30 p-4 sm:p-6 rounded-2xl border border-white/5 shadow-xl"
+                      className="space-y-4 flex flex-col bg-background/30 p-6 sm:p-8 rounded-2xl border border-white/5 shadow-xl"
                     >
-                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                         <div className="space-y-1">
                           <label htmlFor="name" className="text-sm font-medium text-foreground">
                             Name
