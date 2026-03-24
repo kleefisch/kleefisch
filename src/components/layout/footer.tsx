@@ -44,7 +44,7 @@ export function Footer() {
       />
 
       <div className="bg-background">
-        <div className="container mx-auto max-w-7xl px-4 py-8 sm:px-6">
+        <div className="container mx-auto max-w-7xl px-4 py-4 sm:py-6 sm:px-6">
           <div className="flex flex-col items-center justify-between gap-6 md:flex-row">
             {/* Left: Brand + stack */}
             <div className="flex flex-col items-center gap-2 md:items-start">
