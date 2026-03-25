@@ -39,6 +39,8 @@ import {
   SiFastapi,
   SiSupabase,
   SiPostman,
+  SiVite,
+  SiLinux,
 } from "react-icons/si";
 import { FaAws } from "react-icons/fa6";
 import { TbApi } from "react-icons/tb";
@@ -115,6 +117,16 @@ export function Skills() {
           Icon: SiCss3,
           color: "text-muted-foreground group-hover/skill:text-[#1572B6]",
         },
+        {
+          label: "Vite",
+          Icon: SiVite,
+          color: "text-muted-foreground group-hover/skill:text-[#646CFF]",
+        },
+        {
+          label: "Figma",
+          Icon: SiFigma,
+          color: "text-muted-foreground group-hover/skill:text-[#F24E1E]",
+        },
       ],
     },
     {
@@ -157,11 +169,6 @@ export function Skills() {
           label: "Socket.io",
           Icon: SiSocketdotio,
           color: "text-muted-foreground group-hover/skill:text-foreground",
-        },
-        {
-          label: "JWT",
-          Icon: SiJsonwebtokens,
-          color: "text-muted-foreground group-hover/skill:text-[#FB015B]",
         },
         {
           label: "Flask",
@@ -288,6 +295,11 @@ export function Skills() {
           label: "Postman",
           Icon: SiPostman,
           color: "text-muted-foreground group-hover/skill:text-[#FF6C37]",
+        },
+        {
+          label: "Linux",
+          Icon: SiLinux,
+          color: "text-muted-foreground group-hover/skill:text-[#FCC624]",
         },
       ],
     },
