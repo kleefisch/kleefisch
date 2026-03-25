@@ -1,58 +1,68 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { MonitorSmartphone, TerminalSquare, Database, Wrench } from "lucide-react";
+
+import {
+  MonitorSmartphone,
+  TerminalSquare,
+  Database,
+  Wrench,
+  ShieldCheck,
+  Key,
+} from "lucide-react";
 import {
   SiReact,
   SiNextdotjs,
-  SiTailwindcss,
   SiTypescript,
-  SiJavascript,
+  SiTailwindcss,
+  SiReactquery,
+  SiFigma,
+  SiRedux,
+  SiSass,
+  SiVuedotjs,
   SiHtml5,
-  SiCss as SiCss3,
   SiNodedotjs,
   SiNestjs,
+  SiExpress,
   SiPython,
   SiGraphql,
-  SiExpress,
   SiTrpc,
   SiSocketdotio,
+  SiFlask,
+  SiFastapi,
+  SiSwagger,
   SiJsonwebtokens,
+  SiPostman,
+  SiStripe,
   SiPostgresql,
-  SiPrisma,
-  SiRedis,
   SiMongodb,
-  SiVercel,
-  SiNotion,
-  SiResend,
+  SiRedis,
+  SiPrisma,
+  SiSupabase,
+  SiFirebase,
+  SiMysql,
+  SiSqlite,
+  SiRender,
+  SiRailway,
+  SiCloudflare,
+  SiSanity,
   SiDocker,
   SiGit,
   SiGithub,
   SiGithubactions,
   SiJest,
-  SiFigma,
-  SiTestinglibrary,
+  SiCypress,
   SiEslint,
   SiPrettier,
-  SiFlask,
-  SiFastapi,
-  SiSupabase,
-  SiPostman,
-  SiVite,
   SiLinux,
-  SiSass,
-  SiRedux,
-  SiGo,
-  SiBun,
-  SiFirebase,
-  SiMysql,
   SiWebpack,
-  SiNginx,
-  SiVuedotjs,
+  SiNetlify,
+  SiVercel,
+  SiResend,
 } from "react-icons/si";
 import { FaAws } from "react-icons/fa6";
-import { SiSwagger } from "react-icons/si";
 import { TbBrandFramerMotion } from "react-icons/tb";
+import { GiBearFace } from "react-icons/gi";
 import { useTranslations } from "next-intl";
 import { SectionScrollHint } from "@/components/ui/section-scroll-hint";
 
@@ -82,9 +92,9 @@ export function Skills() {
   const categories = [
     {
       title: t("category_1"), // Frontend
-      icon: <MonitorSmartphone className="h-8 w-8 text-accent-cyan" />,
-      gradientHover: "from-accent-cyan/10 to-transparent",
-      borderHover: "hover:border-accent-cyan/30",
+      icon: <MonitorSmartphone className="h-8 w-8 text-accent-blue" />,
+      gradientHover: "from-accent-blue/10 to-transparent",
+      borderHover: "hover:border-accent-blue/30",
       skills: [
         {
           label: "React",
@@ -103,11 +113,6 @@ export function Skills() {
           color: "text-muted-foreground group-hover/skill:text-[#3178C6]",
         },
         {
-          label: "JavaScript",
-          Icon: SiJavascript,
-          color: "text-muted-foreground group-hover/skill:text-[#F7DF1E]",
-        },
-        {
           label: "Tailwind CSS",
           Icon: SiTailwindcss,
           color: "text-muted-foreground group-hover/skill:text-[#06B6D4]",
@@ -119,19 +124,15 @@ export function Skills() {
             "text-muted-foreground group-hover/skill:text-black dark:group-hover/skill:text-white",
         },
         {
-          label: "HTML5",
-          Icon: SiHtml5,
-          color: "text-muted-foreground group-hover/skill:text-[#E34F26]",
+          label: "React Query",
+          Icon: SiReactquery,
+          color: "text-muted-foreground group-hover/skill:text-[#FF4154]",
         },
         {
-          label: "CSS3",
-          Icon: SiCss3,
-          color: "text-muted-foreground group-hover/skill:text-[#1572B6]",
-        },
-        {
-          label: "Vite",
-          Icon: SiVite,
-          color: "text-muted-foreground group-hover/skill:text-[#646CFF]",
+          label: "Zustand",
+          Icon: GiBearFace,
+          color:
+            "text-muted-foreground group-hover/skill:text-[#443E38] dark:group-hover/skill:text-[#F3F3F3]",
         },
         {
           label: "Figma",
@@ -153,13 +154,18 @@ export function Skills() {
           Icon: SiVuedotjs,
           color: "text-muted-foreground group-hover/skill:text-[#4FC08D]",
         },
+        {
+          label: "HTML/CSS",
+          Icon: SiHtml5,
+          color: "text-muted-foreground group-hover/skill:text-[#E34F26]",
+        },
       ],
     },
     {
       title: t("category_2"), // Backend
-      icon: <TerminalSquare className="h-8 w-8 text-accent-violet" />,
-      gradientHover: "from-accent-violet/10 to-transparent",
-      borderHover: "hover:border-accent-violet/30",
+      icon: <TerminalSquare className="h-8 w-8 text-accent-orange" />,
+      gradientHover: "from-accent-orange/10 to-transparent",
+      borderHover: "hover:border-accent-orange/30",
       skills: [
         {
           label: "Node.js",
@@ -215,15 +221,30 @@ export function Skills() {
           color: "text-muted-foreground group-hover/skill:text-[#85EA2D]",
         },
         {
-          label: "Go",
-          Icon: SiGo,
-          color: "text-muted-foreground group-hover/skill:text-[#00ADD8]",
-        },
-        {
-          label: "Bun",
-          Icon: SiBun,
+          label: "JWT",
+          Icon: SiJsonwebtokens,
           color:
             "text-muted-foreground group-hover/skill:text-black dark:group-hover/skill:text-white",
+        },
+        {
+          label: "Postman",
+          Icon: SiPostman,
+          color: "text-muted-foreground group-hover/skill:text-[#FF6C37]",
+        },
+        {
+          label: "Auth.js",
+          Icon: ShieldCheck,
+          color: "text-muted-foreground group-hover/skill:text-[#8B5CF6]",
+        },
+        {
+          label: "Stripe",
+          Icon: SiStripe,
+          color: "text-muted-foreground group-hover/skill:text-[#008CDD]",
+        },
+        {
+          label: "OAuth",
+          Icon: Key,
+          color: "text-muted-foreground group-hover/skill:text-[#F97316]",
         },
       ],
     },
@@ -246,7 +267,7 @@ export function Skills() {
         {
           label: "Redis",
           Icon: SiRedis,
-          color: "text-muted-foreground group-hover/skill:text-[#FF4438]",
+          color: "text-muted-foreground group-hover/skill:text-[#DC382D]",
         },
         {
           label: "Prisma",
@@ -258,24 +279,6 @@ export function Skills() {
           label: "AWS",
           Icon: FaAws,
           color: "text-muted-foreground group-hover/skill:text-[#FF9900]",
-        },
-        {
-          label: "Vercel",
-          Icon: SiVercel,
-          color:
-            "text-muted-foreground group-hover/skill:text-black dark:group-hover/skill:text-white",
-        },
-        {
-          label: "Notion API",
-          Icon: SiNotion,
-          color:
-            "text-muted-foreground group-hover/skill:text-black dark:group-hover/skill:text-white",
-        },
-        {
-          label: "Resend",
-          Icon: SiResend,
-          color:
-            "text-muted-foreground group-hover/skill:text-black dark:group-hover/skill:text-white",
         },
         {
           label: "Supabase",
@@ -297,13 +300,39 @@ export function Skills() {
           Icon: SiMysql,
           color: "text-muted-foreground group-hover/skill:text-[#4479A1]",
         },
+        {
+          label: "SQLite",
+          Icon: SiSqlite,
+          color: "text-muted-foreground group-hover/skill:text-[#003B57]",
+        },
+        {
+          label: "Render",
+          Icon: SiRender,
+          color: "text-muted-foreground group-hover/skill:text-[#46E3B7]",
+        },
+        {
+          label: "Railway",
+          Icon: SiRailway,
+          color:
+            "text-muted-foreground group-hover/skill:text-black dark:group-hover/skill:text-white",
+        },
+        {
+          label: "Cloudflare",
+          Icon: SiCloudflare,
+          color: "text-muted-foreground group-hover/skill:text-[#F38020]",
+        },
+        {
+          label: "Sanity",
+          Icon: SiSanity,
+          color: "text-muted-foreground group-hover/skill:text-[#F03E2F]",
+        },
       ],
     },
     {
       title: t("category_4"), // DevOps & Tools
-      icon: <Wrench className="h-8 w-8 text-muted-foreground" />,
-      gradientHover: "from-white/10 to-transparent",
-      borderHover: "hover:border-white/20",
+      icon: <Wrench className="h-8 w-8 text-accent-purple" />,
+      gradientHover: "from-accent-purple/10 to-transparent",
+      borderHover: "hover:border-accent-purple/30",
       skills: [
         {
           label: "Docker",
@@ -332,9 +361,9 @@ export function Skills() {
           color: "text-muted-foreground group-hover/skill:text-[#C21325]",
         },
         {
-          label: "RTL",
-          Icon: SiTestinglibrary,
-          color: "text-muted-foreground group-hover/skill:text-[#E33332]",
+          label: "Cypress",
+          Icon: SiCypress,
+          color: "text-muted-foreground group-hover/skill:text-[#17202C]",
         },
         {
           label: "ESLint",
@@ -347,11 +376,6 @@ export function Skills() {
           color: "text-muted-foreground group-hover/skill:text-[#F7B93E]",
         },
         {
-          label: "Postman",
-          Icon: SiPostman,
-          color: "text-muted-foreground group-hover/skill:text-[#FF6C37]",
-        },
-        {
           label: "Linux",
           Icon: SiLinux,
           color: "text-muted-foreground group-hover/skill:text-[#FCC624]",
@@ -362,9 +386,21 @@ export function Skills() {
           color: "text-muted-foreground group-hover/skill:text-[#8DD6F9]",
         },
         {
-          label: "Nginx",
-          Icon: SiNginx,
-          color: "text-muted-foreground group-hover/skill:text-[#009639]",
+          label: "Netlify",
+          Icon: SiNetlify,
+          color: "text-muted-foreground group-hover/skill:text-[#00C7B7]",
+        },
+        {
+          label: "Vercel",
+          Icon: SiVercel,
+          color:
+            "text-muted-foreground group-hover/skill:text-black dark:group-hover/skill:text-white",
+        },
+        {
+          label: "Resend",
+          Icon: SiResend,
+          color:
+            "text-muted-foreground group-hover/skill:text-black dark:group-hover/skill:text-white",
         },
       ],
     },
