@@ -409,7 +409,7 @@ export function Skills() {
   return (
     <section
       id="skills"
-      className="relative min-h-screen flex flex-col justify-center py-32 overflow-hidden scroll-mt-16"
+      className="relative min-h-screen flex flex-col justify-center py-16 md:py-20 lg:py-24 overflow-hidden scroll-mt-16"
     >
       {/* Dot grid texture */}
       <div className="absolute inset-0 bg-dot-grid pointer-events-none opacity-60" />
@@ -433,7 +433,7 @@ export function Skills() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-100px" }}
             transition={{ duration: 0.5 }}
-            className="mb-16 text-center"
+            className="mb-10 lg:mb-12 text-center"
           >
             <div className="flex items-center justify-center gap-4 mb-4">
               <div className="h-[1px] w-8 bg-accent-violet/50" />
@@ -460,7 +460,7 @@ export function Skills() {
               <motion.div
                 key={index}
                 variants={cardVariants}
-                className={`group relative p-8 rounded-2xl bg-foreground/[0.03] border border-white/5 backdrop-blur-md transition-all duration-300 hover:bg-foreground/[0.05] overflow-hidden ${category.borderHover}`}
+                className={`group relative p-6 lg:p-8 rounded-2xl bg-foreground/[0.03] border border-white/5 backdrop-blur-md transition-all duration-300 hover:bg-foreground/[0.05] overflow-hidden ${category.borderHover}`}
               >
                 {/* Background Gradient Mesh inside Card */}
                 <div
@@ -477,7 +477,7 @@ export function Skills() {
 
                   {/* Tech Pills Grid */}
                   <motion.div
-                    className="flex flex-wrap gap-2.5 mt-auto"
+                    className="flex flex-wrap gap-2 lg:gap-2.5 mt-auto"
                     variants={containerVariants}
                   >
                     {category.skills.map(({ label, Icon, color }, skillIndex) => (
@@ -485,7 +485,7 @@ export function Skills() {
                         key={skillIndex}
                         variants={pillVariants}
                         whileHover={{ scale: 1.05 }}
-                        className="group/skill flex items-center gap-2 px-3.5 py-2 text-[13px] font-sans font-medium tracking-wide rounded-lg bg-zinc-100 dark:bg-zinc-800/50 border border-transparent shadow-sm text-zinc-600 dark:text-zinc-400 transition-all duration-300 hover:bg-white dark:hover:bg-zinc-800 hover:shadow-md hover:-translate-y-0.5 hover:text-foreground cursor-default"
+                        className="group/skill flex items-center gap-1.5 lg:gap-2 px-2.5 py-1.5 lg:px-3 lg:py-2 text-xs lg:text-[13px] font-sans font-medium tracking-wide rounded-lg bg-zinc-100 dark:bg-zinc-800/50 border border-transparent shadow-sm text-zinc-600 dark:text-zinc-400 transition-all duration-300 hover:bg-white dark:hover:bg-zinc-800 hover:shadow-md hover:-translate-y-0.5 hover:text-foreground cursor-default"
                       >
                         {Icon && <Icon className={`h-4 w-4 shrink-0 transition-colors ${color}`} />}
                         {label}
