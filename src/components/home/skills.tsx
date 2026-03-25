@@ -35,8 +35,13 @@ import {
   SiTestinglibrary,
   SiEslint,
   SiPrettier,
+  SiFlask,
+  SiFastapi,
+  SiSupabase,
+  SiPostman,
 } from "react-icons/si";
 import { FaAws } from "react-icons/fa6";
+import { TbApi } from "react-icons/tb";
 import { useTranslations } from "next-intl";
 import { SectionScrollHint } from "@/components/ui/section-scroll-hint";
 
@@ -158,6 +163,21 @@ export function Skills() {
           Icon: SiJsonwebtokens,
           color: "text-muted-foreground group-hover/skill:text-[#FB015B]",
         },
+        {
+          label: "Flask",
+          Icon: SiFlask,
+          color: "text-muted-foreground group-hover/skill:text-foreground",
+        },
+        {
+          label: "FastAPI",
+          Icon: SiFastapi,
+          color: "text-muted-foreground group-hover/skill:text-[#009688]",
+        },
+        {
+          label: "REST APIs",
+          Icon: TbApi,
+          color: "text-muted-foreground group-hover/skill:text-foreground",
+        },
       ],
     },
     {
@@ -206,6 +226,16 @@ export function Skills() {
           Icon: SiResend,
           color: "text-muted-foreground group-hover/skill:text-foreground",
         },
+        {
+          label: "Supabase",
+          Icon: SiSupabase,
+          color: "text-muted-foreground group-hover/skill:text-[#3ECF8E]",
+        },
+        {
+          label: "Neon",
+          Icon: Database,
+          color: "text-muted-foreground group-hover/skill:text-[#00E599]",
+        },
       ],
     },
     {
@@ -253,6 +283,11 @@ export function Skills() {
           label: "Prettier",
           Icon: SiPrettier,
           color: "text-muted-foreground group-hover/skill:text-[#F7B93E]",
+        },
+        {
+          label: "Postman",
+          Icon: SiPostman,
+          color: "text-muted-foreground group-hover/skill:text-[#FF6C37]",
         },
       ],
     },
