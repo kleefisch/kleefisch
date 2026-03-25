@@ -92,9 +92,9 @@ export function Skills() {
   const categories = [
     {
       title: t("category_1"), // Frontend
-      icon: <MonitorSmartphone className="h-8 w-8 text-accent-blue" />,
-      gradientHover: "from-accent-blue/10 to-transparent",
-      borderHover: "hover:border-accent-blue/30",
+      icon: <MonitorSmartphone className="h-8 w-8 text-accent-violet" />,
+      gradientHover: "from-accent-violet/10 to-transparent",
+      borderHover: "hover:border-accent-violet/50",
       skills: [
         {
           label: "React",
@@ -163,9 +163,9 @@ export function Skills() {
     },
     {
       title: t("category_2"), // Backend
-      icon: <TerminalSquare className="h-8 w-8 text-accent-orange" />,
-      gradientHover: "from-accent-orange/10 to-transparent",
-      borderHover: "hover:border-accent-orange/30",
+      icon: <TerminalSquare className="h-8 w-8 text-accent-cyan" />,
+      gradientHover: "from-accent-cyan/10 to-transparent",
+      borderHover: "hover:border-accent-cyan/50",
       skills: [
         {
           label: "Node.js",
@@ -252,7 +252,7 @@ export function Skills() {
       title: t("category_3"), // Database & Cloud
       icon: <Database className="h-8 w-8 text-accent-emerald" />,
       gradientHover: "from-accent-emerald/10 to-transparent",
-      borderHover: "hover:border-accent-emerald/30",
+      borderHover: "hover:border-accent-emerald/50",
       skills: [
         {
           label: "PostgreSQL",
@@ -330,9 +330,9 @@ export function Skills() {
     },
     {
       title: t("category_4"), // DevOps & Tools
-      icon: <Wrench className="h-8 w-8 text-accent-purple" />,
-      gradientHover: "from-accent-purple/10 to-transparent",
-      borderHover: "hover:border-accent-purple/30",
+      icon: <Wrench className="h-8 w-8 text-accent-violet" />,
+      gradientHover: "from-accent-violet/10 to-transparent",
+      borderHover: "hover:border-accent-violet/50",
       skills: [
         {
           label: "Docker",
