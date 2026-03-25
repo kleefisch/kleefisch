@@ -68,6 +68,7 @@ export function Skills() {
       title: t("category_1"), // Frontend
       icon: <MonitorSmartphone className="h-8 w-8 text-accent-cyan" />,
       gradientHover: "from-accent-cyan/10 to-transparent",
+      borderHover: "hover:border-accent-cyan/30",
       skills: [
         {
           label: "React",
@@ -115,6 +116,7 @@ export function Skills() {
       title: t("category_2"), // Backend
       icon: <TerminalSquare className="h-8 w-8 text-accent-violet" />,
       gradientHover: "from-accent-violet/10 to-transparent",
+      borderHover: "hover:border-accent-violet/30",
       skills: [
         {
           label: "Node.js",
@@ -162,6 +164,7 @@ export function Skills() {
       title: t("category_3"), // Database & Cloud
       icon: <Database className="h-8 w-8 text-accent-emerald" />,
       gradientHover: "from-accent-emerald/10 to-transparent",
+      borderHover: "hover:border-accent-emerald/30",
       skills: [
         {
           label: "PostgreSQL",
@@ -209,6 +212,7 @@ export function Skills() {
       title: t("category_4"), // DevOps & Tools
       icon: <Wrench className="h-8 w-8 text-muted-foreground" />,
       gradientHover: "from-white/10 to-transparent",
+      borderHover: "hover:border-white/20",
       skills: [
         {
           label: "Docker",
@@ -308,7 +312,7 @@ export function Skills() {
               <motion.div
                 key={index}
                 variants={cardVariants}
-                className="group relative p-8 rounded-2xl bg-foreground/[0.03] border border-white/5 backdrop-blur-md transition-colors hover:bg-foreground/[0.05] overflow-hidden"
+                className={`group relative p-8 rounded-2xl bg-foreground/[0.03] border border-white/5 backdrop-blur-md transition-all duration-300 hover:bg-foreground/[0.05] overflow-hidden ${category.borderHover}`}
               >
                 {/* Background Gradient Mesh inside Card */}
                 <div
